@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="header.component.scss">
+    <title>Header</title>
+</head>
+<body>
+    <header class="header">   
+        <div class="titulo">
+            <h4>CURSOS-SOFTWARE</h4>
+        </div>
+   
+
+        <div class="botones">
+                <button class="redireccion">
+                    Talleres
+            </button>
+            <button class="redireccion">
+               Cursos
+            </button>
+            <button class="redireccion">
+                Mi perfil
+            </button>
+            <button class="boton">
+               Mis cursos
+            </button>     
+            <div class="menu-desplegable">
+                <button class="boton-img" (click)="toggleMenu()">
+                </button>
+                    <div *ngIf="isMenuVisible" class="menu">
+                        <ul>
+                            <li><a href="#iniciar-sesion">Iniciar Sesión</a></li>
+                            <li><a href="#registrarse">Registrarse</a></li>
+                        </ul>
+                    </div>
+            </div>          
+</div>
+            
+</header>
+   
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif; /* Por ahora */
+}
+
+.contenedor-buscar-cursos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #426B1F;
+    border-radius: 20px;
+    width: 75%;
+    height: 380px;
+    margin-top: 0;
+}
+
+h3 {
+    font-size: 35px;
+}
+
+.boton {
+    font-size: 20px;
+    cursor: pointer;
+    width: 150px;
+    height: 48px;
+    margin-right: 25px;
+    background-color: #426B1F;
+    color: white;
+    border-radius: 5px;
+    border: none;
+}
+
+.contenedor-grid-fotos {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    width: 75%; 
+    height: 600px; 
+    margin: 30px auto; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 30px; 
+}
+
+.contenedor-grid-fotos img {
+    width: 100%;
+    height: auto; 
+    border-radius: 8px; 
+    object-fit: cover; 
+}
