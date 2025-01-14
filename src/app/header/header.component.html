@@ -33,8 +33,8 @@
                 </button>
                     <div *ngIf="isMenuVisible" class="menu">
                         <ul>
-                            <li><a href="#iniciar-sesion" (click)="opcionesUsuario()">Iniciar Sesión</a></li>
-                            <li><a href="#registrarse">Registrarse</a></li>
+                            <li><a routerLink="/login" href="#iniciar-sesion" (click)="opcionesUsuario()">Iniciar Sesión</a></li>
+                            <li><a routerLink="/register" href="#registrarse">Registrarse</a></li>
                         </ul>
                     </div>
             </div>          

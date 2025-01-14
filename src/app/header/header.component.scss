@@ -27,10 +27,11 @@ h4{
 .redireccion{
     font-size: 18px;
     color: black;
-    background-color:none;
     border: none;
     margin-right: 35px;
     cursor: pointer;
+    outline: none;
+    background-color:white;
 }
 .boton{
     font-size: 18px;
@@ -86,6 +87,7 @@ h4{
     margin: 18px;
     text-decoration: none;
     color: white;
+    outline: none;
 }
 
 .menu a:hover {

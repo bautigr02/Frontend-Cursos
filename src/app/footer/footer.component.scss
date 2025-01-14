@@ -53,7 +53,6 @@ hr{
     width: 800px;
     height: 350px;
     justify-items: center;
-    background-color: wheat;
 }
 .links p{
     color: black;
@@ -63,8 +62,13 @@ hr{
 .redireccion{
     margin-top: 5px;
     font-size: 18px;
-    background-color: none;
+    background-color: white;
     border: none;
     margin-right: 35px;
     cursor: pointer;
+}
+.contenedores-links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;   
 }
