@@ -22,8 +22,10 @@ body {
     margin-top: 0;
 }
 
-h3 {
+h2{
     font-size: 35px;
+    margin: 0px;
+    margin-bottom: 20px;
 }
 
 .boton {
@@ -44,7 +46,7 @@ h3 {
     justify-items: center;
     width: 75%; 
     height: 600px; 
-    margin: 30px auto; 
+    margin: 50px auto; 
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
     gap: 30px; 
 }
@@ -54,4 +56,32 @@ h3 {
     height: auto; 
     border-radius: 8px; 
     object-fit: cover; 
+}
+
+.contenedor-boton-unirse{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 50px auto;
+}
+.contenedor-boton-unirse h3{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.contenedor-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 50px auto;
+}
+
+
+.contenedor-info p{
+    font-size: 25px;
+    text-align: Start;
 }

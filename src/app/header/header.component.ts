@@ -11,5 +11,10 @@ export class HeaderComponent {
   toggleMenu() {
       this.isMenuVisible = !this.isMenuVisible;
   }
+
+  sesionIniciada = false;
+  opcionesUsuario(){
+    this.sesionIniciada = !this.sesionIniciada; //Por el momento es para probar como se ve la version con la sesion iniciada
+  }
 }
 
