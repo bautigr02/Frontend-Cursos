@@ -7,10 +7,14 @@ body {
     height: auto;
     margin: 0;
     padding: 0;
-    font-family: Georgia, 'Times New Roman', Times, serif; /* Por ahora */
+    font-family: 'Montserrat', sans-serif;
 }
 
 .contenedor-buscar-cursos {
+    background-image: url(/assets/Images/Foto-Curso-6.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,16 +32,25 @@ h2{
     margin-bottom: 20px;
 }
 
+.contenedor-buscar-cursos h2 {
+    color: white;
+}
+
 .boton {
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
-    width: 150px;
-    height: 48px;
+    width: 175px;
+    height: 60px;
     margin-right: 25px;
     background-color: #426B1F;
     color: white;
     border-radius: 5px;
     border: none;
+    transition: color 0.3s ease;
+}
+
+.boton:hover {
+    color: #a3b18a;
 }
 
 .contenedor-grid-fotos {
@@ -56,9 +69,27 @@ h2{
     height: auto; 
     border-radius: 8px; 
     object-fit: cover; 
+    border: #426B1F 2px solid;
 }
 
-.contenedor-boton-unirse{
+.contenedor-grid-fotos p{
+    margin-top: 0px;
+    font-size: 25px;
+    text-align: center;
+    color: #426B1F;
+}
+.contenedor-info h3{
+    color: #588157;
+    font-size: 65px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.contenedor-info hr{
+    width: 75%;
+    margin: 0px;
+    border: 2px solid #588157;
+}
+.contenedor-info{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -66,22 +97,111 @@ h2{
     width: 75%;
     margin: 50px auto;
 }
-.contenedor-boton-unirse h3{
-    font-size: 35px;
-    text-align: center;
-    margin-bottom: 20px;
+
+
+.contenedor-texto p{
+    font-size: 30px;
+    text-align: Start;
 }
-.contenedor-info{
+
+.contenedor-texto{
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: flex-start;
+    margin: 25px auto;
+    width: auto;
+}
+
+.contenedor-texto p{
+    font-size: 25px;
+    text-align: justify; 
+    line-height: 1.5;
+    width: 65%;
+}
+
+.contenedor-texto img{
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    margin-left: 20px; 
+    border-radius: 8px;
+}
+
+.contenedor-boton-unirse{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    width: auto;
+    margin: 0px auto; 
+}
+
+.contenedor-boton-unirse p{
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.contenedor-2024{
+    display: flex;
+    flex-direction: row;
+}
+
+.contenedor-titulo-2024 h3{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #588157;
+    font-size: 45px;
+    margin: 0px;
+    padding: 20px;
+}
+
+.contenedor-titulo-2024 img{
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    margin-left: 20px; 
+    border-radius: 8px;
+}
+
+.contenedor-info-2024{
+    display: grid;
+    grid-template-columns: 2fr 2fr;
     width: 75%;
+    justify-content: center;
+    align-items: center;
     margin: 50px auto;
 }
 
-
-.contenedor-info p{
+.contenedor-info-2024 p{
+    color: black;
     font-size: 25px;
-    text-align: Start;
+    text-align: center; 
+    justify-content: center;
+    line-height: 1.5;
+    width: 45%;
+    margin-left: 20px;
+}
+
+.cuadrado {  
+    display: flex;
+    flex-direction: column;     
+    justify-content: center; 
+    align-items: center; 
+    border: #426B1F 2px solid;
+    width: 280px;
+    height: 280px;
+    color: #426B1F;
+    font-size: 25px;
+    margin: 10px 10px auto;
+    border-radius: 8px;
+    background-color: #a3b18a;
+}
+
+.cuadrado h2{
+    margin: 0px;
+}
+.cuadrado p {
+    margin: 0px;
 }
