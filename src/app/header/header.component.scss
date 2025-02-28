@@ -11,6 +11,13 @@
  justify-content: start;
 }
 
+#title{
+    font-style: bold;
+    font-size:xx-large;
+    color: #426B1F;
+    text-decoration: none;
+}
+
 h4{
     margin-left: 96px;
     font-size: 25px;
@@ -27,11 +34,9 @@ h4{
 .redireccion{
     font-size: 18px;
     color: black;
-    border: none;
     margin-right: 35px;
-    cursor: pointer;
-    outline: none;
-    background-color:white;
+    text-decoration: none;
+    align-content: center;
 }
 .boton{
     font-size: 18px;
