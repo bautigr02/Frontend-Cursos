@@ -1,17 +1,20 @@
 body{
-    background-color: #426B1F;
+    margin: 0;
+    padding: 0;
 }
 .footer{
     display: flex;
     background-color: white;
-    height: 500px;
     flex-direction: column;
+    height: auto;
+    margin-bottom: 0px;
+    padding: 0px;
 }
 
 h2{
     margin-left: 100px;
-    margin-top: 50px;
-    font-size: 48px;
+    margin-top: 20px;
+    font-size: 32px;
     color: #426B1F;
 }
 h4{
@@ -28,9 +31,9 @@ hr{
 
 
 .links{
-    margin-left: 500px;
+    margin-left: 750px;
     width: 800px;
-    height: 350px;
+    height: 220px;
     display: flex;
     flex-direction: row;
     justify-content:right;
@@ -47,11 +50,28 @@ hr{
     width: 200px;
     justify-items: center;
 }
+.contact-item {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 0px;
+}
+
+.contact-item img{
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    margin-top: 12px;
+}
 
 .redes{
+    margin-left: 100px;
     align-self: flex-end;
     width: 800px;
-    height: 350px;
+    height: 220px;
     justify-items: center;
 }
 .links p{
@@ -66,9 +86,27 @@ hr{
     border: none;
     margin-right: 35px;
     cursor: pointer;
+    margin-top: 12px;
+    height: 25px;
 }
 .contenedores-links{
     display: flex;
     flex-direction: row;
     justify-content: space-between;   
+    margin-top: 12px;
+}
+
+.derechos-reservados{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #426B1F;
+}
+
+.derechos-reservados hr{
+    width: 90%;
+    color: #426B1F;
+    border: 1.5px solid #426B1F;
 }

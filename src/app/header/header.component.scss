@@ -16,6 +16,12 @@ h4{
     font-size: 25px;
     color: #426B1F;
 }
+
+h4 a{
+    text-decoration: none;
+    color: inherit;
+}
+
 .botones{
     display: flex;
     flex-direction: row;
