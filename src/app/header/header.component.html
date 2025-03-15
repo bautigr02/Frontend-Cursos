@@ -9,17 +9,17 @@
 <body>
     <header class="header">   
         <div class="titulo">
-            <h4><a href="/">CUR.SOFTWARE</a></h4>
+            <a id="title" routerLink="/" href="">CUR.SOFTWARE</a>
         </div>
    
 
         <div class="botones">
-                <button class="redireccion">
-                    Talleres
-            </button>
-            <button class="redireccion">
+            <a class="redireccion" routerLink="/all-workshops" href="#talleres">
+                Talleres
+            </a>
+            <a class="redireccion" routerLink="/all-courses" href="#cursos">
                Cursos
-            </button>
+            </a>
             <div *ngIf="sesionIniciada" class="botones-sesion-iniciada">
                 <button class="redireccion">
                     Mi perfil

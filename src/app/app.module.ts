@@ -9,6 +9,12 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AllCoursesComponent } from './all-courses/all-courses.component';
+import { AllWorkshopsComponent } from './all-workshops/all-workshops.component';
+import { CourseCardComponent } from './course-card/course-card.component';
+import { WorkshopCardComponent } from './workshop-card/workshop-card.component';
+import { CourseInfoComponent } from './course-info/course-info.component';
+import { WorkshopInfoComponent } from './workshop-info/workshop-info.component';
 
 
 
@@ -19,7 +25,13 @@ import { RegisterComponent } from './register/register.component';
     FooterComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AllCoursesComponent,
+    AllWorkshopsComponent,
+    CourseCardComponent,
+    WorkshopCardComponent,
+    CourseInfoComponent,
+    WorkshopInfoComponent
   ],
   imports: [
     BrowserModule,
