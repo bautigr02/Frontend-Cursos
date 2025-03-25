@@ -56,7 +56,7 @@
           
             <div class="input-group">
               <label for="documento">Documento de identidad o DNI</label>
-              <input type="text" id="documento" placeholder="DNI" formControlName="documento">
+              <input type="text" id="documento" placeholder="dni" formControlName="dni">
               <div *ngIf="registerForm.get('documento')?.touched && registerForm.get('documento')?.invalid">
                 <small *ngIf="registerForm.get('documento')?.errors?.['required']">El documento es requerido.</small>
                 <small *ngIf="registerForm.get('documento')?.errors?.['maxlength']">Máximo 10 dígitos permitidos.</small>
