@@ -58,5 +58,17 @@ hr {
 }
 
 .workshops {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
+  gap: 1rem; // Espaciado entre las cards
+}
+
+app-workshop-card{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 4rem; // Espaciado entre las cards
 }
