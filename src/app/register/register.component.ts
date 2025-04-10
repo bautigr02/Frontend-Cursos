@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { HttpClient } from '@angular/common/http';
+import { tap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -13,9 +15,7 @@ export class RegisterComponent {
   ValidarUsuario(){
        this.isErrorVisible = !this.isErrorVisible;
       }
-
-  
-      constructor(private fb: FormBuilder) {
+      constructor(private fb: FormBuilder, private http: HttpClient) {
         this.registerForm = this.fb.group({
           // Nombre: requerido, máximo 30 caracteres, solo letras
           nombre: [
@@ -54,7 +54,7 @@ export class RegisterComponent {
             ]
           ],
           // Documento (DNI): requerido, máximo 10 dígitos, solo números
-          documento: [
+          dni: [
             '',
             [
               Validators.required,
@@ -80,16 +80,25 @@ export class RegisterComponent {
           ]
         });
       }
-    
-      onSubmit(): void {
-        if (this.registerForm.valid) {
-          console.log('Registro exitoso:', this.registerForm.value);
-          // Aquí podrías realizar la lógica para enviar los datos al servidor
-        } else {
-          this.ValidarUsuario()
-          console.log('Formulario inválido');
-          // Marca todos los campos como tocados para mostrar los mensajes de error
+onSubmit(): void {
+  if (this.registerForm.valid) {
+    console.log('Registro exitoso:', this.registerForm.value);
+
+    this.http.post('http://localhost:3000/api/alumno', this.registerForm.value)
+      .pipe(
+        tap((response) => console.log('Alumno creado exitosamente:', response)),
+        catchError((error) => {
+          console.log('Error al crear alumno:', error);
+          this.ValidarUsuario();
           this.registerForm.markAllAsTouched();
-        }
-      }
-    }
+          return of(error); // Devuelve un Observable vacío para evitar que se rompa
+        })
+      )
+      .subscribe();
+      
+  } else {
+    //Revisar si aca llega el error
+    this.ValidarUsuario();
+    console.log('Formulario inválido papa');
+    this.registerForm.markAllAsTouched();
+  }}}
