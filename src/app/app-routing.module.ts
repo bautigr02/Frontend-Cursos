@@ -13,10 +13,11 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'all-courses', component: AllCoursesComponent},
-  {path: 'all-workshops', component: AllWorkshopsComponent},
-  {path: 'course-info', component: CourseInfoComponent}, // Resta aplicar coleccion y luego sera 'course-info/:id'
-  {path: 'workshop-info', component: WorkshopInfoComponent} // Resta aplicar coleccion y luego sera 'workshop-info/:id'
+  {path: 'courses', component: AllCoursesComponent},
+  {path: 'courses/:id', component: CourseInfoComponent}, // Pendiente de implementar el componente
+  {path: 'workshops', component: AllWorkshopsComponent},
+  {path: 'workshops/:id', component: WorkshopInfoComponent},
+  {path: '**', redirectTo: '', pathMatch: 'full'}
 ]; 
 
 @NgModule({

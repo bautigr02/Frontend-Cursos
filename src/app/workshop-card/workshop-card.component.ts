@@ -7,10 +7,12 @@ import { workshopList } from './workshop.mock';
   styleUrls: ['./workshop-card.component.scss']
 })
 export class WorkshopCardComponent {
-  workshopList = workshopList;
+
+  workshopList = workshopList; // Objeto que contiene la lista de talleres
+  color: string = ''; // Inicializa color de la dificultad
 
   // Convierte la dificultad numerica a texto
-  getDifficultyLabel(difficulty: number): string {  
+  getDifficultyLabel(difficulty: number): string {
     switch (difficulty) {
       case 1:
         return 'Principiante';
@@ -19,7 +21,20 @@ export class WorkshopCardComponent {
       case 3:
         return 'Avanzado';
       default:
-        return 'Desconocido';
+        return 'Desconocido'; 
+    }
+  }
+  // Devuelve un color dependiendo de la dificultad
+  getDifficultyColor(difficulty: number): string {
+    switch (difficulty) {
+      case 1:
+        return 'green';
+      case 2:
+        return 'orange';
+      case 3:
+        return 'red';
+      default:
+        return 'gray'; 
     }
   }
 
