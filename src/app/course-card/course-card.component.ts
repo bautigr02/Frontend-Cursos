@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { courseList } from './course.mock';
 
 @Component({
   selector: 'app-course-card',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./course-card.component.scss']
 })
 export class CourseCardComponent {
+
+  courseList = courseList;
 
 }

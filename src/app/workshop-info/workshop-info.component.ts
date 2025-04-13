@@ -10,9 +10,9 @@ import { Workshop, workshopList } from '../workshop-card/workshop.mock';
 export class WorkshopInfoComponent implements OnInit {
   workshop?: Workshop;
   workshopList: Workshop[] = workshopList
-  loading: boolean = true; 
-
-  constructor(private _route: ActivatedRoute) { }
+  loading: boolean = true;
+  
+  constructor(private _route: ActivatedRoute  ) { }
   
   ngOnInit(): void {
 
@@ -22,6 +22,5 @@ export class WorkshopInfoComponent implements OnInit {
       this.loading = false; 
     });
     }, 1500);
-
   }
 }

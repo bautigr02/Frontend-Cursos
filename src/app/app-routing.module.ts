@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'courses', component: AllCoursesComponent},
-  {path: 'courses/:id', component: CourseInfoComponent}, // Pendiente de implementar el componente
+  {path: 'courses/:id', component: CourseInfoComponent},
   {path: 'workshops', component: AllWorkshopsComponent},
   {path: 'workshops/:id', component: WorkshopInfoComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
