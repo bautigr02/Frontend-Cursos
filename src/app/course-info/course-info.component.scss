@@ -2,21 +2,23 @@
   display: flex;
   flex-direction: column;
 }
-h1{
+.title-section h1{
   font-size: 4rem;
   margin: 1rem 1rem;
 }
-p{
+.title-section p{
   font-size: 1rem;
   margin: 0.5rem 1rem;
 }
-h4{
+.title-section h4{
   font-size: 1rem;
   margin: 0.5rem 1rem;
 }
+
 hr{
   margin: 1rem 1rem;
 }
+
 .content{
   display: flex;
   flex-direction: column;
@@ -29,6 +31,30 @@ hr{
   flex-direction: row;
   justify-content: center;
   margin: 1rem;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1rem;
+  justify-content: center;
+}
+
+.content .card{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.card img{
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  margin-right: 1rem;
 }
 
 #inscription{
