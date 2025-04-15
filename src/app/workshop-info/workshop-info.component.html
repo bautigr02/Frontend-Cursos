@@ -17,7 +17,16 @@
 
   <div class="buttons">
     <button id="more-info" routerLink='/workshops'>Mas talleres</button>
-    <button id="inscription">Inscribirse</button>
+    <button id="inscription" (click)="openModal()" >Inscribirse</button>
+  </div>
+
+  <div id="confirmationModal" class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <h2>Confirmar inscripción</h2>
+      <p>¿Estás seguro de que deseas inscribirte en este taller?</p>
+      <button id="inscription" (click)="confirmModal()">Sí</button>
+      <button id="more-info" (click)="cancelModal()">No</button>
+    </div>
   </div>
 </ng-container>
 

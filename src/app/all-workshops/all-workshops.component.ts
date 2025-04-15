@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AllWorkshopsComponent {
 
+  order: string = 'default';
+
+  changeOrder(newOrder:string):void { 
+    this.order = newOrder;
+    console.log("Orden cambiado desde padre a: " + this.order);
+  }
 }

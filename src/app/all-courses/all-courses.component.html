@@ -4,11 +4,11 @@
     <p>Proximos a comenzar</p>
   </div>
   <div class="filters">
-    <a href="" class="active">Por defecto</a>
-    <a href="">A-Z</a>
+    <a [class.active]="order === 'default'" (click)="changeOrder('default')">Por defecto</a>
+    <a [class.active]="order === 'az'" (click)="changeOrder('az')">A-Z</a>
   </div>
 </div>
 <hr>
 <div class="courses">
-  <app-course-card></app-course-card>
+  <app-course-card [order]="order"></app-course-card>
 </div>

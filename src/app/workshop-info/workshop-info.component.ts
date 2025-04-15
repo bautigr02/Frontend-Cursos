@@ -11,6 +11,7 @@ export class WorkshopInfoComponent implements OnInit {
   workshop?: Workshop;
   workshopList: Workshop[] = workshopList
   loading: boolean = true;
+  showModal: boolean = false;
   
   constructor(private _route: ActivatedRoute  ) { }
   
@@ -23,4 +24,14 @@ export class WorkshopInfoComponent implements OnInit {
     });
     }, 1500);
   }
+  openModal(){
+    this.showModal = true;
+  }
+  confirmModal(){
+    this.showModal = false;
+  }
+  cancelModal(){
+    this.showModal = false;
+  }
+  
 }

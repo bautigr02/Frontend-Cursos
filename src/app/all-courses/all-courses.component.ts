@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./all-courses.component.scss']
 })
 export class AllCoursesComponent {
+  order: string = 'default';
 
+  changeOrder(newOrder:string):void { 
+    this.order = newOrder;
+    console.log("Orden cambiado desde padre a: " + this.order);
+  }
 }

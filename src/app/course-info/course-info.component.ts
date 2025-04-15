@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Course, courseList } from '../course-card/course.mock';
 import { ActivatedRoute } from '@angular/router';
+import { Course, courseList } from '../course-card/course.mock';
 
 @Component({
   selector: 'app-course-info',
@@ -11,10 +11,10 @@ export class CourseInfoComponent implements OnInit{
   course?: Course;
   courseList: Course[] = courseList
   loading: boolean = true;
+  showModal: boolean = false;
 
   constructor(private _route: ActivatedRoute  ) { }
   
-
   ngOnInit(): void {
 
     setTimeout(() => {
@@ -24,5 +24,13 @@ export class CourseInfoComponent implements OnInit{
     });
     }, 1500);
   }
-
+  openModal(){
+    this.showModal = true;
+  }
+  confirmModal(){
+    this.showModal = false;
+  }
+  cancelModal(){
+    this.showModal = false;
+  }
 }
