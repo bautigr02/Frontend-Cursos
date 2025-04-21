@@ -5,10 +5,22 @@ body{
 .footer{
     display: flex;
     background-color: white;
-    flex-direction: column;
+    flex-direction: row;
     height: auto;
     margin-bottom: 0px;
     padding: 0px;
+    align-items: center;
+}
+
+.logo-footer{
+    margin: 0;
+    width: 450px;
+    height: 140px;
+    object-fit: cover;
+    overflow: hidden;
+}
+.logo-footer:hover{
+    cursor: pointer;
 }
 
 h2{
@@ -29,25 +41,24 @@ hr{
    border: 1.5px solid #426B1F;
 }
 
-
 .links{
-    margin-left: 750px;
-    width: 800px;
-    height: 220px;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content:right;
+    justify-content: space-evenly;
 }
 
 .links-info{
-    margin-left: 100px;
-    width: 200px;
+    display: flex;
+    flex-direction: column;
     justify-items: center;
 }
 
+.links-info h4{
+    align-self: center;
+}
+
 .links-contacto{
-    margin-left: 100px;
-    width: 200px;
     justify-items: center;
 }
 .contact-item {
@@ -68,9 +79,7 @@ hr{
 }
 
 .redes{
-    margin-left: 100px;
     align-self: flex-end;
-    width: 800px;
     height: 220px;
     justify-items: center;
 }
@@ -80,12 +89,14 @@ hr{
     margin-top: 15px;
 }
 .redireccion{
-    margin-top: 5px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    border: none;
     font-size: 18px;
     background-color: white;
-    border: none;
+    margin-left: 5px;
     margin-right: 35px;
-    cursor: pointer;
     margin-top: 12px;
     height: 25px;
 }
@@ -97,8 +108,8 @@ hr{
     border: none;
     margin-right: 35px;
     margin-left: 5px;
-    cursor: pointer;
     margin-top: 12px;
+    cursor: pointer;
     height: 25px;
     text-decoration: none;
 }
