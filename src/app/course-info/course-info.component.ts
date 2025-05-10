@@ -24,6 +24,7 @@ export class CourseInfoComponent implements OnInit{
     });
     }, 1500);
   }
+  
   openModal(){
     this.showModal = true;
   }
