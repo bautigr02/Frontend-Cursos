@@ -26,7 +26,7 @@
             </div>
     
             <div class="menu-desplegable">
-                <button class="boton-img" (click)="toggleMenu()"></button>
+                <img src="/assets/Icons/Usuario-logo.png" class="boton-img" (click)="toggleMenu()" alt="Usuario">
                 <div *ngIf="isMenuVisible" class="menu">
                     <ul>
                         <li *ngIf="!sesionIniciada"><a routerLink="/login">Iniciar Sesión</a></li>
