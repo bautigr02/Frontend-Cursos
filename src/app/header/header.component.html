@@ -19,11 +19,10 @@
             <a class="redireccion" routerLink="/courses" href="#cursos">
                 Cursos
             </a>
-            
-            <div *ngIf="sesionIniciada" class="botones-sesion-iniciada">
-                <a href="" class="redireccion">Mi perfil</a>
-                <button class="boton">Mis cursos</button>   
-            </div>
+            <ng-container *ngIf="sesionIniciada">
+                <button routerLink="/learning" class="boton">Mis cursos</button>
+            </ng-container> 
+               
     
             <div class="menu-desplegable">
                 <img src="/assets/Icons/Usuario-logo.png" class="boton-img" (click)="toggleMenu()" alt="Usuario">
@@ -31,7 +30,9 @@
                     <ul>
                         <li *ngIf="!sesionIniciada"><a routerLink="/login">Iniciar Sesión</a></li>
                         <li *ngIf="!sesionIniciada"><a routerLink="/register">Registrarse</a></li>
+                        <li *ngIf="sesionIniciada"><a routerLink="/panel">Mi Perfil</a></li>
                         <li *ngIf="sesionIniciada"><a href="#" (click)="logout()">Cerrar Sesión</a></li>
+
                     </ul>
                 </div>
             </div>
