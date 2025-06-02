@@ -1,9 +1,9 @@
   <ng-container *ngIf="loading === false">
 
   <div class="title-section">
-    <h1>{{course?.title}}</h1>
+    <h1>{{course?.nom_curso}}</h1>
     <p>En este curso aprenderas los fundamentos del desarrollo Frontend, pasando de 0 a Experto.</p>
-    <h4>De: {{course?.startDate}}, Hasta: {{course?.finishDate}} </h4>
+    <h4>De: {{course?.fec_ini | date:'dd/MM/yyyy'}}, Hasta: {{course?.fec_fin | date:'dd/MM/yyyy'}} </h4>
   </div>
   <hr>
   <div class="content">
@@ -12,19 +12,21 @@
         <img src={{course?.imageUrl}} alt="imagen-curso">
       </div>
       <div class="card-info">
-        <h2>Aqui va el titulo del taller inluido en {{course?.title}}</h2>
+        <h2>Aqui va el titulo del taller inluido en {{course?.nom_curso}}</h2>
         <p>Descripción del taller. </p>
         <p>Dificultad</p>
-        <p>Fecha inicio</p>
+        <p>Comienza: {{course?.fec_ini | date:'dd/MM/yyyy'}}</p>
         <p>Hora</p>
       </div>
     </div>
     <hr>
     <div class="buttons">
       <button id="more-info" routerLink="/courses">Mas cursos</button>
+      <!-- 
       <button id="inscription" (click)="openModal()">Inscribirse</button>
+      -->
     </div>
-  
+    <!--
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">
         <h2>Confirmar inscripción</h2>
@@ -33,6 +35,7 @@
         <button id="more-info" (click)="cancelModal()">No</button>
       </div>
     </div>
+    -->
   </div>
 </ng-container>
 
