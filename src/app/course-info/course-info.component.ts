@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-// import { Course, courseList } from '../course-card/course.mock';
 import { CourseService } from '../services/course.service';
 
 @Component({
@@ -21,6 +20,15 @@ export class CourseInfoComponent implements OnInit{
       const courseId = +params['id']; // Convierte el ID a número
       this.getCourseInfo(courseId);
     });
+/*   // Simulación de carga de datos
+    setTimeout(() => {
+      this._route.params.subscribe(params => {
+      this.course = this.courseList.find(course => course.idcurso == params['id']);
+      this.loading = false; 
+    });
+    }, 1500);
+*/
+
   }
     getCourseInfo(id: number): void {
       this.courseService.getCourseById(id).subscribe(
@@ -35,22 +43,13 @@ export class CourseInfoComponent implements OnInit{
         }
       );
     }
-
-  /*  setTimeout(() => {
-      this._route.params.subscribe(params => {
-      this.course = this.courseList.find(course => course.idcurso == params['id']);
-      this.loading = false; 
-    });
-    }, 1500);
+    openModal(){
+      this.showModal = true;
+    }
+    confirmModal(){
+      this.showModal = false;
+    }
+    cancelModal(){
+      this.showModal = false;
+    }
   }
-  
-  openModal(){
-    this.showModal = true;
-  }
-  confirmModal(){
-    this.showModal = false;
-  }
-  cancelModal(){
-    this.showModal = false;
-  }*/
-}

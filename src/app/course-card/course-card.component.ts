@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-//import { Course, courseList } from './course.mock';
 import { CourseService } from '../services/course.service';
 
 @Component({
