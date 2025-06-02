@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../services/course.service';
+import { WorkshopService } from '../services/workshop.service';
 
 @Component({
   selector: 'app-course-info',
@@ -9,16 +10,23 @@ import { CourseService } from '../services/course.service';
 })
 export class CourseInfoComponent implements OnInit{
   course: any;
+  workshops: any[] = [];
   loading: boolean = true;
   showModal: boolean = false;
 
-  constructor(private _route: ActivatedRoute, private courseService: CourseService) { }
+  constructor(
+    private _route: ActivatedRoute, 
+    private courseService: CourseService, 
+    private workshopService: WorkshopService
+  ) { }
   
   ngOnInit(): void {
      // Obtener el ID del curso desde la URL
     this._route.params.subscribe(params => {
       const courseId = +params['id']; // Convierte el ID a número
       this.getCourseInfo(courseId);
+      this.getWorkshops(courseId);
+
     });
 /*   // Simulación de carga de datos
     setTimeout(() => {
@@ -43,6 +51,20 @@ export class CourseInfoComponent implements OnInit{
         }
       );
     }
+    getWorkshops(idcurso: number): void {
+      this.workshopService.getWorkshopsByCurso(idcurso).subscribe(
+        (data) => {
+          this.workshops = data;
+        },
+        (error) => {
+          this.workshops = [];
+        }
+      );
+    }
+
+    
+
+    // Métodos para manejar el modal
     openModal(){
       this.showModal = true;
     }

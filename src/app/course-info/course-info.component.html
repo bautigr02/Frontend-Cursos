@@ -8,18 +8,18 @@
   <hr>
 
   <!-- TALLERES DEL CURSO -->
-  <div class="content"> 
-    <div class="card">
+  <div class="content" *ngIf="workshops && workshops.length > 0">
+    <div class="card" *ngFor="let workshop of workshops">
       <div>
-        <img src={{course?.imagen}} alt="imagen-taller">
+        <img [src]="workshop.imagen" alt="imagen-curso">
       </div>
       <div class="card-info">
-        <h2>Titulo taller incluido</h2>
-        <p>Descripción taller:</p>
-        <p>Dificultad taller</p>
-        <p>Comienza taller:</p>
-        <p>Hora taller</p>
-      </div>
+        <h2>{{workshop.nom_taller}}</h2>
+        <p>Temática: {{workshop.tematica}}</p>
+        <p>Dificultad: {{workshop.dificultad}}</p>
+        <p>Comienza: {{workshop.fecha | date:'dd/MM/yyyy'}}</p>
+        <p>Hora: {{workshop.hora_ini.slice(0,5)}}</p>
+        </div>
     </div>
     <hr>
 
@@ -27,6 +27,22 @@
     <div class="buttons">
       <button id="more-info" routerLink="/courses">Mas cursos</button>
       <button id="inscription" (click)="openModal()">Inscribirse</button>
+    </div>
+    <div id="confirmationModal" class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <h2>Confirmar inscripción</h2>
+        <p>¿Estás seguro de que deseas inscribirte en este curso?</p>
+        <button id="inscription" (click)="confirmModal()">Sí</button>
+        <button id="more-info" (click)="cancelModal()">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" *ngIf="workshops.length == 0">
+    <p>No hay talleres para este curso.</p>
+    <hr>
+    <div class="buttons">
+      <button id="more-info" routerLink="/courses">Mas cursos</button>
     </div>
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">

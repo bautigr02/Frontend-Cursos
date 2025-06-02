@@ -1,17 +1,18 @@
 <ng-container *ngIf="!loading">
+  <!-- INFO DEL TALLER -->
   <div class="title-section">
-    <h1>{{workshop?.title}}</h1>
-    <p>{{workshop?.date}} | {{workshop?.startHour}}</p>
+    <h1>{{workshop?.nom_taller}}</h1>
+    <p>{{workshop?.fecha | date:'dd/MM/yyyy'}} | {{workshop?.hora_ini.slice(0,5)}}</p>
   </div>
   <hr>
   <div class="content">
     <h1>Temario</h1>
     <ul>
-      <li *ngFor="let item of workshop?.topics">{{item}}</li>
+      <li *ngFor="let item of workshop?.tematica">{{item}}</li>
     </ul>
     <h1>Requisitos</h1>
     <ul>
-      <li *ngFor="let item of workshop?.requirements">{{item}}</li>
+      <li *ngFor="let item of workshop?.requisitos">{{item}}</li>
     </ul>
   </div>
 
