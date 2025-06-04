@@ -9,7 +9,7 @@
 
   <!-- TALLERES DEL CURSO -->
   <div class="content" *ngIf="workshops && workshops.length > 0">
-    <div class="card" *ngFor="let workshop of workshops">
+    <div class="card" *ngFor="let workshop of workshops" routerLink="/workshops/{{workshop.idtaller}}">
       <div>
         <img [src]="workshop.imagen" alt="imagen-curso">
       </div>
