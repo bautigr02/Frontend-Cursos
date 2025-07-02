@@ -27,4 +27,8 @@ export class UserService {
   getUltimosTalleresByAlumno(dni: number) {
     return this.http.get<any[]>(`http://localhost:3000/api/alumno/${dni}/talleres`);
   }
+
+  updateAlumno(user: any) {
+    return this.http.patch(`http://localhost:3000/api/alumno/${user.dni}`, user);
+  }
 }

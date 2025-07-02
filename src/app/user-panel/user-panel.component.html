@@ -6,14 +6,46 @@
     <div class="datos-box">
       <div class="card-header" *ngIf="user">
         <span class="titulo"> <strong>TUS DATOS</strong></span>
-        <button class="edit-btn" title="Editar datos">
+        <button class="edit-btn" title="Editar datos" *ngIf="!isEditing" (click)="editarDatos()">
           ✎
         </button>
       </div>
-      <p><strong>Nombre y Apellido:</strong> {{user.nombre_alumno}} {{user.apellido_alumno}}</p>
-      <p><strong>DNI:</strong> {{user.dni}}</p>
-      <p><strong>Dirección:</strong> {{user.direccion}}</p>
-    </div>
+      <div *ngIf="!isEditing">
+        <p><strong>Nombre y Apellido:</strong> {{user.nombre_alumno}} {{user.apellido_alumno}}</p>
+        <p><strong>DNI:</strong> {{user.dni}}</p>
+        <p><strong>Dirección:</strong> {{user.direccion}}</p>
+        <p><strong>Correo:</strong> {{user.email}}</p>
+      </div>
+      <form *ngIf="isEditing" (ngSubmit)="guardarDatos()">
+        <p>
+          <strong>Nombre:</strong>
+          <input [(ngModel)]="user.nombre_alumno" name="nombre" required />
+        </p>
+        <p>
+          <strong>Apellido:</strong>
+          <input [(ngModel)]="user.apellido_alumno" name="apellido" required />
+        </p>
+        <p>
+          <strong>Dirección:</strong>
+          <input [(ngModel)]="user.direccion" name="direccion" />
+        </p>
+        <p>
+          <strong>Correo:</strong>
+          <input [(ngModel)]="user.email" name="email" type="email" required />
+        </p>
+        <p>
+          <strong>Teléfono:</strong>
+          <input [(ngModel)]="user.telefono" name="telefono" type="tel" />
+        </p>
+        <!-- Contraseña -->
+        <p>
+          <strong>Contraseña:</strong>
+          <input [(ngModel)]="user.contrasena" name="contrasena" type="password" required />
+        </p>
+        <button type="submit" class="save-btn">Guardar</button>
+        <button type="button" class="cancel-btn" (click)="cancelarEdicion()">Cancelar</button>
+      </form>
+      </div>
     <div *ngIf="!user">
       <p>No se encontraron datos del usuario.</p>
       </div>
