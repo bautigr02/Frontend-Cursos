@@ -1,37 +1,50 @@
 <div class="usuario-container">
-  <h1 class="usuario-nombre">Juan Perez <span class="usuario-dni">44111222</span></h1>
+  <h1 class="usuario-nombre">{{user.nombre_alumno}} {{user.apellido_alumno}}<span class="usuario-dni">{{user.dni}}</span></h1>
   <hr />
 
   <div class="usuario-grid">
     <div class="datos-box">
-      <div class="card-header">
+      <div class="card-header" *ngIf="user">
         <span class="titulo"> <strong>TUS DATOS</strong></span>
         <button class="edit-btn" title="Editar datos">
           ✎
         </button>
       </div>
-      <p><strong>Nombre y Apellido:</strong> Juan Perez</p>
-      <p><strong>DNI:</strong> 44111222</p>
-      <p><strong>Fecha de nacimiento:</strong> 01/01/2002</p>
-      <p><strong>Dirección:</strong> Zeballos 1341, Rosario, Santa Fe</p>
+      <p><strong>Nombre y Apellido:</strong> {{user.nombre_alumno}} {{user.apellido_alumno}}</p>
+      <p><strong>DNI:</strong> {{user.dni}}</p>
+      <p><strong>Dirección:</strong> {{user.direccion}}</p>
     </div>
-
-    <div class="estado-box">
-      <div class="cursando-box">
-        <h4>Estas cursando</h4>
-        <p>Desarrollador Backend <span class="porcentaje">45%</span></p>
-        <p>Diseño Gráfico <span class="porcentaje">65%</span></p>
+    <div *ngIf="!user">
+      <p>No se encontraron datos del usuario.</p>
       </div>
 
-      <div class="pagos-box">
-        <div class="pagos-header">
-          <h4>Últimos pagos</h4>
-          <span class="estado-pago">Estás al día</span>
+    <div class="estado-box">
+
+      <div class="cursando-box" *ngIf="cursos.length > 0">
+        <h4>Tus cursos</h4>
+          <div class="curso-row" *ngFor="let curso of cursos">
+            <span class="curso-nombre">{{curso.nom_curso}}</span>
+            <span class="curso-fecha">
+              <strong>Inicio: </strong>{{ curso.fec_ini | date:'dd/MM/yyyy' }} - <strong>Fin: </strong>{{ curso.fec_fin | date:'dd/MM/yyyy' }}
+            </span>
+          </div> 
+      </div>
+      <div *ngIf="cursos.length === 0">
+        <p>No estás inscripto en ningún curso.</p>
+      </div>
+
+      <div class="cursando-box" *ngIf="cursos.length > 0">
+        <div class="curso-box">
+          <h4>Tus talleres</h4>
+          <div class="curso-row" *ngFor="let taller of talleres">
+            <span class="curso-nombre">{{taller.nom_taller}}</span>
+            <span class="curso-fecha">
+              <strong>Fecha: </strong>{{ taller.fecha | date:'dd/MM/yyyy' }}
+            </span>
         </div>
-        <p>05/02/2025 <span class="monto">$16.000</span></p>
-        <p>05/10/2024 <span class="monto">$12.000</span></p>
-        <p>04/09/2023 <span class="monto">$12.000</span></p>
-        <button class="historial-btn">Historial</button>
+      </div>
+      <div *ngIf="talleres.length === 0">
+        <p>No estás inscripto en ningún taller.</p>
       </div>
     </div>
   </div>

@@ -45,6 +45,7 @@ export class LoginComponent {
 
           if (response.user) {
             this.authService.login(response.user); // Guardar usuario en AuthService
+            sessionStorage.setItem('dni', response.user.dni);
             console.log('Usuario guardado en AuthService y sessionStorage:', response.user);
             this.router.navigate(['/']);
           } else {
