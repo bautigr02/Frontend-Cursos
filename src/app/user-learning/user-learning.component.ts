@@ -22,7 +22,13 @@ export class UserLearningComponent implements OnInit {
 
     // Obtener cursos del alumno
     this.userService.getCursosByAlumno(dni).subscribe(
-      (data) => { this.cursos = data; },
+      (data) => {
+        this.cursos = data.map(curso => ({
+          ...curso,
+          estado: curso.estado !== null && curso.estado !== undefined ? Number(curso.estado) : null,
+          nota_curso: curso.nota_curso !== null && curso.nota_curso !== undefined ? Number(curso.nota_curso) : null
+        }));
+      },
       (error) => { console.error('Error al obtener cursos:', error); }
     );
 

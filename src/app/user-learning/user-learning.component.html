@@ -9,20 +9,18 @@
       <div class="course-card" *ngFor="let curso of cursos">
         <img [src]="curso.imagen" alt="imagen-curso" class="course-img" />
         <div class="course-info">
-<!-- Dentro de .course-info -->
-<h2>{{ curso.nom_curso }}</h2>
-<p class="estado" [ngClass]="{
-     'inscripto': curso.estado === 1,
-     'cursando': curso.estado === 2,
-     'finalizado-aprobado': curso.estado === 3 && curso.nota >= 6,
-     'finalizado-desaprobado': curso.estado === 3 && curso.nota < 6
-   }">
-  {{
-  curso.estado === 1 ? 'Inscripto' :
-  curso.estado === 2 ? 'Cursando' :
-  curso.estado === 3 && curso.nota >= 6 ? 'Finalizado' :
-  curso.estado === 3 && curso.nota < 6 ? 'Desaprobado' : 'Finalizado' }} </p>
-    <p>{{ curso.fec_ini | date:'MM/yyyy' }} - {{ curso.fec_fin | date:'MM/yyyy' }}</p>
+          <!-- Dentro de .course-info -->
+          <h2>{{ curso.nom_curso }}</h2>
+          <p class="estado" [ngClass]="{
+              'inscripto': curso.estado === 1,
+              'cursando': curso.estado === 2,
+              'finalizado': curso.estado === 3
+            }">
+            {{
+            curso.estado === 1 ? 'Inscripto' :
+            curso.estado === 2 ? 'Cursando' :
+            curso.estado === 3 ? 'Finalizado' : ''}}
+              <p>{{ curso.fec_ini | date:'MM/yyyy' }} - {{ curso.fec_fin | date:'MM/yyyy' }}</p>
         </div>
         <div class="course-actions">
           <ng-container [ngSwitch]="curso.estado">
@@ -38,12 +36,12 @@
             </div>
             <!-- Finalizado -->
             <div *ngSwitchCase="3">
-              <span *ngIf="curso.nota >= 6" class="nota-aprobado">
-                Aprobado - {{ curso.nota | number:'1.2-2' }}
+              <span *ngIf="curso.nota_curso >= 6" class="nota-aprobado">
+                Aprobado - {{ curso.nota_curso | number:'1.2-2' }}
                 <button class="certificado-btn" (click)="verCertificado(curso)">Certificado</button>
               </span>
-              <span *ngIf="curso.nota < 6" class="nota-desaprobado">
-                Desaprobado - {{ curso.nota | number:'1.2-2' }}
+              <span *ngIf="curso.nota_curso < 6" class="nota-desaprobado">
+                Desaprobado - {{ curso.nota_curso | number:'1.2-2' }}
               </span>
             </div>
           </ng-container>
@@ -54,12 +52,11 @@
     <!-- Últimos talleres -->
     <div class="sidebar">
       <div class="ultimos-talleres-box">
-        <h4><u>Ultimos Talleres</u></h4>
+        <h4><u>Tus Talleres</u></h4>
         <div class="taller-row" *ngFor="let taller of ultimosTalleres">
           <span>{{ taller.nom_taller }} - {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
-          <span class="taller-nota">{{ taller.nota | number:'1.2-2' }}</span>
+          <span class="taller-nota">{{ taller.nota_taller | number:'1.2-2' }}</span>
         </div>
-        <button class="historial-btn">Historial</button>
       </div>
     </div>
   </div>
