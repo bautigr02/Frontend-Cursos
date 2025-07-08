@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { tap, catchError, switchMap, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -15,7 +14,12 @@ export class LoginComponent {
   loginForm: FormGroup;
   isErrorVisible = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       identifier: [
         '',
@@ -36,26 +40,36 @@ export class LoginComponent {
 
   onSubmit(): void {
     const { identifier, password } = this.loginForm.value;
-    console.log('Datos enviados:', { identifier, password });
+    this.isErrorVisible = false;
 
-    this.http.post('http://localhost:3000/api/login', { identifier, password })
+    this.http.post('http://localhost:3000/api/login', { identifier, password }) // login de alumno
       .pipe(
         tap((response: any) => {
-          console.log('Login exitoso:', response);
-
           if (response.user) {
-            this.authService.login(response.user); // Guardar usuario en AuthService
-            sessionStorage.setItem('dni', response.user.dni);
-            console.log('Usuario guardado en AuthService y sessionStorage:', response.user);
+            response.user.rol = 'alumno'; // 👈 importante
+            this.authService.login(response.user);
+
             this.router.navigate(['/']);
-          } else {
-            console.error('No se recibió el objeto "user" en la respuesta');
           }
         }),
-        catchError((error) => {
-          console.error('Error en la petición:', error);
-          this.isErrorVisible = true;
-          return of(error);
+        catchError(error => {
+          console.warn('No se encontró como alumno, intentando como docente...');
+
+          // login de docente si alumno falla
+          return this.http.post('http://localhost:3000/api/loginDocente', { identifier, password }).pipe(
+            tap((response: any) => {
+              if (response.user) {
+                response.user.rol = 'docente';
+                this.authService.login(response.user);
+                this.router.navigate(['/']);
+              }
+            }),
+            catchError(err => {
+              console.error('Error en login docente:', err);
+              this.isErrorVisible = true;
+              return of(null);
+            })
+          );
         })
       )
       .subscribe();

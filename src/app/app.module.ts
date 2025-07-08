@@ -18,6 +18,7 @@ import { CourseInfoComponent } from './course-info/course-info.component';
 import { WorkshopInfoComponent } from './workshop-info/workshop-info.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserLearningComponent } from './user-learning/user-learning.component';
+import { TeacherPanelComponent } from './teacher-panel/teacher-panel.component';
 
 
 
@@ -36,7 +37,8 @@ import { UserLearningComponent } from './user-learning/user-learning.component';
     CourseInfoComponent,
     WorkshopInfoComponent,
     UserPanelComponent,
-    UserLearningComponent
+    UserLearningComponent,
+    TeacherPanelComponent
   ],
   imports: [
     BrowserModule,
