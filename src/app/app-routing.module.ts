@@ -9,6 +9,7 @@ import { CourseInfoComponent } from './course-info/course-info.component';
 import { WorkshopInfoComponent } from './workshop-info/workshop-info.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserLearningComponent } from './user-learning/user-learning.component';
+import { TeacherPanelComponent } from './teacher-panel/teacher-panel.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'courses/:id', component: CourseInfoComponent},
   {path: 'workshops', component: AllWorkshopsComponent},
   {path: 'workshops/:id', component: WorkshopInfoComponent},
+  {path: 'teacher-panel', component: TeacherPanelComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ]; 
 

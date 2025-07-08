@@ -1,5 +1,35 @@
 const db = require('../models/userModel');
 
+//Obtener docente a partir del login
+const loginDocente = (req, res) => {
+  const { identifier, password } = req.body;
+  let query;
+  if (identifier.includes('@')) {
+
+    query = 'SELECT * FROM docente WHERE email = ?';
+  } else {
+  
+    query = 'SELECT * FROM docente WHERE dni = ?';
+  }
+
+  db.query(query, [identifier], (checkError, checkResults) => {
+    if (checkError) {
+      console.error('Error al verificar las credenciales:', checkError);
+      return res.status(500).json({ error: 'Error al verificar las credenciales' });
+    }
+
+    if (checkResults.length === 0) {
+      return res.status(400).json({ error: 'Docente no encontrado' });
+    }
+    const docente = checkResults[0];
+    if (docente.contrasena !== password) {
+      return res.status(400).json({ error: 'contrasena incorrecta' });
+    }
+    res.status(200).json({ message: 'Login exitoso',
+      user: { dni: docente.dni}
+     });
+  });
+};
 // GET ALL
 const getDocentes = (req, res) => {
   const query = 'SELECT docente.* FROM docente';
@@ -33,14 +63,14 @@ const getDocenteByDni = (req, res) => {
 
 // CREATE docente
 const createDocente = (req, res) => {
-  const { dni, nombre, apellido, telefono, direccion, email, contraseña } = req.body;
+  const { dni, nombre, apellido, telefono, direccion, email, contrasena } = req.body;
 
   const query = `
-    INSERT INTO docente (dni, nombre, apellido, telefono, direccion, email, contraseña)
+    INSERT INTO docente (dni, nombre, apellido, telefono, direccion, email, contrasena)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
 
-  db.query(query, [dni, nombre, apellido, telefono, direccion, email, contraseña], (err, results) => {
+  db.query(query, [dni, nombre, apellido, telefono, direccion, email, contrasena], (err, results) => {
     if (err) {
       console.error('Error al crear docente:', err);
       return res.status(500).json({ error: 'Error al crear el docente' });
@@ -50,6 +80,7 @@ const createDocente = (req, res) => {
   });
 };
 
+// DELETE docente by dni
 const deleteDocenteByDni = (req, res) => {
   const { dni } = req.params;
 
@@ -73,19 +104,19 @@ const deleteDocenteByDni = (req, res) => {
 // Actualizar datos del docente por DNI
 const updateDocente = (req, res) => {
   const dni = req.params.dni;
-  const { direccion, email, telefono, contraseña } = req.body;
+  const { direccion, email, telefono, contrasena } = req.body;
 
-  if (!direccion || !email || !telefono || !contraseña) {
+  if (!direccion || !email || !telefono || !contrasena) {
     return res.status(400).json({ error: 'Faltan campos obligatorios' });
   }
 
   const sql = `
     UPDATE docente
-    SET direccion = ?, email = ?, telefono = ?, contraseña = ?
+    SET direccion = ?, email = ?, telefono = ?, contrasena = ?
     WHERE dni = ?
   `;
 
-  const values = [direccion, email, telefono, contraseña, dni];
+  const values = [direccion, email, telefono, contrasena, dni];
 
  db.query(sql, values, (err, result) => {
     console.log('Valores enviados:', values);
@@ -103,6 +134,7 @@ const updateDocente = (req, res) => {
 };
 
 module.exports = {
+  loginDocente,
   getDocentes,
   getDocenteByDni,
     createDocente,

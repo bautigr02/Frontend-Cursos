@@ -30,7 +30,8 @@
                     <ul>
                         <li *ngIf="!sesionIniciada"><a routerLink="/login">Iniciar Sesión</a></li>
                         <li *ngIf="!sesionIniciada"><a routerLink="/register">Registrarse</a></li>
-                        <li *ngIf="sesionIniciada"><a routerLink="/panel">Mi Perfil</a></li>
+                        <li *ngIf="sesionIniciada && esDocente"><a routerLink="/teacher-panel">Panel Docente</a></li>
+                        <li *ngIf="sesionIniciada && esDocente == false"><a routerLink="/panel">Mi Perfil</a></li>
                         <li *ngIf="sesionIniciada"><a href="#" (click)="logout()">Cerrar Sesión</a></li>
 
                     </ul>
