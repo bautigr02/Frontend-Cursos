@@ -48,6 +48,7 @@ export class LoginComponent {
           if (response.user) {
             response.user.rol = 'alumno'; // 👈 importante
             this.authService.login(response.user);
+
             this.router.navigate(['/']);
           }
         }),
@@ -58,7 +59,7 @@ export class LoginComponent {
           return this.http.post('http://localhost:3000/api/loginDocente', { identifier, password }).pipe(
             tap((response: any) => {
               if (response.user) {
-                response.user.rol = 'docente'; // 👈 importante
+                response.user.rol = 'docente';
                 this.authService.login(response.user);
                 this.router.navigate(['/']);
               }
