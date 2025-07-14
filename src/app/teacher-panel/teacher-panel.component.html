@@ -10,17 +10,24 @@
           ✎
         </button>
       </div>
-      <p><strong>Nombre y Apellido:</strong> Juan Perez</p>
-      <p><strong>DNI:</strong> 44111222</p>
-      <p><strong>Fecha de nacimiento:</strong> 01/01/2002</p>
-      <p><strong>Dirección:</strong> Zeballos 1341, Rosario, Santa Fe</p>
+        <p><strong>Nombre y Apellido:</strong> {{ user?.nombre }} {{ user?.apellido }}</p>
+        <p><strong>DNI:</strong> {{ user?.dni }}</p>
+        <p><strong>Dirección:</strong> {{ user?.direccion }}</p>
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+        <p><strong>Teléfono:</strong> {{ user?.telefono }}</p>
     </div>
 
     <div class="estado-box">
       <div class="clases-box">
         <h4>Mis cursos</h4>
-        <p>Desarrollador Backend </p>
-        <p>Diseño Gráfico</p>
+        <ng-container *ngIf="cursos.length > 0; else sinCursos">
+          <p *ngFor="let curso of cursos">{{ curso.nombre_curso }}</p>
+        </ng-container>
+
+        <ng-template #sinCursos>
+          <p>No estás asignado a ningún curso.</p>
+        </ng-template>
+
         <button class="curso-btn ">Nuevo Curso</button>
       </div>
 
