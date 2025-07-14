@@ -68,22 +68,13 @@
         color: #1976d2;
       }
   
-      /* Azul */
       &.cursando {
         color: #ff9800;
       }
   
-      /* Naranja */
-      &.finalizado-aprobado {
-        color: #388e3c;
-      }
-  
-      /* Verde */
-      &.finalizado-desaprobado {
-        color: #b71c1c;
-      }
-  
-      /* Rojo */ 
+      &.finalizado{
+        color: #4b4b4b;
+      } 
     }
 
     .nota-aprobado {
@@ -199,22 +190,6 @@
       margin-left: 1.5rem;
       min-width: 2.5rem;
       text-align: right;
-    }
-
-    .historial-btn {
-      margin-top: 1rem;
-      background: #888;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 0.3rem 1.2rem;
-      cursor: pointer;
-      font-weight: 500;
-      transition: background 0.2s;
-
-      &:hover {
-        background: #666;
-      }
     }
   }
 }

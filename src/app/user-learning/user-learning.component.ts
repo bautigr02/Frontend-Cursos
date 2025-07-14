@@ -22,11 +22,17 @@ export class UserLearningComponent implements OnInit {
 
     // Obtener cursos del alumno
     this.userService.getCursosByAlumno(dni).subscribe(
-      (data) => { this.cursos = data; },
+      (data) => {
+        this.cursos = data.map(curso => ({
+          ...curso,
+          estado: curso.estado !== null && curso.estado !== undefined ? Number(curso.estado) : null,
+          nota_curso: curso.nota_curso !== null && curso.nota_curso !== undefined ? Number(curso.nota_curso) : null
+        }));
+      },
       (error) => { console.error('Error al obtener cursos:', error); }
     );
 
-    // Obtener últimos talleres del alumno
+    // Obtener talleres del alumno
     this.userService.getUltimosTalleresByAlumno(dni).subscribe(
       (data) => { this.ultimosTalleres = data; },
       (error) => { console.error('Error al obtener talleres:', error); }
@@ -36,8 +42,8 @@ export class UserLearningComponent implements OnInit {
       // fec_ini debe ser un string tipo 'YYYY-MM-DD' o Date
       const fechaInicio = new Date(fec_ini);
       const hoy = new Date();
-      // Puede cancelar hasta el día anterior al inicio
-      return hoy < fechaInicio;
+      return hoy < fechaInicio; // Puede cancelar hasta el día anterior al inicio
+
     }
     
     cancelarInscripcion(curso: any) {

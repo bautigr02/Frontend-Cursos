@@ -48,6 +48,7 @@ hr {
   align-items: center;
 }
 
+// Modificar datos
 .edit-btn {
   background-color: white;
   border: 0 solid white;
@@ -56,6 +57,39 @@ hr {
   width: 2.4rem;
   height: 2.4rem;
   cursor: pointer;
+}
+
+.save-btn {
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: background 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #256029;
+}
+
+.cancel-btn {
+  background-color: #b71c1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #7f1010;
 }
 
 .edit-btn:hover {
