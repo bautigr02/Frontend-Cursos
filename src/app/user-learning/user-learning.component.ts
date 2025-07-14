@@ -32,7 +32,7 @@ export class UserLearningComponent implements OnInit {
       (error) => { console.error('Error al obtener cursos:', error); }
     );
 
-    // Obtener últimos talleres del alumno
+    // Obtener talleres del alumno
     this.userService.getUltimosTalleresByAlumno(dni).subscribe(
       (data) => { this.ultimosTalleres = data; },
       (error) => { console.error('Error al obtener talleres:', error); }
@@ -42,8 +42,8 @@ export class UserLearningComponent implements OnInit {
       // fec_ini debe ser un string tipo 'YYYY-MM-DD' o Date
       const fechaInicio = new Date(fec_ini);
       const hoy = new Date();
-      // Puede cancelar hasta el día anterior al inicio
-      return hoy < fechaInicio;
+      return hoy < fechaInicio; // Puede cancelar hasta el día anterior al inicio
+
     }
     
     cancelarInscripcion(curso: any) {
