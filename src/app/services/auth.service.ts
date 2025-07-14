@@ -30,4 +30,9 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.userSubject.getValue() !== null;
   }
+   
+  getUser(): any {
+    return this.userSubject.getValue();
+  }
+
 }
