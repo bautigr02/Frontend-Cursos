@@ -1,65 +1,66 @@
-<div class="aprendizaje-container">
-  <h1>
-    Tu aprendizaje <span class="curso-cantidad">3 Cursos</span>
-  </h1>
+<!-- user-learning.component.html -->
+<div class="learning-container">
+  <h1>Tu aprendizaje <span class="curso-count">{{ cursos.length }} Cursos</span></h1>
   <hr />
 
-  <div class="contenido-grid">
-    <!-- CURSOS -->
-    <div class="cursos-lista">
-      <div class="curso-box pendiente">
-        <img src="/assets/Images/Foto-Curso-1.jpg" alt="Diseño Gráfico" />
-        <div class="curso-info">
-          <p class="titulo">Diseño Gráfico</p>
-          <p class="estado">Pendiente</p>
-          <p class="fechas">06/2025 - 10/2025</p>
+  <div class="learning-content">
+    <!-- Cursos -->
+    <div class="courses-list">
+      <div class="course-card" *ngFor="let curso of cursos">
+        <img [src]="curso.imagen" alt="imagen-curso" class="course-img" />
+        <div class="course-info">
+<!-- Dentro de .course-info -->
+<h2>{{ curso.nom_curso }}</h2>
+<p class="estado" [ngClass]="{
+     'inscripto': curso.estado === 1,
+     'cursando': curso.estado === 2,
+     'finalizado-aprobado': curso.estado === 3 && curso.nota >= 6,
+     'finalizado-desaprobado': curso.estado === 3 && curso.nota < 6
+   }">
+  {{
+  curso.estado === 1 ? 'Inscripto' :
+  curso.estado === 2 ? 'Cursando' :
+  curso.estado === 3 && curso.nota >= 6 ? 'Finalizado' :
+  curso.estado === 3 && curso.nota < 6 ? 'Desaprobado' : 'Finalizado' }} </p>
+    <p>{{ curso.fec_ini | date:'MM/yyyy' }} - {{ curso.fec_fin | date:'MM/yyyy' }}</p>
         </div>
-        <div class="acciones">
-          <span class="inscripto">Inscripto</span>
-          <button class="btn cancelar">Cancelar</button>
+        <div class="course-actions">
+          <ng-container [ngSwitch]="curso.estado">
+            <!-- Inscripto -->
+            <div *ngSwitchCase="1">
+              <button class="cancel-btn" [disabled]="!puedeCancelar(curso.fec_ini)" (click)="cancelarInscripcion(curso)">
+                Cancelar
+              </button>
+            </div>
+            <!-- Cursando -->
+            <div *ngSwitchCase="2">
+              <button class="talleres-btn" (click)="verTalleres(curso)">Talleres &rarr;</button>
+            </div>
+            <!-- Finalizado -->
+            <div *ngSwitchCase="3">
+              <span *ngIf="curso.nota >= 6" class="nota-aprobado">
+                Aprobado - {{ curso.nota | number:'1.2-2' }}
+                <button class="certificado-btn" (click)="verCertificado(curso)">Certificado</button>
+              </span>
+              <span *ngIf="curso.nota < 6" class="nota-desaprobado">
+                Desaprobado - {{ curso.nota | number:'1.2-2' }}
+              </span>
+            </div>
+          </ng-container>
         </div>
+      </div>
       </div>
 
-      <div class="curso-box cursando">
-        <img src="/assets/Images/Foto-Curso-2.jpg" alt="Backend" />
-        <div class="curso-info">
-          <p class="titulo">Desarrollador Backend</p>
-          <p class="estado">Pendiente</p>
-          <p class="fechas">02/2025 - 06/2025</p>
+    <!-- Últimos talleres -->
+    <div class="sidebar">
+      <div class="ultimos-talleres-box">
+        <h4><u>Ultimos Talleres</u></h4>
+        <div class="taller-row" *ngFor="let taller of ultimosTalleres">
+          <span>{{ taller.nom_taller }} - {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
+          <span class="taller-nota">{{ taller.nota | number:'1.2-2' }}</span>
         </div>
-        <div class="acciones">
-          <span class="inscripto">Cursando</span>
-          <button class="btn talleres">Talleres →</button>
-        </div>
+        <button class="historial-btn">Historial</button>
       </div>
-
-      <div class="curso-box finalizado">
-        <img src="/assets/Images/Foto-Curso-3.jpg" alt="Frontend" />
-        <div class="curso-info">
-          <p class="titulo">Desarrollador Frontend</p>
-          <p class="estado aprobado">Aprobado - 8.00</p>
-          <p class="fechas">06/2024 - 10/2024</p>
-        </div>
-        <div class="acciones">
-          <span class="inscripto">Finalizado</span>
-          <button class="btn certificado">Certificado</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TALLERES -->
-    <div class="talleres-box">
-      <p class="titulo">Ultimos Talleres</p>
-      <div class="taller-item">
-        <span>Canva - 26/02/2025</span><span>10.00</span>
-      </div>
-      <div class="taller-item">
-        <span>MySQL - 21/02/2025</span><span>8.00</span>
-      </div>
-      <div class="taller-item">
-        <span>Angular - 22/10/2024</span><span>7.00</span>
-      </div>
-      <button class="btn historial">Historial</button>
     </div>
   </div>
 </div>

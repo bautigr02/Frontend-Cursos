@@ -129,4 +129,22 @@ hr {
 .accion-btn:hover {
   background-color: #222;
 }
+.cursando-box {
+  .curso-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+  }
 
+  .curso-nombre {
+    font-weight: 500;
+  }
+
+  .curso-fecha {
+    color: #666;
+    font-size: 0.95em;
+    margin-left: 1rem;
+    white-space: nowrap;
+  }
+}
