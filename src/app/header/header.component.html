@@ -19,7 +19,7 @@
             <a class="redireccion" routerLink="/courses" href="#cursos">
                 Cursos
             </a>
-            <ng-container *ngIf="sesionIniciada">
+            <ng-container *ngIf="sesionIniciada && esDocente == false">
                 <button routerLink="/learning" class="boton">Mis cursos</button>
             </ng-container> 
                

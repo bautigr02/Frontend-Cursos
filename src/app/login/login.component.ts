@@ -48,7 +48,7 @@ export class LoginComponent {
           if (response.user) {
             response.user.rol = 'alumno'; // 👈 importante
             this.authService.login(response.user);
-
+            sessionStorage.setItem('dni', response.user.dni);
             this.router.navigate(['/']);
           }
         }),
@@ -61,6 +61,7 @@ export class LoginComponent {
               if (response.user) {
                 response.user.rol = 'docente';
                 this.authService.login(response.user);
+                 sessionStorage.setItem('dni', response.user.dni);
                 this.router.navigate(['/']);
               }
             }),
