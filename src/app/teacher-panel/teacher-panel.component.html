@@ -20,15 +20,17 @@
     <div class="estado-box">
       <div class="clases-box">
         <h4>Mis cursos</h4>
-        <ng-container *ngIf="cursos.length > 0; else sinCursos">
-          <p *ngFor="let curso of cursos">{{ curso.nombre_curso }}</p>
-        </ng-container>
-
-        <ng-template #sinCursos>
-          <p>No estás asignado a ningún curso.</p>
-        </ng-template>
-
-        <button class="curso-btn ">Nuevo Curso</button>
+          <ng-container *ngIf="cursos.length > 0; else sinCursos">
+            <ul>
+              <p *ngFor="let curso of cursos">
+                {{ curso.nom_curso }} <span *ngIf="curso.num_aula"> - Aula: {{ curso.num_aula }}</span>
+              </p>
+            </ul>
+          </ng-container>
+          <ng-template #sinCursos>
+            <p>No estás asignado a ningún curso.</p>
+          </ng-template>
+          <button class="curso-btn">Nuevo Curso</button>
       </div>
 
       <div class="horarios-box">

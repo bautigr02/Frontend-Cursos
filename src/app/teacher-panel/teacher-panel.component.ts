@@ -29,7 +29,7 @@ export class TeacherPanelComponent implements OnInit {
       return;
     }
 
-    this.http.get<any[]>(`http://localhost:3000/docente/cursos/${this.user.dni}`)
+    this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/${this.user.dni}`)
       .subscribe({
         next: (cursos) => {
           this.cursos = cursos;
