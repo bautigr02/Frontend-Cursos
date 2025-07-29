@@ -37,9 +37,17 @@
         <div class="horarios-header">
           <h4>Proximas clases</h4>
         </div>
-        <p>05/02/2025 <span class="hora">16:00</span></p>
-        <p>05/10/2024 <span class="hora">14:00</span></p>
-        <p>04/09/2023 <span class="hora">16:00</span></p>
+          <ng-container *ngFor="let curso of cursos">
+            <ng-container *ngIf="curso.talleres && curso.talleres.length > 0;">
+              <ul>
+                  <p *ngFor="let taller of curso.talleres">
+                    {{ taller.Nom_taller }}
+                    <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
+                    <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
+                  </p>
+              </ul>
+            </ng-container>
+          </ng-container>
         <button class="historial-btn">Historial</button>
       </div>
     </div>
