@@ -31,7 +31,7 @@ export class AuthService {
     return this.userSubject.getValue() !== null;
   }
    
-  getUser(): any {
+  getUser(): any {  //Lo deberiamos eliminar ¿?
     return this.userSubject.getValue();
   }
 
