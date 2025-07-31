@@ -12,11 +12,6 @@ export class TeacherService {
 
   // Obtener datos del usuario
   
-
-  getUserData(dni: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${dni}`);
-  }
-
   updateDocente(user: any) {
     return this.http.patch(`http://localhost:3000/api/docente/${user.dni}`, user);
   }

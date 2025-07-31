@@ -72,7 +72,7 @@ export class TeacherPanelComponent implements OnInit {
     this.teacherService.updateDocente(this.user).subscribe(
       (data) => {
         this.isEditing = false;
-        console.log('Datos del usuario actualizados:', data);
+        console.log('Datos del docente actualizados:', data);
       },
       (error) => {
         console.error('Error al guardar los datos:', error);
