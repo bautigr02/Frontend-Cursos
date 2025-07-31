@@ -6,17 +6,47 @@
     <div class="datos-box">
       <div class="card-header">
         <span class="titulo"> <strong>TUS DATOS</strong></span>
-        <button class="edit-btn" title="Editar datos">
+        <button class="edit-btn" title="Editar datos" *ngIf="!isEditing" (click)="editarDatos()">
           ✎
         </button>
       </div>
+      <div *ngIf="!isEditing">
         <p><strong>Nombre y Apellido:</strong> {{ user?.nombre }} {{ user?.apellido }}</p>
         <p><strong>DNI:</strong> {{ user?.dni }}</p>
         <p><strong>Dirección:</strong> {{ user?.direccion }}</p>
         <p><strong>Email:</strong> {{ user?.email }}</p>
         <p><strong>Teléfono:</strong> {{ user?.telefono }}</p>
     </div>
-
+    <form *ngIf="isEditing" (ngSubmit)="guardarDatos()">
+        <p>
+          <strong>Nombre:</strong>
+          <input [(ngModel)]="user.nombre" name="nombre" required />
+        </p>
+        <p>
+          <strong>Apellido:</strong>
+          <input [(ngModel)]="user.apellido" name="apellido" required />
+        </p>
+        <p>
+          <strong>Dirección:</strong>
+          <input [(ngModel)]="user.direccion" name="direccion" />
+        </p>
+        <p>
+          <strong>Correo:</strong>
+          <input [(ngModel)]="user.email" name="email" type="email" required />
+        </p>
+        <p>
+          <strong>Teléfono:</strong>
+          <input [(ngModel)]="user.telefono" name="telefono" type="tel" />
+        </p>
+        <!-- Contraseña -->
+        <p>
+          <strong>Contraseña:</strong>
+          <input [(ngModel)]="user.contrasena" name="contrasena" type="password" required />
+        </p>
+        <button type="submit" class="save-btn">Guardar</button>
+        <button type="button" class="cancel-btn" (click)="cancelarEdicion()">Cancelar</button>
+      </form>
+      </div>
     <div class="estado-box">
       <div class="clases-box">
         <h4>Mis cursos</h4>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { TeacherService } from '../services/teacher.service';
 
 @Component({
   selector: 'app-teacher-panel',
@@ -12,9 +13,11 @@ export class TeacherPanelComponent implements OnInit {
   cursos: any[] = [];
   user: any;
   talleres: any[] = [];
+  isEditing = false;
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuthService,
+    private teacherService: TeacherService,
   ) {}
   ngOnInit(): void {
     this.user = this.authService.getUser();
@@ -56,4 +59,34 @@ export class TeacherPanelComponent implements OnInit {
       }
     });
   }
+
+ userBackup: any; // Backup de los datos del usuario antes de editar
+  editarDatos() {
+    this.isEditing = true;
+    this.userBackup = { ...this.user };
+
+  }
+
+  guardarDatos() {
+    console.log('Intentando guardar...');
+    this.teacherService.updateDocente(this.user).subscribe(
+      (data) => {
+        this.isEditing = false;
+        console.log('Datos del usuario actualizados:', data);
+      },
+      (error) => {
+        console.error('Error al guardar los datos:', error);
+      }
+    );
+  }
+
+  cancelarEdicion() { // Restaura los datos originales si el usuario cancela
+    this.isEditing = false;
+    if (this.userBackup) {
+      this.user = { ...this.userBackup };
+      console.log('Edición cancelada, datos restaurados:', this.user);
+    }
+  }
+
+
 }
