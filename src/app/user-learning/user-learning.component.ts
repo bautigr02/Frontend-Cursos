@@ -125,19 +125,19 @@ verCertificado(curso: any) {
   doc.setFont('times', 'italic');
   doc.setFontSize(16);
   doc.text('Juan', 65, 170, { align: 'center' });
-  doc.text('Adrian', 145, 170, { align: 'center' });
+  doc.text(`${curso.nombre_docente}`, 145, 170, { align: 'center' });
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   doc.text('Di Rector', 65, 176, { align: 'center' });
-  doc.text('Do Cente', 145, 176, { align: 'center' });
+  doc.text(`${curso.apellido_docente}`, 145, 176, { align: 'center' });
 
   // Línea bajo firmas
   doc.line(45, 178, 85, 178);
   doc.line(125, 178, 165, 178);
 
   // Medalla (opcional: usa una imagen PNG de medalla dorada)
-  // doc.addImage(medallaBase64, 'PNG', 85, 185, 40, 40);
+  // doc.addImage("C:/Users/User1/OneDrive/Escritorio/Facu/2023 (3ro)/Desarrollo Web/TP-CURSOS/Frontend-Cursos/src/assets/Icons/logo-1.png", 'PNG', 85, 185, 40, 40);
 
   // Fecha y curso
   doc.setFontSize(12);
