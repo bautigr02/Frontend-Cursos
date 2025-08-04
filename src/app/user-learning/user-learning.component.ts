@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-learning',
@@ -9,6 +10,7 @@ import { UserService } from '../services/user.service';
 export class UserLearningComponent implements OnInit {
   cursos: any[] = [];
   ultimosTalleres: any[] = [];
+  router: Router = new Router();
 
   constructor(private userService: UserService) {}
 
@@ -38,6 +40,7 @@ export class UserLearningComponent implements OnInit {
       (error) => { console.error('Error al obtener talleres:', error); }
     );
   }
+  
     puedeCancelar(fec_ini: string): boolean {
       // fec_ini debe ser un string tipo 'YYYY-MM-DD' o Date
       const fechaInicio = new Date(fec_ini);
@@ -46,16 +49,32 @@ export class UserLearningComponent implements OnInit {
 
     }
     
-    cancelarInscripcion(curso: any) {
-      // Lógica para cancelar inscripción
-      alert('Inscripción cancelada para ' + curso.nom_curso);
-    }
-    
+cancelarInscripcion(curso: any){
+  const dniStr = localStorage.getItem('dni') || sessionStorage.getItem('dni');
+  if (!dniStr) {
+    console.error('No hay DNI en storage');
+    return;
+  }
+  const dni = Number(dniStr);
+
+  if (confirm(`¿Seguro que deseas cancelar la inscripción a "${curso.nom_curso}"?`)) {
+    this.userService.cancelarInscripcion(dni, curso.idcurso).subscribe(
+      () => {
+        curso.estado = 3;
+        alert('Inscripción cancelada (marcada como finalizada).');
+      },
+      (error) => {
+        alert('Error al cancelar la inscripción.');
+        console.error('Error al cancelar inscripción:', error);
+      }
+    );
+  }
+}
+/*
     verTalleres(curso: any) {
-      // Lógica para ver talleres
-      alert('Ver talleres de ' + curso.nom_curso);
+      // Navegar a talleres del curso que esta cursando - Hecho con routerLink temporalmente
     }
-    
+*/
     verCertificado(curso: any) {
       // Lógica para ver certificado
       alert('Ver certificado de ' + curso.nom_curso);

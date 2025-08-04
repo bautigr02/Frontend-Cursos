@@ -32,7 +32,7 @@
             </div>
             <!-- Cursando -->
             <div *ngSwitchCase="2">
-              <button class="talleres-btn" (click)="verTalleres(curso)">Talleres &rarr;</button>
+              <button class="talleres-btn" [routerLink]="['/courses', curso.idcurso]">Talleres &rarr;</button>
             </div>
             <!-- Finalizado -->
             <div *ngSwitchCase="3">
@@ -40,8 +40,11 @@
                 Aprobado - {{ curso.nota_curso | number:'1.2-2' }}
                 <button class="certificado-btn" (click)="verCertificado(curso)">Certificado</button>
               </span>
-              <span *ngIf="curso.nota_curso < 6" class="nota-desaprobado">
+              <span *ngIf="curso.nota_curso < 6 && curso.nota_curso !== null" class="nota-desaprobado">
                 Desaprobado - {{ curso.nota_curso | number:'1.2-2' }}
+              </span>
+              <span *ngIf="curso.nota_curso === null" class="nota-cancelado">
+                Cancelado
               </span>
             </div>
           </ng-container>
