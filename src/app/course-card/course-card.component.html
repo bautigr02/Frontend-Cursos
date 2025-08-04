@@ -1,6 +1,13 @@
 <div *ngFor="let curso of courseList" [routerLink]="['/courses', curso.idcurso]" class="course-card">
   <img src={{curso.imagen}} alt="imagen-curso">
   <h2>{{curso.nom_curso}}</h2>
-  <h3>/{{curso.cant_alumnos}}</h3>
+  <h3 [ngClass]="getCupoClass(curso)">
+    <ng-container *ngIf="curso.cantidad_inscriptos / curso.cant_alumnos === 1; else cupoNormal">
+      Cupo completo
+    </ng-container>
+    <ng-template #cupoNormal>
+      {{curso.cantidad_inscriptos}}/{{curso.cant_alumnos}}
+    </ng-template>
+  </h3>
   <p>{{curso.fec_ini | date:'dd/MM/yyyy'}} - {{curso.fec_fin | date:'dd/MM/yyyy'}}</p>
 </div>

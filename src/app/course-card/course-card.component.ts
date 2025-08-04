@@ -32,11 +32,22 @@ export class CourseCardComponent implements OnInit, OnChanges{
     if (this.order === 'az') {
       this.courseList.sort((a, b) => a.nom_curso.localeCompare(b.nom_curso));
       console.log("Ordenado por A-Z")
-    } else {
+    } else if (this.order === 'default') {
       // Orden por defecto (puedes personalizarlo)
       this.courseList.sort((a,b) => a.idcurso - b.idcurso);
       console.log("Ordenado por ID")
+    } else if (this.order === 'proximos') { // Próximos a comenzar
+    this.courseList.sort((a, b) => new Date(a.fec_ini).getTime() - new Date(b.fec_ini).getTime());
+    console.log("Ordenado por fecha de inicio")
     }
   }
+
+  getCupoClass(curso: any): string {
+  const ratio = curso.cantidad_inscriptos / curso.cant_alumnos;
+  if (ratio === 1) return 'cupo-completo';
+  if (ratio < 0.25) return 'cupo-verde';
+  if (ratio < 0.75) return 'cupo-naranja';
+  return 'cupo-rojo';
+}
 
 }
