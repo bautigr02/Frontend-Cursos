@@ -26,7 +26,12 @@
     <!-- BOTONES -->
     <div class="buttons">
       <button id="more-info" routerLink="/courses">Mas cursos</button>
-      <button id="inscription" (click)="openModal()">Inscribirse</button>
+      <button id="inscription" (click)="openModal()" [disabled]="yaInscripto" *ngIf="!yaInscripto">
+        Inscribirse
+      </button>
+      <span *ngIf="yaInscripto" class="inscripto-label">
+        {{ yaInscripto ? 'Ya inscripto' : 'Inscribirse' }}
+      </span>
     </div>
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">

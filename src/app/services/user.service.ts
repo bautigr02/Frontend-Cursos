@@ -35,5 +35,9 @@ export class UserService {
   cancelarInscripcion(dni: number, idCurso: number): Observable<any> {
   // PATCH: solo actualiza el campo estado
   return this.http.patch(`http://localhost:3000/api/inscripcion_curso/${dni}/${idCurso}`, { estado: 3 });
+  }
+
+  inscribirEnCurso(dni: number, idcurso: number) {
+  return this.http.post('http://localhost:3000/api/inscripcion_curso', { dni, idcurso });
 }
 }

@@ -12,13 +12,15 @@ export class CourseCardComponent implements OnInit, OnChanges{
   
   @Input() order:string = 'default';
 
-  courseList: any[] = [];
+  allCourses: any[] = [];    // Lista original
+  courseList: any[] = [];    // Lista que se muestra
 
   ngOnInit(): void {
     // Cargar los cursos desde el service -> desde el backend
     this.courseService.getCourses().subscribe(
       (data) => {
-        this.courseList = data;
+        this.allCourses = data;
+        this.courseList = [...data]; // Copia para mostrar inicialmente
         console.log('Cursos obtenidos:', data);
       },
       (error) => {
@@ -30,15 +32,14 @@ export class CourseCardComponent implements OnInit, OnChanges{
   ngOnChanges(): void {
     // Ordena la lista según el valor de `order`
     if (this.order === 'az') {
-      this.courseList.sort((a, b) => a.nom_curso.localeCompare(b.nom_curso));
-      console.log("Ordenado por A-Z")
+      this.courseList = [...this.allCourses].sort((a, b) => a.nom_curso.localeCompare(b.nom_curso));
     } else if (this.order === 'default') {
-      // Orden por defecto (puedes personalizarlo)
-      this.courseList.sort((a,b) => a.idcurso - b.idcurso);
-      console.log("Ordenado por ID")
-    } else if (this.order === 'proximos') { // Próximos a comenzar
-    this.courseList.sort((a, b) => new Date(a.fec_ini).getTime() - new Date(b.fec_ini).getTime());
-    console.log("Ordenado por fecha de inicio")
+      this.courseList = [...this.allCourses].sort((a, b) => a.idcurso - b.idcurso);
+    } else if (this.order === 'proximos') {
+      const hoy = new Date();
+      this.courseList = this.allCourses
+        .filter(curso => new Date(curso.fec_ini) > hoy)
+        .sort((a, b) => new Date(a.fec_ini).getTime() - new Date(b.fec_ini).getTime());
     }
   }
 
