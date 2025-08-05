@@ -49,6 +49,30 @@ hr {
 }
 
 // Modificar datos
+input{
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #388e3c;
+  box-shadow: 0 0 0 2px #c8e6c9;
+  background: #fff;
+}
+
+input:hover {
+  border-color: #81c784;
+}
+
 .edit-btn {
   background-color: white;
   border: 0 solid white;
