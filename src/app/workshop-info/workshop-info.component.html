@@ -5,6 +5,7 @@
     <p>{{workshop?.fecha | date:'dd/MM/yyyy'}} | {{workshop?.hora_ini.slice(0,5)}}</p>
   </div>
   <hr>
+
   <div class="content">
     <h1>Temario</h1>
     <ul>
@@ -18,9 +19,22 @@
 
   <div class="buttons">
     <button id="more-info" routerLink='/workshops'>Mas talleres</button>
-    <button id="inscription" (click)="openModal()" >Inscribirse</button>
+
+    <!-- Botón de inscripción con validaciones -->
+    <button id="inscription" (click)="openModal()" *ngIf="puedeInscribirse && !yaInscripto">
+      Inscribirse
+    </button>
+
+    <!-- Mensajes de estado -->
+    <span *ngIf="yaInscripto" class="inscripto-label">
+      Ya inscripto
+    </span>
+    <span *ngIf="!puedeInscribirse && !yaInscripto" class="no-disponible">
+      {{mensajeError}}
+    </span>
   </div>
 
+  <!-- Modal de confirmación -->
   <div id="confirmationModal" class="modal" *ngIf="showModal">
     <div class="modal-content">
       <h2>Confirmar inscripción</h2>
