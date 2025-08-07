@@ -32,6 +32,8 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
+
+  //Solucionar
   onSubmit(): void {
     if (this.cursoForm.valid) {
       console.log('Formulario de curso enviado:', this.cursoForm.value);

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-workshop-form',
   templateUrl: './workshop-form.component.html',
-  styleUrls: ['./workshop-form.component.scss'] // Asegurate de tener los estilos aplicados
+  styleUrls: ['./workshop-form.component.scss'] 
 })
 export class WorkshopFormComponent implements OnInit {
 
@@ -29,6 +29,8 @@ export class WorkshopFormComponent implements OnInit {
       imagen: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]],
     });
   }
+
+//Solucionar
 
   onSubmit(): void {
     if (this.tallerForm.invalid) {
