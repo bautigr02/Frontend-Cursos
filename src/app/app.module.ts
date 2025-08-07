@@ -21,6 +21,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserLearningComponent } from './user-learning/user-learning.component';
 import { TeacherPanelComponent } from './teacher-panel/teacher-panel.component';
 import { CourseFormComponent } from './course-form/course-form.component';
+import { WorkshopFormComponent } from './workshop-form/workshop-form.component';
 
 
 
@@ -42,6 +43,7 @@ import { CourseFormComponent } from './course-form/course-form.component';
     UserLearningComponent,
     TeacherPanelComponent,
     CourseFormComponent,
+    WorkshopFormComponent,
   ],
   imports: [
     BrowserModule,

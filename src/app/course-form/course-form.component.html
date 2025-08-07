@@ -7,7 +7,7 @@
 </head>
 <body>
   <div class="form-container">
-  <button routerLink="" class="btn-regresar" type="button">Volver</button>
+  <button routerLink="/teacher-panel" class="btn-regresar" type="button">Volver</button>
 
   <h2>Registro de Curso</h2>
   <hr>
@@ -65,7 +65,17 @@
       </div>
     </div>
 
-    <button type="submit">Guardar Curso</button>
+
+     <div class="input-group">
+      <label for="talleres">Cantidad de Talleres</label>
+      <input type="text" id="talleres" placeholder="4" formControlName="talleres">
+      <div *ngIf="cursoForm.get('talleres')?.touched && cursoForm.get('talleres')?.invalid">
+        <small *ngIf="cursoForm.get('talleres')?.errors?.['required']">El número de talleres es requerido.</small>
+        <small *ngIf="cursoForm.get('talleres')?.errors?.['pattern']">Solo se permiten números.</small>
+      </div>
+    </div>
+
+    <button type="submit" routerLink="/workshop-form">Cargar Talleres</button>
   </form>
 </div>
 
