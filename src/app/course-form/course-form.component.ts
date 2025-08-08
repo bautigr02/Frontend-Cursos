@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { tap, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { CourseWorkshopService } from '../services/course-workshop.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-form',
@@ -15,7 +14,8 @@ export class CourseFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient
+    private Router: Router,
+    private CourseWorkshopService: CourseWorkshopService
   ) {} 
 
   ngOnInit(): void {
@@ -31,31 +31,14 @@ export class CourseFormComponent implements OnInit {
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
     });
   }
-
-
-  //Solucionar
   onSubmit(): void {
-    if (this.cursoForm.valid) {
-      console.log('Formulario de curso enviado:', this.cursoForm.value);
-      this.isErrorVisible = false;
-
-      // Aquí puedes agregar la lógica para enviar los datos a tu API usando HttpClient
-      // Por ejemplo:
-      /*
-      const cursoData = this.cursoForm.value;
-      this.http.post('https://tu-api.com/cursos', cursoData)
-        .pipe(
-          tap(response => console.log('Respuesta de la API:', response)),
-          catchError(error => {
-            console.error('Error al enviar el formulario:', error);
-            return new Observable<any>();
-          })
-        )
-        .subscribe();
-      */
-    } else {
-      console.log('Formulario inválido. Revisa los campos.');
-      this.isErrorVisible = true;
+     if (this.cursoForm.valid) {
+      this.CourseWorkshopService.setCurso(this.cursoForm.value);
+      this.Router.navigate(['/workshop-form']);
+    }
+  else{
+    console.log('Formulario no válido. Por favor, revisa los campos.');
+    this.isErrorVisible = true;
     }
   }
 }

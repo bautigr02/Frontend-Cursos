@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CourseWorkshopService } from '../services/course-workshop.service';
+import { CourseService } from '../services/course.service';
+import { WorkshopService } from '../services/workshop.service';
+import { switchMap, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,12 +12,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./workshop-form.component.scss'] 
 })
 export class WorkshopFormComponent implements OnInit {
-
+  talleresAgregados: any[] = [];
   tallerForm!: FormGroup;
   isErrorVisible: boolean = false;
 
   constructor(
     private fb: FormBuilder,
+    private CourseWorkshopService: CourseWorkshopService,
+    private courseService: CourseService,
+    private WorkshopService: WorkshopService,
     private router: Router
   ) {}
 
@@ -31,24 +38,49 @@ export class WorkshopFormComponent implements OnInit {
   }
 
 //Solucionar
-
+  addTaller(): void {
+    if (this.tallerForm.valid) {
+      const nuevoTaller = this.tallerForm.value;
+      this.talleresAgregados.push(nuevoTaller);
+      this.CourseWorkshopService.addTaller(nuevoTaller);
+      this.tallerForm.reset();
+    }
+  }
   onSubmit(): void {
-    if (this.tallerForm.invalid) {
-      this.isErrorVisible = true;
+    const cursoParaCrear = this.CourseWorkshopService.getCurso();
+    const talleresParaCrear = this.CourseWorkshopService.getTalleres();
+
+    if (!cursoParaCrear || talleresParaCrear.length === 0) {
+      console.error('Faltan datos de curso o talleres para guardar.');
       return;
     }
 
-    const tallerData = this.tallerForm.value;
-
-    // 📌 Agregá acá el DNI del docente desde el usuario logueado
-    // tallerData.dni_docente = this.authService.getCurrentUser()?.dni_docente;
-
-    console.log('Taller enviado:', tallerData);
-
-    // Acá podés hacer el POST a la API
-    // this.tallerService.saveTaller(tallerData).subscribe(...)
-
-    // Navegación o feedback al usuario
-    this.router.navigate(['/teacher-panel']);
+    // 1. Crear el curso primero
+    this.courseService.createCourse(cursoParaCrear).pipe(
+      // 2. Usar switchMap para obtener el ID del curso y luego crear los talleres
+      switchMap(responseCurso => {
+        const idCursoCreado = responseCurso.id; // Asume que la API devuelve el ID
+        
+        // 3. Mapear cada taller a una petición de creación, agregando el ID del curso
+          const peticionesTalleres = talleresParaCrear.map(taller => {
+          const tallerConCursoId = { ...taller, idCurso: idCursoCreado };
+          return this.WorkshopService.createWorkshop(tallerConCursoId);
+        });
+        
+        // 4. Usar forkJoin para esperar a que todas las peticiones de talleres terminen
+        return forkJoin(peticionesTalleres);
+      })
+    ).subscribe({
+      next: (responseTalleres) => {
+        console.log('Curso y talleres creados con éxito.');
+        this.CourseWorkshopService.clearData(); // Limpiamos el servicio
+        this.isErrorVisible = false;
+        this.router.navigate(['/teacher-panel']); 
+      },
+      error: (error) => {
+        console.error('Error en la creación:', error);
+        this.isErrorVisible = true;
+      }
+    });
   }
 }
