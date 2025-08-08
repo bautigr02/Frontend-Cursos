@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RegistroCurso</title>
+</head>
+<body>
+  <div class="form-container">
+  <button routerLink="/teacher-panel" class="btn-regresar" type="button">Volver</button>
+
+  <h2>Registro de Curso</h2>
+  <hr>
+
+  <form [formGroup]="cursoForm" (ngSubmit)="onSubmit()">
+    <div class="input-group">
+      <label for="nom_curso">Nombre del Curso</label>
+      <input type="text" id="nom_curso" placeholder="Desarrollo Web" formControlName="nom_curso">
+      <div *ngIf="cursoForm.get('nom_curso')?.touched && cursoForm.get('nom_curso')?.invalid">
+        <small *ngIf="cursoForm.get('nom_curso')?.errors?.['required']">El nombre del curso es requerido.</small>
+        <small *ngIf="cursoForm.get('nom_curso')?.errors?.['maxlength']">Máximo 45 caracteres permitidos.</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="fec_ini">Fecha de Inicio</label>
+      <input type="date" id="fec_ini" formControlName="fec_ini">
+      <div *ngIf="cursoForm.get('fec_ini')?.touched && cursoForm.get('fec_ini')?.invalid">
+        <small *ngIf="cursoForm.get('fec_ini')?.errors?.['required']">La fecha de inicio es requerida.</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="fec_fin">Fecha de Finalización</label>
+      <input type="date" id="fec_fin" formControlName="fec_fin">
+      <div *ngIf="cursoForm.get('fec_fin')?.touched && cursoForm.get('fec_fin')?.invalid">
+        <small *ngIf="cursoForm.get('fec_fin')?.errors?.['required']">La fecha de finalización es requerida.</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="num_aula">Número de Aula</label>
+      <input type="text" id="num_aula" placeholder="1" formControlName="num_aula">
+      <div *ngIf="cursoForm.get('num_aula')?.touched && cursoForm.get('num_aula')?.invalid">
+        <small *ngIf="cursoForm.get('num_aula')?.errors?.['required']">El número de aula es requerido.</small>
+        <small *ngIf="cursoForm.get('num_aula')?.errors?.['pattern']">Solo se permiten números.</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="imagen">URL de la Imagen</label>
+      <input type="text" id="imagen" placeholder="https://..." formControlName="imagen">
+      <div *ngIf="cursoForm.get('imagen')?.touched && cursoForm.get('imagen')?.invalid">
+        <small *ngIf="cursoForm.get('imagen')?.errors?.['required']">La URL de la imagen es requerida.</small>
+        <small *ngIf="cursoForm.get('imagen')?.errors?.['pattern']">La URL no es válida.</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" placeholder="Descripción del curso..." formControlName="descripcion"></textarea>
+      <div *ngIf="cursoForm.get('descripcion')?.touched && cursoForm.get('descripcion')?.invalid">
+        <small *ngIf="cursoForm.get('descripcion')?.errors?.['required']">La descripción es requerida.</small>
+        <small *ngIf="cursoForm.get('descripcion')?.errors?.['maxlength']">Máximo 255 caracteres permitidos.</small>
+      </div>
+    </div>
+
+
+     <div class="input-group">
+      <label for="talleres">Cantidad de Talleres</label>
+      <input type="text" id="talleres" placeholder="4" formControlName="talleres">
+      <div *ngIf="cursoForm.get('talleres')?.touched && cursoForm.get('talleres')?.invalid">
+        <small *ngIf="cursoForm.get('talleres')?.errors?.['required']">El número de talleres es requerido.</small>
+        <small *ngIf="cursoForm.get('talleres')?.errors?.['pattern']">Solo se permiten números.</small>
+      </div>
+    </div>
+
+    <button type="submit" routerLink="/workshop-form">Cargar Talleres</button>
+  </form>
+</div>
+
+<div *ngIf="isErrorVisible" class="error-login">
+  <p>Campo con dato incorrecto o incompleto.</p>
+  <button (click)="isErrorVisible = false" class="btn-cerrar-error">Cerrar</button>
+</div>
+</body>
+</html>
