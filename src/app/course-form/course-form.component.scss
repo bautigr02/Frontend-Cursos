@@ -104,7 +104,7 @@ small {
     margin-top: 5px;
 }
 
-button[type="submit"] {
+.button-talleres{
     width: 80%;
     padding: 12px;
     background-color: #426B1F;
@@ -116,7 +116,7 @@ button[type="submit"] {
     transition: background-color 0.3s;
 }
 
-button[type="submit"]:hover {
+.button-talleres:hover {
     background-color: #365517;
 }
 
