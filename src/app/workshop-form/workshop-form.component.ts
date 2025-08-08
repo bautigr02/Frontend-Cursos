@@ -44,6 +44,9 @@ export class WorkshopFormComponent implements OnInit {
       this.talleresAgregados.push(nuevoTaller);
       this.CourseWorkshopService.addTaller(nuevoTaller);
       this.tallerForm.reset();
+    }else{
+      console.log('Formulario de taller no válido. Por favor, revisa los campos.');
+      this.isErrorVisible = true;
     }
   }
   onSubmit(): void {
