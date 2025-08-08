@@ -103,9 +103,27 @@ small {
     margin-top: 5px;
 }
 
+.btn-agregar-taller{
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 5px;
+    background-color: #426B1F;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-agregar-taller:hover {
+    background-color: #365517;
+}
+
 button[type="submit"] {
     width: 80%;
     padding: 12px;
+    margin-bottom: 5px;
     background-color: #426B1F;
     border: none;
     border-radius: 5px;
