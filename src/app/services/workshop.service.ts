@@ -18,7 +18,7 @@ export class WorkshopService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
   // Crear un taller
-  createWorkshop(workshop: any): Observable<any> {
+  createTaller(workshop: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, workshop);
   }
   // Actualizar un taller

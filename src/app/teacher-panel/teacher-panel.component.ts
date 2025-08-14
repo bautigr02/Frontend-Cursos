@@ -19,6 +19,9 @@ export class TeacherPanelComponent implements OnInit {
     private authService: AuthService,
     private teacherService: TeacherService,
   ) {}
+
+
+  //Solucionar
   ngOnInit(): void {
     this.user = this.authService.getUser();
 

@@ -53,6 +53,7 @@
       <div *ngIf="cursoForm.get('imagen')?.touched && cursoForm.get('imagen')?.invalid">
         <small *ngIf="cursoForm.get('imagen')?.errors?.['required']">La URL de la imagen es requerida.</small>
         <small *ngIf="cursoForm.get('imagen')?.errors?.['pattern']">La URL no es válida.</small>
+        <small *ngIf="cursoForm.get('imagen')?.errors?.['maxlength']">Máximo 255 caracteres permitidos.</small>
       </div>
     </div>
 
@@ -65,17 +66,7 @@
       </div>
     </div>
 
-
-     <div class="input-group">
-      <label for="talleres">Cantidad de Talleres</label>
-      <input type="text" id="talleres" placeholder="4" formControlName="talleres">
-      <div *ngIf="cursoForm.get('talleres')?.touched && cursoForm.get('talleres')?.invalid">
-        <small *ngIf="cursoForm.get('talleres')?.errors?.['required']">El número de talleres es requerido.</small>
-        <small *ngIf="cursoForm.get('talleres')?.errors?.['pattern']">Solo se permiten números.</small>
-      </div>
-    </div>
-
-    <button type="submit" routerLink="/workshop-form">Cargar Talleres</button>
+    <button type="button" class="button-talleres" (click)="onSubmit()">Cargar Talleres</button>
   </form>
 </div>
 

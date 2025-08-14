@@ -21,7 +21,7 @@ export class CourseService {
   }
 
   // Crear un curso
-  createCourse(course: any): Observable<any> {
+  createCurso(course: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, course);
   }
 
@@ -31,7 +31,7 @@ export class CourseService {
   }
 
   // Eliminar un curso
-  deleteCourse(id: number): Observable<any> {
+  deleteCurso(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

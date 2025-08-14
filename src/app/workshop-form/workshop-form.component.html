@@ -85,7 +85,10 @@
         </div>
       </div>
 
-      <button type="submit">Guardar Taller</button>
+      
+      <button type="button" class="btn-agregar-taller" (click)="addTaller()">Agregar Taller</button>
+      <label for="totalTalleres">Total Talleres cargados: {{totalTalleres}}</label>
+      <button type="submit" >Finalizar carga curso</button>
     </form>
   </div>
 
