@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseWorkshopService } from '../services/course-workshop.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-course-form',
@@ -15,26 +16,30 @@ export class CourseFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private Router: Router,
-    private CourseWorkshopService: CourseWorkshopService
+    private CourseWorkshopService: CourseWorkshopService,
+     private authService: AuthService
   ) {} 
 
   ngOnInit(): void {
     this.cursoForm = this.fb.group({
-      idcursoint: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       nom_curso: ['', [Validators.required, Validators.maxLength(45)]],
       fec_ini: ['', Validators.required],
       fec_fin: ['', Validators.required],
-      estado: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       num_aula: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      dni_docente: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       imagen: ['', [Validators.required, Validators.maxLength(255), Validators.pattern('^https?://.*\\.(webp|jpeg|jpg|png|gif)$')]],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
     });
   }
   onSubmit(): void {
      if (this.cursoForm.valid) {
-      this.CourseWorkshopService.setCurso(this.cursoForm.value);
-      this.Router.navigate(['/workshop-form']);
+      const cursoParaCrear = this.cursoForm.value;
+        //Agregar datos faltantes al curso
+          cursoParaCrear.estado = '1';
+          const dniDocenteLogueado = this.authService.getDniDocenteLogueado(); 
+          cursoParaCrear.dni_docente = dniDocenteLogueado;
+          this.CourseWorkshopService.setCurso(cursoParaCrear);
+          this.Router.navigate(['/workshop-form']);
+          this.isErrorVisible = false;
     }
   else{
     console.log('Formulario no válido. Por favor, revisa los campos.');

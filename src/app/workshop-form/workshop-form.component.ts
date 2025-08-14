@@ -41,8 +41,9 @@ export class WorkshopFormComponent implements OnInit {
   addTaller(): void {
     if (this.tallerForm.valid) {
       const nuevoTaller = this.tallerForm.value;
+      nuevoTaller.dificultad = Number(nuevoTaller.dificultad);
       this.talleresAgregados.push(nuevoTaller);
-      this.CourseWorkshopService.addTaller(nuevoTaller);
+      this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller al la lista en el service
       this.tallerForm.reset();
     }else{
       console.log('Formulario de taller no válido. Por favor, revisa los campos.');
@@ -58,25 +59,27 @@ export class WorkshopFormComponent implements OnInit {
       return;
     }
 
-    // 1. Crear el curso primero
-    this.courseService.createCourse(cursoParaCrear).pipe(
-      // 2. Usar switchMap para obtener el ID del curso y luego crear los talleres
+    //Crear el curso
+    this.courseService.createCurso(cursoParaCrear).pipe(
+      //SwitchMap para obtener el ID del curso y luego crear los talleres
       switchMap(responseCurso => {
-        const idCursoCreado = responseCurso.id; // Asume que la API devuelve el ID
+        const idCursoCreado = responseCurso.id;
+        const dniDocente = cursoParaCrear.dni_docente;
         
-        // 3. Mapear cada taller a una petición de creación, agregando el ID del curso
+        // Mapea cada taller a una petición de creación, agregando el ID del curso
           const peticionesTalleres = talleresParaCrear.map(taller => {
-          const tallerConCursoId = { ...taller, idCurso: idCursoCreado };
-          return this.WorkshopService.createWorkshop(tallerConCursoId);
+          const tallerConCursoId = { ...taller, idcurso: idCursoCreado, dni_docente: dniDocente };
+          return this.WorkshopService.createTaller(tallerConCursoId);
         });
         
-        // 4. Usar forkJoin para esperar a que todas las peticiones de talleres terminen
+        //forkJoin para esperar a que todas las peticiones de talleres terminen
         return forkJoin(peticionesTalleres);
       })
     ).subscribe({
       next: (responseTalleres) => {
         console.log('Curso y talleres creados con éxito.');
-        this.CourseWorkshopService.clearData(); // Limpiamos el servicio
+        console.log('Respuesta de los talleres:', responseTalleres);
+        this.CourseWorkshopService.clearData(); 
         this.isErrorVisible = false;
         this.router.navigate(['/teacher-panel']); 
       },

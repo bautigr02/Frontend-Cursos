@@ -53,6 +53,7 @@
       <div *ngIf="cursoForm.get('imagen')?.touched && cursoForm.get('imagen')?.invalid">
         <small *ngIf="cursoForm.get('imagen')?.errors?.['required']">La URL de la imagen es requerida.</small>
         <small *ngIf="cursoForm.get('imagen')?.errors?.['pattern']">La URL no es válida.</small>
+        <small *ngIf="cursoForm.get('imagen')?.errors?.['maxlength']">Máximo 255 caracteres permitidos.</small>
       </div>
     </div>
 
