@@ -33,13 +33,14 @@ export class CourseFormComponent implements OnInit {
   onSubmit(): void {
      if (this.cursoForm.valid) {
       const cursoParaCrear = this.cursoForm.value;
-        //Agregar datos faltantes al curso
-          cursoParaCrear.estado = '1';
-          const dniDocenteLogueado = this.authService.getDniDocenteLogueado(); 
+        //Agrega datos faltantes al curso
+        cursoParaCrear.estado = '1';
+        const dniDocenteLogueado = this.authService.getDniDocenteLogueado(); 
           cursoParaCrear.dni_docente = dniDocenteLogueado;
-          this.CourseWorkshopService.setCurso(cursoParaCrear);
-          this.Router.navigate(['/workshop-form']);
-          this.isErrorVisible = false;
+        this.CourseWorkshopService.setCurso(cursoParaCrear);
+        this.isErrorVisible = false;
+        this.Router.navigate(['/workshop-form']);
+        
     }
   else{
     console.log('Formulario no válido. Por favor, revisa los campos.');

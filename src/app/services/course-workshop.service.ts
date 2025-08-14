@@ -10,10 +10,12 @@ export class CourseWorkshopService {
  
   constructor() { }
 
-   setCurso(curso: any): void {
+  //Utilizado en CourseFormComponent.ts
+  setCurso(curso: any): void {
     this.cursoTemporal = curso;
   }
 
+  //Utilizados en WorkshopFormComponent.ts
   addTaller(taller: any): void {
     this.talleresTemporales.push(taller);
   }

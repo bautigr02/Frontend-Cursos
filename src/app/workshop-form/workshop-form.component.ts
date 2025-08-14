@@ -15,6 +15,7 @@ export class WorkshopFormComponent implements OnInit {
   talleresAgregados: any[] = [];
   tallerForm!: FormGroup;
   isErrorVisible: boolean = false;
+  totalTalleres: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -37,13 +38,13 @@ export class WorkshopFormComponent implements OnInit {
     });
   }
 
-//Solucionar
   addTaller(): void {
     if (this.tallerForm.valid) {
+      this.totalTalleres++;
       const nuevoTaller = this.tallerForm.value;
-      nuevoTaller.dificultad = Number(nuevoTaller.dificultad);
+      nuevoTaller.dificultad = Number(nuevoTaller.dificultad); // Convierte dificultad a numero para evitar problema de tipo de dato
       this.talleresAgregados.push(nuevoTaller);
-      this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller al la lista en el service
+      this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
       this.tallerForm.reset();
     }else{
       console.log('Formulario de taller no válido. Por favor, revisa los campos.');
@@ -65,6 +66,7 @@ export class WorkshopFormComponent implements OnInit {
       switchMap(responseCurso => {
         const idCursoCreado = responseCurso.id;
         const dniDocente = cursoParaCrear.dni_docente;
+        console.log('Curso creado con éxito:', responseCurso);
         
         // Mapea cada taller a una petición de creación, agregando el ID del curso
           const peticionesTalleres = talleresParaCrear.map(taller => {

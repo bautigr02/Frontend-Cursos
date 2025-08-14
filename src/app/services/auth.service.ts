@@ -35,6 +35,7 @@ export class AuthService {
     return this.userSubject.getValue();
   }
 
+  // Existe para course-form.component.ts
   getDniDocenteLogueado(): string | null {
     const user = this.userSubject.getValue();
     return user ? user.dni : null; 
