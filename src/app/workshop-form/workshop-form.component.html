@@ -96,5 +96,10 @@
     <p>Campo con dato incorrecto o incompleto.</p>
     <button (click)="isErrorVisible = false" class="btn-cerrar-error">Cerrar</button>
   </div>
+
+  <div *ngIf="isSuccessVisible" class="success-login">
+    <p>Curso + talleres creados exitosamente.</p>
+    <button (click)="isSuccessVisible = false" class="btn-cerrar-success">Cerrar</button>
+  </div>
 </body>
 </html>
