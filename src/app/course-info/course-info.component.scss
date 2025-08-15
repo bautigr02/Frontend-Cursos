@@ -45,6 +45,25 @@ hr{
   cursor: default;
 }
 
+.curso-no-disponible {
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #d32f2f; // rojo de no disponible
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
 button[disabled] {
   background: #bdbdbd !important;
   color: #fff !important;

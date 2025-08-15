@@ -10,7 +10,7 @@
         <img [src]="curso.imagen" alt="imagen-curso" class="course-img" />
         <div class="course-info">
           <!-- Dentro de .course-info -->
-          <h2>{{ curso.nom_curso }}</h2>
+          <h2 routerLink="/courses/{{ curso.idcurso }}">{{ curso.nom_curso }}</h2>
           <p class="estado" [ngClass]="{
               'inscripto': curso.estado === 1,
               'cursando': curso.estado === 2,

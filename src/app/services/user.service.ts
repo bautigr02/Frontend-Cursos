@@ -40,4 +40,14 @@ export class UserService {
   inscribirEnCurso(dni: number, idcurso: number) {
   return this.http.post('http://localhost:3000/api/inscripcion_curso', { dni, idcurso });
 }
+
+// Inscribirse a un taller
+inscribirEnTaller(dni: number, idtaller: number) {
+  return this.http.post('http://localhost:3000/api/inscripcion_taller', { dni, idtaller });
+}
+
+// Verificar si puede inscribirse a un taller
+puedeInscribirseATaller(dni: number, idtaller: number) {
+  return this.http.get(`http://localhost:3000/api/taller/${idtaller}/puede-inscribirse/${dni}`);
+}
 }

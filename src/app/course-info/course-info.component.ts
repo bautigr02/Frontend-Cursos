@@ -50,6 +50,7 @@ export class CourseInfoComponent implements OnInit{
       }
     );
   }
+
   }
 
     getCourseInfo(id: number): void {
@@ -80,23 +81,30 @@ export class CourseInfoComponent implements OnInit{
     openModal(){
       this.showModal = true;
     }
+
     confirmModal(){
-  const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-  if (!user.dni || !this.course?.idcurso) return;
+    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    if (!user.dni || !this.course?.idcurso) {
+      alert('Debe iniciar sesión para inscribirse en el curso.');
+      this.showModal = false;
+      window.location.href = '/login'; // Redirigir al login si no hay usuario
+      return;
+    }
   
-  this.userService.inscribirEnCurso(user.dni, this.course.idcurso).subscribe(
-    () => {
-      this.yaInscripto = true;
-      this.showModal = false;
-      alert('¡Inscripción exitosa!');
-    },
-    (error) => {
-      alert(error.error?.error || 'Error al inscribirse');
-      this.showModal = false;
-    }
-  );
-}
-    cancelModal(){
-      this.showModal = false;
-    }
+    this.userService.inscribirEnCurso(user.dni, this.course.idcurso).subscribe(
+      () => {
+        this.yaInscripto = true;
+        this.showModal = false;
+        alert('¡Inscripción exitosa!');
+      },
+      (error) => {
+        alert(error.error?.error || 'Error al inscribirse');
+        this.showModal = false;
+      }
+    );
   }
+
+  cancelModal(){
+    this.showModal = false;
+  }
+}
