@@ -89,5 +89,10 @@
             <p>Campo con dato incorrecto/incompleto o Usuario ya existe</p>
             <button (click)="isErrorVisible = false" class="btn-cerrar-error">Cerrar</button>
         </div>
+
+        <div *ngIf = "isSuccessVisible" class="success-login">
+          <p>Usuario creado exitosamente.</p>
+          <button (click)="isSuccessVisible = false" class="btn-cerrar-success">Cerrar</button>
+        </div>
 </body>
 </html>

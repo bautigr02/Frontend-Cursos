@@ -10,12 +10,10 @@ import { of } from 'rxjs';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-
   isErrorVisible = false;
-  ValidarUsuario(){
-       this.isErrorVisible = !this.isErrorVisible;
-      }
-      constructor(private fb: FormBuilder, private http: HttpClient) {
+  isSuccessVisible = false;
+
+  constructor(private fb: FormBuilder, private http: HttpClient) {
         this.registerForm = this.fb.group({
           // Nombre: requerido, máximo 30 caracteres, solo letras
           nombre: [
@@ -80,25 +78,29 @@ export class RegisterComponent {
           ]
         });
       }
+
 onSubmit(): void {
   if (this.registerForm.valid) {
     console.log('Registro exitoso:', this.registerForm.value);
-
-    this.http.post('http://localhost:3000/api/alumno', this.registerForm.value)
+    this.http.post('http://localhost:3000/api/alumno', this.registerForm.value) //CAMBIAR
       .pipe(
-        tap((response) => console.log('Alumno creado exitosamente:', response)),
+        tap((response) => {console.log('Alumno creado exitosamente:', response)
+          this.isSuccessVisible = true;
+        }),
         catchError((error) => {
           console.log('Error al crear alumno:', error);
-          this.ValidarUsuario();
+          this.isErrorVisible = true;
           this.registerForm.markAllAsTouched();
           return of(error); // Devuelve un Observable vacío para evitar que se rompa
         })
       )
       .subscribe();
-      
-  } else {
-    //Revisar si aca llega el error
-    this.ValidarUsuario();
-    console.log('Formulario inválido papa');
+   
+     } else {
+    this.isErrorVisible = true;
+    this.isSuccessVisible = false;
+    console.log('Formulario inválido.');
     this.registerForm.markAllAsTouched();
-  }}}
+    }
+  }
+}
