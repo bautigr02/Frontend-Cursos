@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-course-info',
@@ -13,11 +14,15 @@ export class CourseInfoComponent implements OnInit{
   workshops: any[] = [];
   loading: boolean = true;
   showModal: boolean = false;
+  
+  cursosInscriptos: any[] = [];
+  yaInscripto: boolean = false;
 
   constructor(
     private _route: ActivatedRoute, 
     private courseService: CourseService, 
-    private workshopService: WorkshopService
+    private workshopService: WorkshopService, 
+    private userService: UserService
   ) { }
   
   ngOnInit(): void {
@@ -26,7 +31,6 @@ export class CourseInfoComponent implements OnInit{
       const courseId = +params['id']; // Convierte el ID a número
       this.getCourseInfo(courseId);
       this.getWorkshops(courseId);
-
     });
 /*   // Simulación de carga de datos
     setTimeout(() => {
@@ -36,8 +40,19 @@ export class CourseInfoComponent implements OnInit{
     });
     }, 1500);
 */
+  const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+  if (user && user.dni) {
+    this.userService.getCursosByAlumno(user.dni).subscribe(
+      (cursos) => {
+        this.cursosInscriptos = cursos;
+        // Si el curso actual está en la lista, ya está inscripto
+        this.yaInscripto = !!cursos.find(c => c.idcurso === this.course.idcurso && c.estado !== 3);
+      }
+    );
+  }
 
   }
+
     getCourseInfo(id: number): void {
       this.courseService.getCourseById(id).subscribe(
         (data) => {
@@ -62,16 +77,34 @@ export class CourseInfoComponent implements OnInit{
       );
     }
 
-    
-
     // Métodos para manejar el modal
     openModal(){
       this.showModal = true;
     }
+
     confirmModal(){
+    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    if (!user.dni || !this.course?.idcurso) {
+      alert('Debe iniciar sesión para inscribirse en el curso.');
       this.showModal = false;
+      window.location.href = '/login'; // Redirigir al login si no hay usuario
+      return;
     }
-    cancelModal(){
-      this.showModal = false;
-    }
+  
+    this.userService.inscribirEnCurso(user.dni, this.course.idcurso).subscribe(
+      () => {
+        this.yaInscripto = true;
+        this.showModal = false;
+        alert('¡Inscripción exitosa!');
+      },
+      (error) => {
+        alert(error.error?.error || 'Error al inscribirse');
+        this.showModal = false;
+      }
+    );
   }
+
+  cancelModal(){
+    this.showModal = false;
+  }
+}

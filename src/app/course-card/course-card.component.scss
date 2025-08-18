@@ -13,6 +13,7 @@ div {
 
 div:hover {
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  cursor: pointer;
 }
 
 img {
@@ -30,6 +31,28 @@ h3 {
   margin: 0;
   font-size: 20px;
 }
+
+.cupo-verde {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.cupo-naranja {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.cupo-rojo {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.cupo-completo {
+  color: #d32f2f;
+  font-weight: bold;
+  font-size: 22px;
+}
+
 p {
   margin: 0;
   font-size: 16px;

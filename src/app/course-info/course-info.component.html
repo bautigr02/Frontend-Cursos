@@ -1,5 +1,5 @@
-  <ng-container *ngIf="loading === false">
-<!-- INFO DEL CURSO -->
+<ng-container *ngIf="loading === false">
+  <!-- INFO DEL CURSO -->
   <div class="title-section">
     <h1>{{course?.nom_curso}}</h1>
     <p>{{course?.descripcion}}</p>
@@ -26,7 +26,18 @@
     <!-- BOTONES -->
     <div class="buttons">
       <button id="more-info" routerLink="/courses">Mas cursos</button>
-      <button id="inscription" (click)="openModal()">Inscribirse</button>
+      <button 
+        id="inscription" 
+        (click)="openModal()" 
+        *ngIf="course.estado === 1 && !yaInscripto">
+        Inscribirse
+      </button>
+      <span *ngIf="yaInscripto" class="inscripto-label">
+        Ya Inscripto
+      </span>
+      <span *ngIf="course.estado !== 1" class="curso-no-disponible">
+        No disponible
+      </span>
     </div>
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">
@@ -38,12 +49,22 @@
     </div>
   </div>
 
+  <!-- MENSAJE SI NO HAY TALLERES -->
   <div class="content" *ngIf="workshops.length == 0">
     <p>No hay talleres para este curso.</p>
     <hr>
     <div class="buttons">
+      <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1 && !yaInscripto">
+        Inscribirse
+      </button>
       <button id="more-info" routerLink="/courses">Mas cursos</button>
     </div>
+    <span *ngIf="yaInscripto" class="inscripto-label">
+      Ya Inscripto
+    </span>
+    <span *ngIf="course.estado !== 1" class="curso-no-disponible">
+      No disponible
+    </span>
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">
         <h2>Confirmar inscripción</h2>

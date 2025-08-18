@@ -15,6 +15,7 @@
         <p><strong>DNI:</strong> {{user.dni}}</p>
         <p><strong>Dirección:</strong> {{user.direccion}}</p>
         <p><strong>Correo:</strong> {{user.email}}</p>
+        <p><strong>Teléfono:</strong> {{user.telefono}}</p>
       </div>
       <form *ngIf="isEditing" (ngSubmit)="guardarDatos()">
         <p>
