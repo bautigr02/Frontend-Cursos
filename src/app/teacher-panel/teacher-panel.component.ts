@@ -14,6 +14,8 @@ export class TeacherPanelComponent implements OnInit {
   user: any;
   talleres: any[] = [];
   isEditing = false;
+  curso: any;
+  taller: any;
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -91,5 +93,10 @@ export class TeacherPanelComponent implements OnInit {
     }
   }
 
+  editarCurso(curso: any) {
+  }
+  
+  editarTaller(taller: any) {
+  }
 
 }

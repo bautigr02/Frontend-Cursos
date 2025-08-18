@@ -52,9 +52,10 @@
         <h4>Mis cursos</h4>
           <ng-container *ngIf="cursos.length > 0; else sinCursos">
             <ul>
-              <p *ngFor="let curso of cursos">
+              <li *ngFor="let curso of cursos">
                 {{ curso.nom_curso }} <span *ngIf="curso.num_aula"> - Aula: {{ curso.num_aula }}</span>
-              </p>
+                <button class="edit-btn" title="Editar curso" (click)="editarCurso(curso)">✎</button>
+              </li> 
             </ul>
           </ng-container>
           <ng-template #sinCursos>
@@ -70,11 +71,12 @@
           <ng-container *ngFor="let curso of cursos">
             <ng-container *ngIf="curso.talleres && curso.talleres.length > 0;">
               <ul>
-                  <p *ngFor="let taller of curso.talleres">
+                  <li *ngFor="let taller of curso.talleres">
                     {{ taller.Nom_taller }}
                     <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
                     <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
-                  </p>
+                    <button class="edit-btn" title="Editar taller" (click)="editarTaller(taller)">✎</button>
+                  </li>  
               </ul>
             </ng-container>
           </ng-container>
