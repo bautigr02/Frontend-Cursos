@@ -16,6 +16,7 @@ export class TeacherPanelComponent implements OnInit {
   isEditing = false;
   curso: any;
   taller: any;
+  
   constructor(
     private http: HttpClient,
     private authService: AuthService,
