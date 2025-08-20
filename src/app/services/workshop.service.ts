@@ -29,8 +29,8 @@ export class WorkshopService {
   deleteWorkshop(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
-// Obtener talleres por curso
-getWorkshopsByCurso(idcurso: number): Observable<any[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/curso/${idcurso}`);
-}
+  // Obtener talleres por curso
+  getWorkshopsByCurso(idcurso: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/curso/${idcurso}`);
+  }
 }

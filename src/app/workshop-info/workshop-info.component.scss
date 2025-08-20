@@ -66,21 +66,21 @@ li{
 
 .inscripto-label {
   width: 175px;
-    height: 60px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 15px;
-    font-size: 22px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: #426B1F;
-    background-color: #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
-    cursor: default;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #426B1F;
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: default;
 }
 
 .no-disponible {
@@ -94,8 +94,86 @@ li{
   display: flex;
   text-align: center;
   align-items: center;
+  justify-content: center;
   font-weight: bold;
-  color: #d32f2f; // rojo de no disponible
+  color: #d32f2f;
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.cancelar{
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  background-color: #d32f2f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.terminado{
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.aprobado{
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #426B1F;
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: default;
+}
+
+.desaprobado{
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #d32f2f;
   background-color: #e0e0e0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
