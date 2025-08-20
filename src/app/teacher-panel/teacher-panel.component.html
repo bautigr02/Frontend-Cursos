@@ -84,4 +84,32 @@
       </div>
     </div>
   </div>
+  <!---Visibilziar este contenedor cuando se de click a un edit-btn de la seccion de cursos-->
+  <div *ngIf="isEditingCurso" class="edicionCurso">
+      <form action="" (ngSubmit)="guardarCursoModificado()">
+          <p>
+              <strong>Nombre del curso:</strong>
+              <input [(ngModel)]="cursoSeleccionado.nom_curso" name="nombreCurso" required />
+          </p>
+          <p>
+              <strong>Aula:</strong>
+              <input [(ngModel)]="cursoSeleccionado.num_aula" name="aulaCurso" required/>
+          </p>
+          <p>
+              <strong>Descripción:</strong>
+              <textarea [(ngModel)]="cursoSeleccionado.descripcion" name="descripcionCurso" required></textarea>
+          </p>
+          <p>
+            <strong>Fecha de inicio:</strong>
+            <input [(ngModel)]="cursoSeleccionado.fec_inicio" name="fechaInicio" type="date" required />
+          </p>
+          <p>
+            <strong>Fecha Fin:</strong>
+            <input [(ngModel)]="cursoSeleccionado.fec_fin" name="fechaFin" type="date" required />
+          </p>
+          <button type="submit" class="save-btn">Guardar</button>
+          <button type="button" class="cancel-btn" (click)="cancelarEdicionCurso()">Cancelar</button>
+      </form>
+  </div>
+  
 </div>

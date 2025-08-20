@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { TeacherService } from '../services/teacher.service';
+import { CourseService } from '../services/course.service';
 
 @Component({
   selector: 'app-teacher-panel',
@@ -14,13 +15,16 @@ export class TeacherPanelComponent implements OnInit {
   user: any;
   talleres: any[] = [];
   isEditing = false;
+  isEditingCurso = false;
   curso: any;
+  cursoSeleccionado: any;
   taller: any;
   
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private teacherService: TeacherService,
+    private CourseService: CourseService,
   ) {}
 
 
@@ -66,6 +70,7 @@ export class TeacherPanelComponent implements OnInit {
     });
   }
 
+  //Edicion usuario Docente
  userBackup: any; // Backup de los datos del usuario antes de editar
   editarDatos() {
     this.isEditing = true;
@@ -94,9 +99,46 @@ export class TeacherPanelComponent implements OnInit {
     }
   }
 
+  //Edicion Cursos
+
+  cursoBackup: any; // Backup de los datos del curso antes de editar
   editarCurso(curso: any) {
+    this.cursoBackup = { ...curso };
+    this.cursoSeleccionado = curso;
+    this.isEditingCurso = true;
   }
-  
+
+  guardarCursoModificado(){
+    console.log('Intentando guardar curso modificado...');
+    delete this.cursoSeleccionado.talleres; // Elimina talleres para evitar conflictos al enviar
+  // Formatear fecha para SQL
+  if (this.cursoSeleccionado.fec_ini) {
+    this.cursoSeleccionado.fec_ini = this.cursoSeleccionado.fec_ini.slice(0, 10);
+  }
+  if (this.cursoSeleccionado.fec_fin) {
+    this.cursoSeleccionado.fec_fin = this.cursoSeleccionado.fec_fin.slice(0, 10);
+  }
+    this.CourseService.patchCurso(this.cursoSeleccionado.idcurso,this.cursoSeleccionado).subscribe(  
+      (data) => {
+        this.isEditingCurso = false;
+        this.cursoSeleccionado.talleres = this.cursoBackup.talleres;
+        console.log('Curso actualizado:', data);
+      },
+      (error) => {
+        console.error('Error al actualizar el curso:', error);
+      }
+    );
+  }
+
+  cancelarEdicionCurso() {
+    this.isEditingCurso = false;
+    if (this.cursoBackup) {
+      this.cursoSeleccionado = { ...this.cursoBackup };
+      console.log('Edición de curso cancelada, datos restaurados:', this.cursoSeleccionado);
+    }
+  }
+
+  //Edicion Talleres
   editarTaller(taller: any) {
   }
 

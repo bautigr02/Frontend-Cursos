@@ -26,10 +26,11 @@ export class CourseService {
   }
 
   // Actualizar un curso
-  updateCourse(id: number, course: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, course);
+  patchCurso(id: number, course: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/${id}`, course);
   }
 
+  
   // Eliminar un curso
   deleteCurso(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
