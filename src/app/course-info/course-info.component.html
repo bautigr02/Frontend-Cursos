@@ -32,12 +32,12 @@
         *ngIf="course.estado === 1 && !yaInscripto">
         Inscribirse
       </button>
-      <span *ngIf="yaInscripto" class="inscripto-label">
+      <button *ngIf="yaInscripto" class="inscripto-label">
         Ya Inscripto
-      </span>
-      <span *ngIf="course.estado !== 1" class="curso-no-disponible">
+      </button>
+      <button *ngIf="course.estado !== 1 && !yaInscripto" class="curso-no-disponible">
         No disponible
-      </span>
+      </button>
     </div>
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">
@@ -58,13 +58,13 @@
         Inscribirse
       </button>
       <button id="more-info" routerLink="/courses">Mas cursos</button>
+      <span *ngIf="yaInscripto" class="inscripto-label">
+        Ya Inscripto
+      </span>
+      <span *ngIf="course.estado !== 1" class="curso-no-disponible">
+        No disponible
+      </span>
     </div>
-    <span *ngIf="yaInscripto" class="inscripto-label">
-      Ya Inscripto
-    </span>
-    <span *ngIf="course.estado !== 1" class="curso-no-disponible">
-      No disponible
-    </span>
     <div id="confirmationModal" class="modal" *ngIf="showModal">
       <div class="modal-content">
         <h2>Confirmar inscripción</h2>

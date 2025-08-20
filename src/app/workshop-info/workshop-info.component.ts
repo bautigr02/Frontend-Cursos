@@ -12,11 +12,13 @@ export class WorkshopInfoComponent implements OnInit {
   workshop: any;
   loading: boolean = true;
   showModal: boolean = false;
+  showCancellationModal: boolean = false;
   yaInscripto: boolean = false;
-  puedeInscribirse: boolean = false;
   mensajeError: string = '';
   user: any;
-  
+  talleresInscriptos: any[] = [];
+  fechaActual: Date = new Date();
+
   constructor(
     private _route: ActivatedRoute, 
     private workshopService: WorkshopService,
@@ -31,13 +33,27 @@ export class WorkshopInfoComponent implements OnInit {
       const workshopId = +params['id'];
       this.getWorkshopInfo(workshopId);
     });
+
+    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    if (user && user.dni) {
+      this.userService.getTalleresByAlumno(user.dni).subscribe(
+        (talleres) => {
+          this.talleresInscriptos = talleres;
+          // Si el taller actual está en la lista, ya está inscripto
+          this.yaInscripto = !!talleres.find(t => t.idtaller === this.workshop.idtaller && t.estado !== 3);
+        }
+      );
+    }
   }
 
   getWorkshopInfo(id: number): void {
     this.workshopService.getWorkshopById(id).subscribe(
       (data) => {
         this.workshop = data;
-
+        // Convertir fecha a objeto Date si es string
+        if (typeof this.workshop.fecha === 'string') {
+          this.workshop.fecha = new Date(this.workshop.fecha);
+        }
         // Convertir tematica y requisitos a arrays
         if (typeof this.workshop.tematica === 'string') {
           this.workshop.tematica = this.workshop.tematica.split(',').map((item: string) => item.trim());
@@ -47,9 +63,8 @@ export class WorkshopInfoComponent implements OnInit {
         }
 
         // Verificar si puede inscribirse
-        this.verificarInscripcion();
-        
         this.loading = false;
+        console.log('Información del taller:', data);
       },
       (error) => {
         console.error('Error al obtener el taller:', error);
@@ -58,72 +73,9 @@ export class WorkshopInfoComponent implements OnInit {
     );
   }
 
-verificarInscripcion(): void {
-  if (!this.user.dni) {
-    this.puedeInscribirse = false;
-    this.mensajeError = 'Debes estar logueado';
-    return;
-  }
-
-  // Verificar fecha del taller
-  const fechaTaller = new Date(this.workshop.fecha);
-  const fechaActual = new Date();
-  
-  if (fechaActual >= fechaTaller) {
-    this.puedeInscribirse = false;
-    this.mensajeError = 'El taller ya pasó';
-    return;
-  }
-
-  // Verificar si ya está inscripto (opcional: consulta al backend)
-  this.verificarInscripcionPrevia();
-}
-
-verificarInscripcionPrevia(): void {
-  // Obtener cursos del usuario para verificar si está inscripto al curso del taller
-  this.userService.getCursosByAlumno(this.user.dni).subscribe(
-    (cursos) => {
-      const cursoDelTaller = cursos.find(curso => 
-        curso.idcurso === this.workshop.idcurso && 
-        (curso.estado === 1 || curso.estado === 2)
-      );
-      
-      if (!cursoDelTaller) {
-        this.puedeInscribirse = false;
-        this.mensajeError = 'No inscripto al curso';
-        return;
-      }
-      
-      // Verificar talleres del usuario para ver si ya está inscripto
-      this.userService.getTalleresByAlumno(this.user.dni).subscribe(
-        (talleres) => {
-          const yaInscriptoEnTaller = talleres.some(t => t.idtaller === this.workshop.idtaller);
-          
-          if (yaInscriptoEnTaller) {
-            this.yaInscripto = true;
-            this.puedeInscribirse = false;
-          } else {
-            this.puedeInscribirse = true;
-          }
-        },
-        (error) => {
-          console.error('Error al obtener talleres:', error);
-          this.puedeInscribirse = true; // En caso de error, permitir intentar
-        }
-      );
-    },
-    (error) => {
-      console.error('Error al obtener cursos:', error);
-      this.puedeInscribirse = false;
-      this.mensajeError = 'Error al verificar inscripción al curso';
-    }
-  );
-}
-  
+  // Modal de inscripción
   openModal() {
-    if (this.puedeInscribirse) {
       this.showModal = true;
-    }
   }
 
   confirmModal() {
@@ -147,5 +99,31 @@ verificarInscripcionPrevia(): void {
 
   cancelModal() {
     this.showModal = false;
+  }
+
+  // Modal de cancelación
+
+  
+  openCancellationModal() {
+    this.showCancellationModal = true;
+  }
+
+  confirmCancellationModal() {
+    this.showCancellationModal = false;
+    this.userService.cancelarInscripcionTaller(this.user.dni, this.workshop.idtaller).subscribe(
+      () => {
+        this.yaInscripto = false;
+        this.showCancellationModal = false;
+        alert('Inscripción cancelada correctamente.');
+      },
+      (error) => {
+        alert('Error al cancelar la inscripción.');
+        this.showCancellationModal = false;
+      }
+    );
+  }
+
+  closeCancellationModal() {
+    this.showCancellationModal = false;
   }
 }

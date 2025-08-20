@@ -26,6 +26,30 @@ hr{
   margin: 1rem;
 }
 
+#inscription {
+  color: white;
+  background-color: #426B1F;
+  width: 175px;
+  height: 60px;
+  border-radius: 5px;
+  font-size: 22px;
+  margin: 15px;
+  border: none;
+  cursor: pointer;
+}
+
+#more-info {
+  color: white;
+  background-color: grey;
+  width: 175px;
+  height: 60px;
+  border-radius: 5px;
+  margin: 15px;
+  font-size: 22px;
+  border: none;
+  cursor: pointer;
+}
+
 .inscripto-label {
   width: 175px;
   height: 60px;
@@ -76,7 +100,6 @@ button[disabled] {
   cursor: pointer;
   background-color: #e0e0e0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 1.5px 4px rgba(0, 0, 0, 0.10);  
-
 }
 
 .content{
@@ -124,31 +147,6 @@ button[disabled] {
   padding: 2rem;
   border-radius: 8px;
   text-align: center;
-}
-
-#inscription{
-  color: white;
-  font-size: 22px;
-  width: 175px;
-  height: 60px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 15px;
-  background-color: #426B1F;
-}
-
-
-#more-info{
-  color: white;
-  font-size: 22px;
-  width: 175px;
-  height: 60px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 15px;
-  background-color: grey;
 }
 
 .loading-spinner{
