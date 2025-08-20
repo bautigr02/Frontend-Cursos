@@ -36,7 +36,7 @@ export class UserLearningComponent implements OnInit {
     );
 
     // Obtener talleres del alumno
-    this.userService.getUltimosTalleresByAlumno(dni).subscribe(
+    this.userService.getTalleresByAlumno(dni).subscribe(
       (data) => { this.ultimosTalleres = data; },
       (error) => { console.error('Error al obtener talleres:', error); }
     );

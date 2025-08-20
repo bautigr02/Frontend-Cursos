@@ -17,21 +17,26 @@
     </ul>
   </div>
 
+  <!-- BOTONES -->
   <div class="buttons">
     <button id="more-info" routerLink='/workshops'>Mas talleres</button>
-
-    <!-- Botón de inscripción con validaciones -->
-    <button id="inscription" (click)="openModal()" *ngIf="puedeInscribirse && !yaInscripto">
+    <button id="inscription" (click)="openModal()" *ngIf="!yaInscripto ">
       Inscribirse
     </button>
-
-    <!-- Mensajes de estado -->
-    <span *ngIf="yaInscripto" class="inscripto-label">
+    <button *ngIf="yaInscripto" class="inscripto-label">
       Ya inscripto
-    </span>
-    <span *ngIf="!puedeInscribirse && !yaInscripto" class="no-disponible">
-      {{mensajeError}}
-    </span>
+    </button>
+    <button *ngIf="yaInscripto && fechaActual < workshop.fecha" class="cancelar" (click)="openCancellationModal()">
+      Cancelar
+    </button>
+    <!--
+  <button 
+  *ngIf="!yaInscripto && workshop.nota_taller !== null" 
+  class="terminado">
+  Terminado
+</button>
+-->
+
   </div>
 
   <!-- Modal de confirmación -->
@@ -41,6 +46,16 @@
       <p>¿Estás seguro de que deseas inscribirte en este taller?</p>
       <button id="inscription" (click)="confirmModal()">Sí</button>
       <button id="more-info" (click)="cancelModal()">No</button>
+    </div>
+  </div>
+
+  <!-- Modal de cancelación -->
+  <div id="cancellationModal" class="modal" *ngIf="showCancellationModal">
+    <div class="modal-content">
+      <h2>Confirmar cancelación</h2>
+      <p>¿Estás seguro de que deseas cancelar tu inscripción en este taller?</p>
+      <button id="inscription" (click)="confirmCancellationModal()">Sí</button>
+      <button id="more-info" (click)="closeCancellationModal()">No</button>
     </div>
   </div>
 </ng-container>
