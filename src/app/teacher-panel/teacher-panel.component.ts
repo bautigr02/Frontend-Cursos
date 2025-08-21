@@ -22,6 +22,13 @@ export class TeacherPanelComponent implements OnInit {
   cursoSeleccionado: any;
   taller: any;
   tallerSeleccionado: any;
+  alumno: any;
+  alumnosInscritos: any[] = [];
+  alumnosTaller: any[] = [];
+  historialTalleres: any[] = [];
+  isInsertarNota = false;
+  alumnoSeleccionado: any;
+  nuevaNota: number | null = null;
 
   constructor(
     private http: HttpClient,
@@ -174,5 +181,83 @@ export class TeacherPanelComponent implements OnInit {
       this.tallerSeleccionado = { ...this.tallerBackup };
       console.log('Edición de taller cancelada, datos restaurados:', this.tallerSeleccionado);
     }
+  }
+
+  // Crear una funcion verAlumnos que te genere un listado de alumnos que estan inscriptos a un curso determinado
+  verAlumnos(curso: any) {
+    this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
+      (alumnos) => {
+        this.alumnosInscritos = alumnos;
+        this.cursoSeleccionado = curso;
+        console.log('Alumnos inscritos en el curso:', alumnos);
+      },
+      (error) => {
+        console.error('Error al obtener alumnos inscritos:', error);
+      }
+    );
+  }
+
+  cerrarAlumnosInscritos(){
+    this.alumnosInscritos = [];
+  }
+  
+  verAlumnosTaller(taller: any) {
+    this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
+      (alumnos) => {
+        this.alumnosTaller = alumnos;
+        this.tallerSeleccionado = taller;
+        console.log('Alumnos inscritos en el taller:', alumnos);
+      },
+      (error) => {
+        console.error('Error al obtener alumnos inscritos:', error);
+      }
+    );
+  }
+
+  insertarNota(alumno: any) {
+    this.alumnoSeleccionado = alumno;
+    this.isInsertarNota = true;
+  }
+
+  agregarNota(alumno: any) {
+  this.teacherService.insertNotaAlumno({
+    dni: alumno.dni,
+    nota_taller: this.nuevaNota,
+    idtaller: this.tallerSeleccionado.idtaller
+  }).subscribe(
+    (response) => {
+      console.log('Nota agregada:', response);
+    },
+    (error) => {
+      console.error('Error al agregar nota:', error);
+    }
+  );
+}
+
+  cancelarInsercionNota() {
+    this.isInsertarNota = false;
+    this.nuevaNota = null;
+  }
+
+  cerrarAlumnosInscritosTaller(){
+    this.alumnosTaller = [];
+  }
+
+  //Historial de talleres x docente
+
+  verHistorial(){
+    this.teacherService.showTalleresHistorial(this.user.dni).subscribe(
+      (historial) => {
+        this.historialTalleres = historial;
+        console.log('Historial de talleres:', historial);
+      },
+      (error) => {
+        console.error('Error al obtener historial de talleres:', error);
+      }
+    );
+  }
+
+  cerrarHistorial(){
+    this.historialTalleres = [];
   }
 }
