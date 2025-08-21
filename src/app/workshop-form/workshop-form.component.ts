@@ -15,6 +15,7 @@ export class WorkshopFormComponent implements OnInit {
   talleresAgregados: any[] = [];
   tallerForm!: FormGroup;
   isErrorVisible: boolean = false;
+  isSuccessVisible: boolean = false;
   totalTalleres: number = 0;
 
   constructor(
@@ -83,6 +84,7 @@ export class WorkshopFormComponent implements OnInit {
         console.log('Respuesta de los talleres:', responseTalleres);
         this.CourseWorkshopService.clearData(); 
         this.isErrorVisible = false;
+        this.isSuccessVisible = true;
         this.router.navigate(['/teacher-panel']); 
       },
       error: (error) => {

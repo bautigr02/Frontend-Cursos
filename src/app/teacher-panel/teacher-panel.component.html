@@ -52,9 +52,10 @@
         <h4>Mis cursos</h4>
           <ng-container *ngIf="cursos.length > 0; else sinCursos">
             <ul>
-              <p *ngFor="let curso of cursos">
+              <li *ngFor="let curso of cursos">
                 {{ curso.nom_curso }} <span *ngIf="curso.num_aula"> - Aula: {{ curso.num_aula }}</span>
-              </p>
+                <button class="edit-btn" title="Editar curso" (click)="editarCurso(curso)">✎</button>
+              </li> 
             </ul>
           </ng-container>
           <ng-template #sinCursos>
@@ -70,11 +71,12 @@
           <ng-container *ngFor="let curso of cursos">
             <ng-container *ngIf="curso.talleres && curso.talleres.length > 0;">
               <ul>
-                  <p *ngFor="let taller of curso.talleres">
-                    {{ taller.Nom_taller }}
+                  <li *ngFor="let taller of curso.talleres">
+                    {{ taller.nom_taller }}
                     <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
                     <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
-                  </p>
+                    <button class="edit-btn" title="Editar taller" (click)="editarTaller(taller)">✎</button>
+                  </li>  
               </ul>
             </ng-container>
           </ng-container>
@@ -82,4 +84,59 @@
       </div>
     </div>
   </div>
+  <!---Visibilziar este contenedor cuando se de click a un edit-btn de la seccion de cursos-->
+  <div *ngIf="isEditingCurso" class="edicionCurso">
+      <form action="" (ngSubmit)="guardarCursoModificado()">
+          <p>
+              <strong>Nombre del curso:</strong>
+              <input [(ngModel)]="cursoSeleccionado.nom_curso" name="nombreCurso" required />
+          </p>
+          <p>
+              <strong>Aula:</strong>
+              <input [(ngModel)]="cursoSeleccionado.num_aula" name="aulaCurso" required/>
+          </p>
+          <p>
+              <strong>Descripción:</strong>
+              <textarea [(ngModel)]="cursoSeleccionado.descripcion" name="descripcionCurso" required></textarea>
+          </p>
+          <p>
+            <strong>Fecha de inicio:</strong>
+            <input [(ngModel)]="cursoSeleccionado.fec_inicio" name="fechaInicio" type="date" required />
+          </p>
+          <p>
+            <strong>Fecha Fin:</strong>
+            <input [(ngModel)]="cursoSeleccionado.fec_fin" name="fechaFin" type="date" required />
+          </p>
+          <button type="submit" class="save-btn">Guardar</button>
+          <button type="button" class="cancel-btn" (click)="cancelarEdicionCurso()">Cancelar</button>
+      </form>
+  </div>
+
+  <div *ngIf="isEditingTaller" class="edicionTaller">
+      <form action="" (ngSubmit)="guardarTallerModificado()">
+          <p>
+              <strong>Nombre del taller:</strong>
+              <input [(ngModel)]="tallerSeleccionado.nom_taller" name="nombreTaller" required />
+          </p>
+          <p>
+              <strong>Fecha:</strong>
+              <input [(ngModel)]="tallerSeleccionado.fecha" name="fechaTaller" type="date" required />
+          </p>
+          <p>
+              <strong>Hora de inicio:</strong>
+              <input [(ngModel)]="tallerSeleccionado.hora_ini" name="horaInicioTaller" type="time" required />
+          </p>
+          <p>
+            <strong>Tematica:</strong>
+            <input [(ngModel)]="tallerSeleccionado.tematica" name="tematicaTaller" required />
+          </p>
+          <p>
+            <strong>Requisitos:</strong>
+            <textarea [(ngModel)]="tallerSeleccionado.requisitos" name="requisitosTaller" required></textarea>
+          </p>
+          <button type="submit" class="save-btn">Guardar</button>
+          <button type="button" class="cancel-btn" (click)="cancelarEdicionTaller()">Cancelar</button>
+      </form>
+  </div>
+
 </div>

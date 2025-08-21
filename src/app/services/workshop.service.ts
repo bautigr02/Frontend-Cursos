@@ -22,8 +22,8 @@ export class WorkshopService {
     return this.http.post<any>(this.apiUrl, workshop);
   }
   // Actualizar un taller
-  updateWorkshop(id: number, workshop: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, workshop);
+  patchTaller(id: number, workshop: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/${id}`, workshop);
   }
   // Eliminar un taller
   deleteWorkshop(id: number): Observable<any> {
