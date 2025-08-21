@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { TeacherService } from '../services/teacher.service';
 import { CourseService } from '../services/course.service';
+import { WorkshopService } from '../services/workshop.service';
 
 @Component({
   selector: 'app-teacher-panel',
@@ -16,15 +17,18 @@ export class TeacherPanelComponent implements OnInit {
   talleres: any[] = [];
   isEditing = false;
   isEditingCurso = false;
+  isEditingTaller = false;
   curso: any;
   cursoSeleccionado: any;
   taller: any;
-  
+  tallerSeleccionado: any;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private teacherService: TeacherService,
     private CourseService: CourseService,
+    private workshopService: WorkshopService
   ) {}
 
 
@@ -139,7 +143,36 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   //Edicion Talleres
+  tallerBackup: any; // Backup de los datos del taller antes de editar
   editarTaller(taller: any) {
+    this.tallerBackup = { ...taller };
+    this.tallerSeleccionado = taller;
+    this.isEditingTaller = true;
   }
 
+  guardarTallerModificado() {
+    console.log('Intentando guardar taller modificado...');
+    delete this.tallerSeleccionado.curso;
+    if (this.tallerSeleccionado.fecha) {
+    this.tallerSeleccionado.fecha = this.tallerSeleccionado.fecha.slice(0, 10);
+  }
+    this.workshopService.patchTaller(this.tallerSeleccionado.idtaller, this.tallerSeleccionado).subscribe(
+      (data) => {
+        this.isEditingTaller = false;
+        this.tallerSeleccionado.curso = this.tallerBackup.curso;
+        console.log('Taller actualizado:', data);
+      },
+      (error) => {
+        console.error('Error al actualizar el taller:', error);
+      }
+    );
+  }
+
+  cancelarEdicionTaller() {
+    this.isEditingTaller = false;
+    if (this.tallerBackup) {
+      this.tallerSeleccionado = { ...this.tallerBackup };
+      console.log('Edición de taller cancelada, datos restaurados:', this.tallerSeleccionado);
+    }
+  }
 }
