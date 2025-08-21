@@ -82,7 +82,7 @@
               </ul>
             </ng-container>
           </ng-container>
-        <button class="historial-btn">Historial</button>
+        <button class="historial-btn" (click)="verHistorial()">Historial</button>
       </div>
     </div>
   </div>
@@ -153,10 +153,33 @@
     <h4>Alumnos inscritos en el Taller: {{tallerSeleccionado.nom_taller}}</h4>
     <ul>
       <li *ngFor="let alumno of alumnosTaller">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}
-      <button (click)="agregarNota(alumno)">Agregar Nota</button>
+      <button (click)="insertarNota(alumno)">Agregar Nota</button>
       </li>
     </ul>
     <button (click)="cerrarAlumnosInscritosTaller()">Cerrar</button>
+  </div>
+
+  <!--Contenedor de Insercion de nota nueva de taller-->
+  <div *ngIf="isInsertarNota">
+    <h4>Agregar Nota a {{alumnoSeleccionado.nombre_alumno}} {{alumnoSeleccionado.apellido_alumno}}</h4>
+    <form (ngSubmit)="agregarNota(alumnoSeleccionado)">
+      <p>
+        <strong>Nota:</strong>
+        <input [(ngModel)]="nuevaNota" name="nota" required />
+      </p>
+      <button type="submit" class="save-btn">Guardar</button>
+      <button type="button" class="cancel-btn" (click)="cancelarInsercionNota()">Cancelar</button>
+    </form>
+  </div>
+
+  <!--Contenedor de historial de talleres-->
+  <div *ngIf="historialTalleres.length > 0">
+    <h4>Historial de Talleres para el Curso: {{cursoSeleccionado.nom_curso}}</h4>
+    <ul>
+      <li *ngFor="let taller of historialTalleres">
+        {{ taller.nom_taller }} - Fecha: {{ taller.fecha | date }}
+      </li>
+    </ul>
   </div>
 
 </div>

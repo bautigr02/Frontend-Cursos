@@ -23,4 +23,12 @@ export class TeacherService {
   getAlumnosByTallerId(idtaller: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/talleres/alumnos/${idtaller}`);
   }
+
+  insertNotaAlumno(nota: any) {
+    return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota`, nota);
+  }
+
+  showTalleresHistorial(idcurso: number): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:3000/api/docente/talleres/historial/${idcurso}`);
+  }
 }
