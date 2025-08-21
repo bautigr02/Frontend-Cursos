@@ -24,6 +24,8 @@ export class TeacherPanelComponent implements OnInit {
   tallerSeleccionado: any;
   alumno: any;
   alumnosInscritos: any[] = [];
+  alumnosTaller: any[] = [];
+
 
   constructor(
     private http: HttpClient,
@@ -196,6 +198,25 @@ export class TeacherPanelComponent implements OnInit {
     this.alumnosInscritos = [];
   }
   
-  agregarNota(alumno: any) {}
+  verAlumnosTaller(taller: any) {
+    this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
+      (alumnos) => {
+        this.alumnosTaller = alumnos;
+        this.tallerSeleccionado = taller;
+        console.log('Alumnos inscritos en el taller:', alumnos);
+      },
+      (error) => {
+        console.error('Error al obtener alumnos inscritos:', error);
+      }
+    );
+  }
 
+  agregarNota(alumno: any) {
+    // Lógica para agregar una nota al alumno
+  }
+
+
+  cerrarAlumnosInscritosTaller(){
+    this.alumnosTaller = [];
+  }
 }

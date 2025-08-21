@@ -19,4 +19,8 @@ export class TeacherService {
   getAlumnosByCursoId(idcurso: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/cursos/alumnos/${idcurso}`);
   }
+
+  getAlumnosByTallerId(idtaller: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/talleres/alumnos/${idtaller}`);
+  }
 }

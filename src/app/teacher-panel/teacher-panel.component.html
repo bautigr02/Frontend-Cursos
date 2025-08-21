@@ -77,6 +77,7 @@
                     <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
                     <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
                     <button class="edit-btn" title="Editar taller" (click)="editarTaller(taller)">✎</button>
+                    <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnosTaller(taller)">👤</button>
                   </li>  
               </ul>
             </ng-container>
@@ -143,11 +144,19 @@
   <div *ngIf="alumnosInscritos.length > 0" class="alumnos-inscritos">
     <h4>Alumnos inscritos en el curso: {{cursoSeleccionado.nom_curso}}</h4>
     <ul>
-      <li *ngFor="let alumno of alumnosInscritos">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}
+      <li *ngFor="let alumno of alumnosInscritos">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}</li>
+    </ul>
+    <button (click)="cerrarAlumnosInscritos()">Cerrar</button>
+  </div>
+
+    <div *ngIf="alumnosTaller.length > 0" class="alumnos-inscritos">
+    <h4>Alumnos inscritos en el Taller: {{tallerSeleccionado.nom_taller}}</h4>
+    <ul>
+      <li *ngFor="let alumno of alumnosTaller">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}
       <button (click)="agregarNota(alumno)">Agregar Nota</button>
       </li>
     </ul>
-    <button (click)="cerrarAlumnosInscritos()">Cerrar</button>
+    <button (click)="cerrarAlumnosInscritosTaller()">Cerrar</button>
   </div>
 
 </div>
