@@ -174,12 +174,13 @@
 
   <!--Contenedor de historial de talleres-->
   <div *ngIf="historialTalleres.length > 0">
-    <h4>Historial de Talleres para el Curso: {{cursoSeleccionado.nom_curso}}</h4>
+    <h4>Historial de Talleres</h4>
     <ul>
       <li *ngFor="let taller of historialTalleres">
-        {{ taller.nom_taller }} - Fecha: {{ taller.fecha | date }}
+        {{ taller.nom_taller }} - Fecha: {{ taller.fecha | date: 'dd/MM/yyyy' }}
       </li>
     </ul>
+    <button (click)="cerrarHistorial()">Cerrar</button>
   </div>
 
 </div>

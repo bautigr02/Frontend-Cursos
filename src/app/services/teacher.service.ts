@@ -25,10 +25,12 @@ export class TeacherService {
   }
 
   insertNotaAlumno(nota: any) {
-    return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota`, nota);
+    const { dni, nota_taller, idtaller } = nota;
+    return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota`, { dni, nota_taller, idtaller });
   }
 
-  showTalleresHistorial(idcurso: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/api/docente/talleres/historial/${idcurso}`);
+  showTalleresHistorial(dni_docente: string): Observable<any[]> {
+  return this.http.get<any[]>(`http://localhost:3000/api/docente/talleres/historial/${dni_docente}`);
   }
+  
 }

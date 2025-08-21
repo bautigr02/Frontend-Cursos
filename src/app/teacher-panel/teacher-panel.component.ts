@@ -220,15 +220,19 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   agregarNota(alumno: any) {
-    this.teacherService.insertNotaAlumno(alumno).subscribe(
-      (response) => {
-        console.log('Nota agregada:', response);
-      },
-      (error) => {
-        console.error('Error al agregar nota:', error);
-      }
-    );
-  }
+  this.teacherService.insertNotaAlumno({
+    dni: alumno.dni,
+    nota_taller: this.nuevaNota,
+    idtaller: this.tallerSeleccionado.idtaller
+  }).subscribe(
+    (response) => {
+      console.log('Nota agregada:', response);
+    },
+    (error) => {
+      console.error('Error al agregar nota:', error);
+    }
+  );
+}
 
   cancelarInsercionNota() {
     this.isInsertarNota = false;
@@ -242,7 +246,7 @@ export class TeacherPanelComponent implements OnInit {
   //Historial de talleres x docente
 
   verHistorial(){
-    this.teacherService.showTalleresHistorial(this.cursoSeleccionado.idcurso).subscribe(
+    this.teacherService.showTalleresHistorial(this.user.dni).subscribe(
       (historial) => {
         this.historialTalleres = historial;
         console.log('Historial de talleres:', historial);
@@ -251,5 +255,9 @@ export class TeacherPanelComponent implements OnInit {
         console.error('Error al obtener historial de talleres:', error);
       }
     );
+  }
+
+  cerrarHistorial(){
+    this.historialTalleres = [];
   }
 }
