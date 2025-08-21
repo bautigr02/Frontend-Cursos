@@ -15,4 +15,8 @@ export class TeacherService {
   updateDocente(user: any) {
     return this.http.patch(`http://localhost:3000/api/docente/${user.dni}`, user);
   }
+
+  getAlumnosByCursoId(idcurso: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/cursos/alumnos/${idcurso}`);
+  }
 }

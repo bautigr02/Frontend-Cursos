@@ -55,7 +55,8 @@
               <li *ngFor="let curso of cursos">
                 {{ curso.nom_curso }} <span *ngIf="curso.num_aula"> - Aula: {{ curso.num_aula }}</span>
                 <button class="edit-btn" title="Editar curso" (click)="editarCurso(curso)">✎</button>
-              </li> 
+                <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnos(curso)">👤</button>
+              </li>
             </ul>
           </ng-container>
           <ng-template #sinCursos>
@@ -137,6 +138,16 @@
           <button type="submit" class="save-btn">Guardar</button>
           <button type="button" class="cancel-btn" (click)="cancelarEdicionTaller()">Cancelar</button>
       </form>
+  </div>
+
+  <div *ngIf="alumnosInscritos.length > 0" class="alumnos-inscritos">
+    <h4>Alumnos inscritos en el curso: {{cursoSeleccionado.nom_curso}}</h4>
+    <ul>
+      <li *ngFor="let alumno of alumnosInscritos">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}
+      <button (click)="agregarNota(alumno)">Agregar Nota</button>
+      </li>
+    </ul>
+    <button (click)="cerrarAlumnosInscritos()">Cerrar</button>
   </div>
 
 </div>

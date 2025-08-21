@@ -22,6 +22,8 @@ export class TeacherPanelComponent implements OnInit {
   cursoSeleccionado: any;
   taller: any;
   tallerSeleccionado: any;
+  alumno: any;
+  alumnosInscritos: any[] = [];
 
   constructor(
     private http: HttpClient,
@@ -175,4 +177,25 @@ export class TeacherPanelComponent implements OnInit {
       console.log('Edición de taller cancelada, datos restaurados:', this.tallerSeleccionado);
     }
   }
+
+  // Crear una funcion verAlumnos que te genere un listado de alumnos que estan inscriptos a un curso determinado
+  verAlumnos(curso: any) {
+    this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
+      (alumnos) => {
+        this.alumnosInscritos = alumnos;
+        this.cursoSeleccionado = curso;
+        console.log('Alumnos inscritos en el curso:', alumnos);
+      },
+      (error) => {
+        console.error('Error al obtener alumnos inscritos:', error);
+      }
+    );
+  }
+
+  cerrarAlumnosInscritos(){
+    this.alumnosInscritos = [];
+  }
+  
+  agregarNota(alumno: any) {}
+
 }
