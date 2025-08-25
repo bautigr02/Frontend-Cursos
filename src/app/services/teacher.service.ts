@@ -15,4 +15,22 @@ export class TeacherService {
   updateDocente(user: any) {
     return this.http.patch(`http://localhost:3000/api/docente/${user.dni}`, user);
   }
+
+  getAlumnosByCursoId(idcurso: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/cursos/alumnos/${idcurso}`);
+  }
+
+  getAlumnosByTallerId(idtaller: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/talleres/alumnos/${idtaller}`);
+  }
+
+  insertNotaAlumno(nota: any) {
+    const { dni, nota_taller, idtaller } = nota;
+    return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota`, { dni, nota_taller, idtaller });
+  }
+
+  showTalleresHistorial(dni_docente: string): Observable<any[]> {
+  return this.http.get<any[]>(`http://localhost:3000/api/docente/talleres/historial/${dni_docente}`);
+  }
+  
 }
