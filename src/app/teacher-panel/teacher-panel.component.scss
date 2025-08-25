@@ -167,7 +167,70 @@ hr {
   max-width: 90vw;
 }
 
-.alumnos-inscritos{
+.alumnos-inscritos {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  z-index: 1000;
+  min-width: 600px;
+  max-width: 900px;
+}
+
+.alumnos-inscritos table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.alumnos-inscritos th,
+.alumnos-inscritos td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.alumnos-inscritos th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.alumnos-inscritos tr:last-child td {
+  border-bottom: none;
+}
+
+.alumnos-inscritos tr:hover {
+  background-color: #fafafa;
+}
+
+//Controla tamaño de las columnas
+.alumnos-inscritos th:nth-child(1),
+.alumnos-inscritos td:nth-child(1) {
+  width: 20%;
+}
+
+.alumnos-inscritos th:nth-child(2),
+.alumnos-inscritos td:nth-child(2) {
+  width: 20%;
+}
+
+.alumnos-inscritos th:nth-child(3),
+.alumnos-inscritos td:nth-child(3) {
+  width: 40%;
+  word-break: break-word;
+}
+
+.alumnos-inscritos th:nth-child(4),
+.alumnos-inscritos td:nth-child(4) {
+  width: 20%;
+  text-align: center;
+}
+
+.alumno-nota {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -181,6 +244,37 @@ hr {
   max-width: 90vw;
 }
 
-.alumnos-inscritos li {
-  margin-bottom: 0.5rem;
+.historial-talleres {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  z-index: 1000;
+  min-width: 350px;
+  max-width: 90vw;
+}
+
+.historial-talleres th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+
+.historial-talleres th,
+.historial-talleres td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.historial-talleres tr:last-child td {
+  border-bottom: none;
+}
+
+.historial-talleres tr:hover {
+  background-color: #fafafa;
 }
