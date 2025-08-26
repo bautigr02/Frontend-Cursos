@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>workshop-form</title>
+</head>
+
+<body>
+  <div class="form-container">
+    <button routerLink="/course-form" class="btn-regresar" type="button">Volver</button>
+
+    <h2>Registro de Talleres</h2>
+    <hr>
+
+    <form [formGroup]="tallerForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="nom_taller">Nombre del Taller</label>
+        <input type="text" id="nom_taller" placeholder="Taller de Git" formControlName="nom_taller">
+        <div *ngIf="tallerForm.get('nom_taller')?.touched && tallerForm.get('nom_taller')?.invalid">
+          <small *ngIf="tallerForm.get('nom_taller')?.errors?.['required']">El nombre del taller es requerido.</small>
+          <small *ngIf="tallerForm.get('nom_taller')?.errors?.['maxlength']">Máximo 45 caracteres permitidos.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" formControlName="fecha">
+        <div *ngIf="tallerForm.get('fecha')?.touched && tallerForm.get('fecha')?.invalid">
+          <small *ngIf="tallerForm.get('fecha')?.errors?.['required']">La fecha es requerida.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="tematica">Temática</label>
+        <input type="text" id="tematica" placeholder="Control de versiones" formControlName="tematica">
+        <div *ngIf="tallerForm.get('tematica')?.touched && tallerForm.get('tematica')?.invalid">
+          <small *ngIf="tallerForm.get('tematica')?.errors?.['required']">La temática es requerida.</small>
+          <small *ngIf="tallerForm.get('tematica')?.errors?.['maxlength']">Máximo 30 caracteres permitidos.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="herramienta">Herramienta</label>
+        <input type="text" id="herramienta" placeholder="GitHub" formControlName="herramienta">
+        <div *ngIf="tallerForm.get('herramienta')?.touched && tallerForm.get('herramienta')?.invalid">
+          <small *ngIf="tallerForm.get('herramienta')?.errors?.['required']">La herramienta es requerida.</small>
+          <small *ngIf="tallerForm.get('herramienta')?.errors?.['maxlength']">Máximo 30 caracteres permitidos.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="hora_ini">Hora de Inicio</label>
+        <input type="time" id="hora_ini" formControlName="hora_ini">
+        <div *ngIf="tallerForm.get('hora_ini')?.touched && tallerForm.get('hora_ini')?.invalid">
+          <small *ngIf="tallerForm.get('hora_ini')?.errors?.['required']">La hora de inicio es requerida.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="requisitos">Requisitos</label>
+        <input type="text" id="requisitos" placeholder="Conocimientos básicos de terminal" formControlName="requisitos">
+        <div *ngIf="tallerForm.get('requisitos')?.touched && tallerForm.get('requisitos')?.invalid">
+          <small *ngIf="tallerForm.get('requisitos')?.errors?.['required']">Los requisitos son requeridos.</small>
+          <small *ngIf="tallerForm.get('requisitos')?.errors?.['maxlength']">Máximo 70 caracteres permitidos.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="dificultad">Dificultad</label>
+        <input type="text" id="dificultad" placeholder="1-10" formControlName="dificultad">
+        <div *ngIf="tallerForm.get('dificultad')?.touched && tallerForm.get('dificultad')?.invalid">
+          <small *ngIf="tallerForm.get('dificultad')?.errors?.['required']">La dificultad es requerida.</small>
+          <small *ngIf="tallerForm.get('dificultad')?.errors?.['min']">Mínimo 1.</small>
+          <small *ngIf="tallerForm.get('dificultad')?.errors?.['max']">Máximo 10.</small>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="imagen">URL de la Imagen</label>
+        <input type="text" id="imagen" placeholder="https://..." formControlName="imagen">
+        <div *ngIf="tallerForm.get('imagen')?.touched && tallerForm.get('imagen')?.invalid">
+          <small *ngIf="tallerForm.get('imagen')?.errors?.['required']">La URL de la imagen es requerida.</small>
+          <small *ngIf="tallerForm.get('imagen')?.errors?.['pattern']">La URL no es válida.</small>
+        </div>
+      </div>
+
+      
+      <button type="button" class="btn-agregar-taller" (click)="addTaller()">Agregar Taller</button>
+      <label for="totalTalleres">Total Talleres cargados: {{totalTalleres}}</label>
+      <button type="submit" >Finalizar carga curso</button>
+    </form>
+  </div>
+
+  <div *ngIf="isErrorVisible" class="error-login">
+    <p>Campo con dato incorrecto o incompleto.</p>
+    <button (click)="isErrorVisible = false" class="btn-cerrar-error">Cerrar</button>
+  </div>
+
+  <div *ngIf="isSuccessVisible" class="success-login">
+    <p>Curso + talleres creados exitosamente.</p>
+    <button (click)="isSuccessVisible = false" class="btn-cerrar-success">Cerrar</button>
+  </div>
+</body>
+</html>

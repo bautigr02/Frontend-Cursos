@@ -10,7 +10,8 @@ import { WorkshopInfoComponent } from './workshop-info/workshop-info.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserLearningComponent } from './user-learning/user-learning.component';
 import { TeacherPanelComponent } from './teacher-panel/teacher-panel.component';
-
+import { CourseFormComponent } from './course-form/course-form.component';
+import { WorkshopFormComponent } from './workshop-form/workshop-form.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,6 +24,8 @@ const routes: Routes = [
   {path: 'workshops', component: AllWorkshopsComponent},
   {path: 'workshops/:id', component: WorkshopInfoComponent},
   {path: 'teacher-panel', component: TeacherPanelComponent},
+  {path:'course-form', component: CourseFormComponent},
+  {path:'workshop-form', component: WorkshopFormComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ]; 
 

@@ -21,17 +21,18 @@ export class CourseService {
   }
 
   // Crear un curso
-  createCourse(course: any): Observable<any> {
+  createCurso(course: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, course);
   }
 
   // Actualizar un curso
-  updateCourse(id: number, course: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, course);
+  patchCurso(id: number, course: any): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/${id}`, course);
   }
 
+  
   // Eliminar un curso
-  deleteCourse(id: number): Observable<any> {
+  deleteCurso(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
 }

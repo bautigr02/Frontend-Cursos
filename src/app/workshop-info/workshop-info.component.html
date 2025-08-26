@@ -20,7 +20,10 @@
   <!-- BOTONES -->
   <div class="buttons">
     <button id="more-info" routerLink='/workshops'>Mas talleres</button>
-    <button id="inscription" (click)="openModal()" *ngIf="!yaInscripto ">
+    <button 
+      id="inscription" 
+      (click)="openModal()" 
+      *ngIf="!yaInscripto ">
       Inscribirse
     </button>
     <button *ngIf="yaInscripto" class="inscripto-label">
@@ -29,7 +32,7 @@
     <button *ngIf="yaInscripto && fechaActual < workshop.fecha" class="cancelar" (click)="openCancellationModal()">
       Cancelar
     </button>
-    <!--
+<!--
   <button 
   *ngIf="!yaInscripto && workshop.nota_taller !== null" 
   class="terminado">

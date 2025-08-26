@@ -9,15 +9,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 60px;
     background-image: linear-gradient(to right bottom, #f6edd9, #dcd6bb, #bfc09f, #a1ab85, #82976d);
     border-top: 2px solid #333;
     border-bottom: 2px solid #333;
 }
 
-.login-container {
+.form-container {
     position: relative;
-    padding-top: 500px;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
@@ -27,9 +28,9 @@ body {
     text-align: center;
 }
 
-.btn-regresar{
+.btn-regresar {
     margin: 2%;
-    top:0% ;
+    top: 0%;
     left: 0%;
     position: absolute;
     width: 20%;
@@ -41,7 +42,10 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
 
+.btn-regresar:hover {
+    background-color: #365517;
 }
 
 h2 {
@@ -51,7 +55,7 @@ h2 {
     font-size: 24px;
 }
 
-hr{
+hr {
     margin-left: 50px;
     margin-bottom: 25px;
     width: 230px;
@@ -71,7 +75,8 @@ label {
     font-size: 14px;
 }
 
-input {
+input,
+textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -80,14 +85,28 @@ input {
     transition: border-color 0.3s;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
     border-color: #426B1F;
     outline: none;
 }
 
-button {
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+small {
+    color: red;
+    display: block;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.btn-agregar-taller{
     width: 80%;
     padding: 12px;
+    margin-bottom: 5px;
     background-color: #426B1F;
     border: none;
     border-radius: 5px;
@@ -97,13 +116,29 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.btn-agregar-taller:hover {
     background-color: #365517;
 }
 
-.error-login{
+button[type="submit"] {
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 5px;
+    background-color: #426B1F;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #365517;
+}
+
+.error-login {
     position: fixed;
-    padding-top: 500px;
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
@@ -115,13 +150,12 @@ button:hover {
     border: 2px solid #426B1F;
 }
 
-.error-login p{
+.error-login p {
     color: red;
     font-size: 16px;
     padding-bottom: 15px;
     display: block;
 }
-
 .success-login {
     position: fixed;
     background-color: #fff;
@@ -140,7 +174,16 @@ button:hover {
     padding-bottom: 15px;
     display: block;
 }
-
+.btn-cerrar-error {
+    width: auto;
+    padding: 10px 20px;
+    background-color: #426B1F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
 .btn-cerrar-success {
     width: auto;
     padding: 10px 20px;
