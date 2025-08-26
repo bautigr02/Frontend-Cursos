@@ -29,10 +29,7 @@
     <button *ngIf="yaInscripto" class="inscripto-label">
       Ya inscripto
     </button>
-    <button 
-      *ngIf="yaInscripto && fechaActual < workshop.fecha" 
-      class="cancelar"
-      (click)="openCancellationModal()">
+    <button *ngIf="yaInscripto && fechaActual < workshop.fecha" class="cancelar" (click)="openCancellationModal()">
       Cancelar
     </button>
 <!--

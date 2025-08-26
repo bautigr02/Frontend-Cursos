@@ -19,17 +19,14 @@
         <p>Dificultad: {{workshop.dificultad}}</p>
         <p>Comienza: {{workshop.fecha | date:'dd/MM/yyyy'}}</p>
         <p>Hora: {{workshop.hora_ini.slice(0,5)}}</p>
-        </div>
+      </div>
     </div>
     <hr>
 
     <!-- BOTONES -->
     <div class="buttons">
       <button id="more-info" routerLink="/courses">Mas cursos</button>
-      <button 
-        id="inscription" 
-        (click)="openModal()" 
-        *ngIf="course.estado === 1 && !yaInscripto">
+      <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1 && !yaInscripto">
         Inscribirse
       </button>
       <button *ngIf="yaInscripto" class="inscripto-label">

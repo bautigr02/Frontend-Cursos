@@ -34,3 +34,4 @@ export class WorkshopService {
     return this.http.get<any[]>(`${this.apiUrl}/curso/${idcurso}`);
   }
 }
+
