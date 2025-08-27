@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
+import { forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-workshop-info',
@@ -26,30 +27,71 @@ export class WorkshopInfoComponent implements OnInit {
   ) { }
   
   ngOnInit(): void {
-    // Obtener usuario logueado
     this.user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
     
     this._route.params.subscribe(params => {
       const workshopId = +params['id'];
-      this.getWorkshopInfo(workshopId);
-    });
+      const dni = this.user?.dni || null;
 
-    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-    if (user && user.dni) {
-      this.userService.getTalleresByAlumno(user.dni).subscribe(
-        (talleres) => {
-          this.talleresInscriptos = talleres;
-          // Si el taller actual está en la lista, ya está inscripto
-          this.yaInscripto = !!talleres.find(t => t.idtaller === this.workshop.idtaller && t.estado !== 3);
+      // Obtener simultáneamente: info del taller y talleres del alumno
+      const workshopObs = this.workshopService.getWorkshopById(workshopId);
+      const talleresAlumnoObs = dni ? this.userService.getTalleresByAlumno(dni) : of([]);
+
+      forkJoin([workshopObs, talleresAlumnoObs]).subscribe(
+        ([workshopData, talleresAlumno]) => {
+          this.workshop = workshopData;
+          this.talleresInscriptos = talleresAlumno;
+
+          // Convertir fecha a Date
+          if (typeof this.workshop.fecha === 'string') {
+            this.workshop.fecha = new Date(this.workshop.fecha);
+          }
+
+          // Convertir tematica y requisitos a arrays
+          if (typeof this.workshop.tematica === 'string') {
+            this.workshop.tematica = this.workshop.tematica.split(',').map((item: string) => item.trim());
+          }
+          if (typeof this.workshop.requisitos === 'string') {
+            this.workshop.requisitos = this.workshop.requisitos.split(',').map((item: string) => item.trim());
+          }
+
+          // Buscar inscripción del usuario a este taller
+          const inscripcion = talleresAlumno.find((t: any) => t.idtaller === this.workshop.idtaller);
+          
+          if (inscripcion) {
+            this.yaInscripto = inscripcion.estado === 1 || inscripcion.estado === 2;
+            this.workshop.estado_inscripcion = inscripcion.estado;
+            
+            // Normalizar nota
+            const nota = inscripcion.nota_taller;
+            if (nota === null || nota === undefined || nota === '') {
+              this.workshop.nota_taller = null;
+            } else {
+              const n = Number(nota);
+              this.workshop.nota_taller = Number.isFinite(n) ? n : null;
+            }
+          } else {
+            this.yaInscripto = false;
+            this.workshop.estado_inscripcion = null;
+            this.workshop.nota_taller = null;
+          }
+
+          this.loading = false;
+          console.log('Workshop con nota:', this.workshop);
+        },
+        (error) => {
+          console.error('Error al obtener datos:', error);
+          this.loading = false;
         }
       );
-    }
+    });
   }
-
+/*
   getWorkshopInfo(id: number): void {
     this.workshopService.getWorkshopById(id).subscribe(
       (data) => {
         this.workshop = data;
+
         // Convertir fecha a objeto Date si es string
         if (typeof this.workshop.fecha === 'string') {
           this.workshop.fecha = new Date(this.workshop.fecha);
@@ -61,8 +103,6 @@ export class WorkshopInfoComponent implements OnInit {
         if (typeof this.workshop.requisitos === 'string') {
           this.workshop.requisitos = this.workshop.requisitos.split(',').map((item: string) => item.trim());
         }
-
-        // Verificar si puede inscribirse
         this.loading = false;
         console.log('Información del taller:', data);
       },
@@ -72,7 +112,7 @@ export class WorkshopInfoComponent implements OnInit {
       }
     );
   }
-
+*/
   // Modal de inscripción
   openModal() {
       this.showModal = true;
@@ -81,6 +121,7 @@ export class WorkshopInfoComponent implements OnInit {
   confirmModal() {
     if (!this.user.dni) {
       alert('Debes estar logueado para inscribirte');
+      this.showModal = false;
       return;
     }
 
@@ -101,9 +142,7 @@ export class WorkshopInfoComponent implements OnInit {
     this.showModal = false;
   }
 
-  // Modal de cancelación
-
-  
+  // Modal de cancelación  
   openCancellationModal() {
     this.showCancellationModal = true;
   }
