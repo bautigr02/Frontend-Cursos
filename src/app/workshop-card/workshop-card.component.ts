@@ -30,13 +30,13 @@ export class WorkshopCardComponent implements OnInit, OnChanges{
   }
 
   ngOnChanges(): void {
-    // Ordena la lista según el valor de `order`
+    // Ordena la lista según el valor de 'order'
     if (this.order === 'az') {
       this.workshopList.sort((a, b) => a.nom_taller.localeCompare(b.nom_taller));
       console.log("Ordenado por A-Z")
     } else {
-      // Orden por defecto (puedes personalizarlo)
-      this.workshopList.sort((a,b) => a.id - b.id);
+      // Orden por defecto
+      this.workshopList.sort((a,b) => a.idtaller - b.idtaller);
       console.log("Ordenado por ID")
     }
   }
