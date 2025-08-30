@@ -21,56 +21,40 @@
         <p>Hora: {{workshop.hora_ini.slice(0,5)}}</p>
       </div>
     </div>
-    <hr>
-
-    <!-- BOTONES -->
-    <div class="buttons">
-      <button id="more-info" routerLink="/courses">Mas cursos</button>
-      <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1 && !yaInscripto">
-        Inscribirse
-      </button>
-      <button *ngIf="yaInscripto" class="inscripto-label">
-        Ya Inscripto
-      </button>
-      <button *ngIf="course.estado !== 1 && !yaInscripto" class="curso-no-disponible">
-        No disponible
-      </button>
-    </div>
-    <div id="confirmationModal" class="modal" *ngIf="showModal">
-      <div class="modal-content">
-        <h2>Confirmar inscripción</h2>
-        <p>¿Estás seguro de que deseas inscribirte en este curso?</p>
-        <button id="inscription" (click)="confirmModal()">Sí</button>
-        <button id="more-info" (click)="cancelModal()">No</button>
-      </div>
-    </div>
   </div>
-
   <!-- MENSAJE SI NO HAY TALLERES -->
   <div class="content" *ngIf="workshops.length == 0">
     <p>No hay talleres para este curso.</p>
-    <hr>
-    <div class="buttons">
-      <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1 && !yaInscripto">
-        Inscribirse
-      </button>
-      <button id="more-info" routerLink="/courses">Mas cursos</button>
-      <span *ngIf="yaInscripto" class="inscripto-label">
-        Ya Inscripto
-      </span>
-      <span *ngIf="course.estado !== 1" class="curso-no-disponible">
-        No disponible
-      </span>
-    </div>
-    <div id="confirmationModal" class="modal" *ngIf="showModal">
-      <div class="modal-content">
-        <h2>Confirmar inscripción</h2>
-        <p>¿Estás seguro de que deseas inscribirte en este curso?</p>
-        <button id="inscription" (click)="confirmModal()">Sí</button>
-        <button id="more-info" (click)="cancelModal()">No</button>
-      </div>
+  </div>
+  <hr>
+
+  <!-- BOTONES -->
+  <div class="buttons">
+    <button id="more-info" routerLink="/courses">Mas cursos</button>
+    <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1  && !yaInscripto ">
+      Inscribirse
+    </button>
+    <button *ngIf="yaInscripto" class="inscripto-label">
+      Ya Inscripto
+    </button>
+    <button *ngIf="yaInscripto && course.fec_ini < fechaActual && !course.nota" (click)="cancelarInscripcion()" class="cancelar">
+      Cancelar
+    </button>
+    <button *ngIf="course.estado !== 1 && !yaInscripto" class="curso-no-disponible">
+      No disponible 
+    </button>
+  </div>
+  <!-- MODAL DE CONFIRMACION DE INSCRIPCION -->
+  <div id="confirmationModal" class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <h2>Confirmar inscripción</h2>
+      <p>¿Estás seguro de que deseas inscribirte en este curso?</p>
+      <button id="inscription" (click)="confirmModal()">Sí</button>
+      <button id="more-info" (click)="cancelModal()">No</button>
     </div>
   </div>
+
+  <!-- MODAL DE CONFIRMACION DE CANCELACION -->
 </ng-container>
 
 <!-- PANTALLA DE CARGA -->

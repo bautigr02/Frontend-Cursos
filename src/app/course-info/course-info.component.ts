@@ -16,6 +16,8 @@ export class CourseInfoComponent implements OnInit{
   showModal: boolean = false;
   cursosInscriptos: any[] = [];
   yaInscripto: boolean = false;
+  fechaActual = new Date().toLocaleDateString('es-AR');
+
 
   constructor(
     private _route: ActivatedRoute, 
@@ -75,7 +77,31 @@ export class CourseInfoComponent implements OnInit{
       );
     }
 
-    // Métodos para manejar el modal
+    // Método para cancelar la inscripción
+    cancelarInscripcion(): void {
+      const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+      if (!user.dni || !this.course?.idcurso) {
+        alert('Debe iniciar sesión para cancelar la inscripción en el curso.');
+        return;
+      }
+
+      this.userService.cancelarInscripcion(user.dni, this.course.idcurso).subscribe(
+        () => {
+          this.yaInscripto = false;
+          alert('¡Inscripción cancelada con éxito!');
+        },
+        (error) => {
+          alert(error.error?.error || 'Error al cancelar la inscripción');
+        }
+      );
+    }
+
+    // Método para manejar el modal de cancelación
+    openCancelModal(){}
+    confirmCancelModal(){}
+
+
+    // Métodos para manejar el modal de inscripción
     openModal(){
       this.showModal = true;
     }
@@ -86,6 +112,12 @@ export class CourseInfoComponent implements OnInit{
       alert('Debe iniciar sesión para inscribirse en el curso.');
       this.showModal = false;
       window.location.href = '/login'; // Redirigir al login si no hay usuario
+      return;
+    } 
+    // Fecha actual > fecha inicio curso
+    else if(new Date() > new Date(this.course.fec_ini)){
+      alert('El curso ya pasó.');
+      this.showModal = false;
       return;
     }
   
@@ -105,4 +137,5 @@ export class CourseInfoComponent implements OnInit{
   cancelModal(){
     this.showModal = false;
   }
+  
 }

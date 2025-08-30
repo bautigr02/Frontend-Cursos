@@ -90,6 +90,25 @@ hr {
   transition: background-color 0.3s ease;
   cursor: default;
 }
+.cancelar{
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  background-color: #d32f2f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
 
 button[disabled] {
   background: #bdbdbd !important;
