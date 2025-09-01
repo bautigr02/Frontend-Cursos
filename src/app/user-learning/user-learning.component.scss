@@ -19,7 +19,7 @@
 .learning-content {
   display: flex;
   gap: 2rem;
-  align-items: flex-start;
+  // align-items: flex-start;
 }
 
 .courses-list {
@@ -215,4 +215,8 @@
       text-align: right;
     }
   }
+}
+.no-courses {
+  font-size: 1.2rem;
+  color: #888;
 }

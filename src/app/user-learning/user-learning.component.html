@@ -5,7 +5,7 @@
 
   <div class="learning-content">
     <!-- Cursos -->
-    <div class="courses-list">
+    <div class="courses-list" *ngIf="cursos.length > 0">
       <div class="course-card" *ngFor="let curso of cursos">
         <img [src]="curso.imagen" alt="imagen-curso" class="course-img" />
         <div class="course-info">
@@ -50,10 +50,10 @@
           </ng-container>
         </div>
       </div>
-      </div>
+    </div>
 
     <!-- Últimos talleres -->
-    <div class="sidebar">
+    <div class="sidebar" *ngIf="cursos.length > 0">
       <div class="ultimos-talleres-box">
         <h4><u>Tus Talleres</u></h4>
         <div class="taller-row" *ngFor="let taller of ultimosTalleres">
@@ -62,5 +62,10 @@
         </div>
       </div>
     </div>
+        <!-- No hay cursos disponibles -->
+        <div *ngIf="cursos.length === 0" class="no-courses">
+          <p>No te inscribiste a ningún curso.</p>
+          <p><a routerLink="/courses">Explorá nuestros cursos</a> y comenzá tu aprendizaje hoy mismo!</p>
+        </div>
   </div>
 </div>

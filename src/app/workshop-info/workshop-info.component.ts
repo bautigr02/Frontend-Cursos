@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
 import { forkJoin, of } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-workshop-info',
@@ -23,7 +24,8 @@ export class WorkshopInfoComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute, 
     private workshopService: WorkshopService,
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) { }
   
   ngOnInit(): void {
@@ -86,33 +88,7 @@ export class WorkshopInfoComponent implements OnInit {
       );
     });
   }
-/*
-  getWorkshopInfo(id: number): void {
-    this.workshopService.getWorkshopById(id).subscribe(
-      (data) => {
-        this.workshop = data;
 
-        // Convertir fecha a objeto Date si es string
-        if (typeof this.workshop.fecha === 'string') {
-          this.workshop.fecha = new Date(this.workshop.fecha);
-        }
-        // Convertir tematica y requisitos a arrays
-        if (typeof this.workshop.tematica === 'string') {
-          this.workshop.tematica = this.workshop.tematica.split(',').map((item: string) => item.trim());
-        }
-        if (typeof this.workshop.requisitos === 'string') {
-          this.workshop.requisitos = this.workshop.requisitos.split(',').map((item: string) => item.trim());
-        }
-        this.loading = false;
-        console.log('Información del taller:', data);
-      },
-      (error) => {
-        console.error('Error al obtener el taller:', error);
-        this.loading = false;
-      }
-    );
-  }
-*/
   // Modal de inscripción
   openModal() {
       this.showModal = true;
@@ -120,7 +96,8 @@ export class WorkshopInfoComponent implements OnInit {
 
   confirmModal() {
     if (!this.user.dni) {
-      alert('Debes estar logueado para inscribirte');
+      alert('Debe iniciar sesión para inscribirse.');
+      window.location.href = '/login'; // Redirigir al login si no hay usuario
       this.showModal = false;
       return;
     }
@@ -165,4 +142,8 @@ export class WorkshopInfoComponent implements OnInit {
   closeCancellationModal() {
     this.showCancellationModal = false;
   }
+ 
+  goBack(): void {
+  this.location.back();
+}
 }
