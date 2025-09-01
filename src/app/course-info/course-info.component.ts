@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-course-info',
@@ -23,7 +24,8 @@ export class CourseInfoComponent implements OnInit{
     private _route: ActivatedRoute, 
     private courseService: CourseService, 
     private workshopService: WorkshopService, 
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) { }
   
   ngOnInit(): void {
@@ -138,4 +140,7 @@ export class CourseInfoComponent implements OnInit{
     this.showModal = false;
   }
   
+  goBack(): void {
+  this.location.back();
+}
 }

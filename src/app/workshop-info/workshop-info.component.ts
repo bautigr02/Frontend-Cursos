@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
 import { forkJoin, of } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-workshop-info',
@@ -23,7 +24,8 @@ export class WorkshopInfoComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute, 
     private workshopService: WorkshopService,
-    private userService: UserService
+    private userService: UserService,
+    private location: Location
   ) { }
   
   ngOnInit(): void {
@@ -165,4 +167,8 @@ export class WorkshopInfoComponent implements OnInit {
   closeCancellationModal() {
     this.showCancellationModal = false;
   }
+ 
+  goBack(): void {
+  this.location.back();
+}
 }
