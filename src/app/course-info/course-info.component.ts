@@ -15,8 +15,10 @@ export class CourseInfoComponent implements OnInit{
   workshops: any[] = [];
   loading: boolean = true;
   showModal: boolean = false;
-  cursosInscriptos: any[] = [];
+  showCancellationModal: boolean = false;
   yaInscripto: boolean = false;
+  user: any;
+  cursosInscriptos: any[] = [];
   fechaActual = new Date().toLocaleDateString('es-AR');
 
 
@@ -29,9 +31,12 @@ export class CourseInfoComponent implements OnInit{
   ) { }
   
   ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+
     // Obtener el ID del curso desde la URL
     this._route.params.subscribe(params => {
       const courseId = +params['id']; // Convierte el ID a número
+      const dni = user?.dni || null;
       this.getCourseInfo(courseId);
       this.getWorkshops(courseId);
     });
@@ -43,7 +48,6 @@ export class CourseInfoComponent implements OnInit{
     });
     }, 1500);
     */
-    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
     if (user && user.dni) {
       this.userService.getCursosByAlumno(user.dni).subscribe(
         (cursos) => {
@@ -79,31 +83,26 @@ export class CourseInfoComponent implements OnInit{
       );
     }
 
-    // Método para cancelar la inscripción
-    cancelarInscripcion(): void {
-      const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-      if (!user.dni || !this.course?.idcurso) {
-        alert('Debe iniciar sesión para cancelar la inscripción en el curso.');
-        return;
-      }
+    // // Método para cancelar la inscripción
+    // cancelarInscripcion(): void {
+    //   const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    //   if (!user.dni || !this.course?.idcurso) {
+    //     alert('Debe iniciar sesión para cancelar la inscripción en el curso.');
+    //     return;
+    //   }
 
-      this.userService.cancelarInscripcion(user.dni, this.course.idcurso).subscribe(
-        () => {
-          this.yaInscripto = false;
-          alert('¡Inscripción cancelada con éxito!');
-        },
-        (error) => {
-          alert(error.error?.error || 'Error al cancelar la inscripción');
-        }
-      );
-    }
+    //   this.userService.cancelarInscripcion(user.dni, this.course.idcurso).subscribe(
+    //     () => {
+    //       this.yaInscripto = false;
+    //       alert('¡Inscripción cancelada con éxito!');
+    //     },
+    //     (error) => {
+    //       alert(error.error?.error || 'Error al cancelar la inscripción');
+    //     }
+    //   );
+    // }
 
-    // Método para manejar el modal de cancelación
-    openCancelModal(){}
-    confirmCancelModal(){}
-
-
-    // Métodos para manejar el modal de inscripción
+    // Modal de inscripción
     openModal(){
       this.showModal = true;
     }
@@ -111,17 +110,11 @@ export class CourseInfoComponent implements OnInit{
     confirmModal(){
     const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
     if (!user.dni || !this.course?.idcurso) {
-      alert('Debe iniciar sesión para inscribirse en el curso.');
+      alert('Debe iniciar sesión para inscribirse.');
       this.showModal = false;
       window.location.href = '/login'; // Redirigir al login si no hay usuario
       return;
     } 
-    // Fecha actual > fecha inicio curso
-    else if(new Date() > new Date(this.course.fec_ini)){
-      alert('El curso ya pasó.');
-      this.showModal = false;
-      return;
-    }
   
     this.userService.inscribirEnCurso(user.dni, this.course.idcurso).subscribe(
       () => {
@@ -140,7 +133,38 @@ export class CourseInfoComponent implements OnInit{
     this.showModal = false;
   }
   
+  // Modal de cancelación  
+  openCancellationModal() {
+    this.showCancellationModal = true;
+  }
+
+  confirmCancellationModal() {
+  const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+  
+  if (!user.dni || !this.course?.idcurso) {
+    alert('Error: No se pudo obtener la información necesaria.');
+    this.showCancellationModal = false;
+    return;
+  }
+
+  this.userService.cancelarInscripcion(user.dni, this.course.idcurso).subscribe(
+    () => {
+      this.yaInscripto = false;
+      this.showCancellationModal = false;
+      alert('Inscripción cancelada correctamente.');
+    },
+    (error) => {
+      alert(error.error?.error || 'Error al cancelar la inscripción.');
+      this.showCancellationModal = false;
+    }
+  );
+}
+
+  closeCancellationModal() {
+    this.showCancellationModal = false;
+  }
+
   goBack(): void {
   this.location.back();
-}
+  }
 }

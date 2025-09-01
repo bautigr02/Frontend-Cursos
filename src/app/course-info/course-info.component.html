@@ -37,7 +37,7 @@
     <button *ngIf="yaInscripto" class="inscripto-label">
       Ya Inscripto
     </button>
-    <button *ngIf="yaInscripto && course.fec_ini < fechaActual && !course.nota" (click)="cancelarInscripcion()" class="cancelar">
+    <button *ngIf="yaInscripto && course.fec_ini > fechaActual && !course.nota" (click)="openCancellationModal()" class="cancelar">
       Cancelar
     </button>
     <button *ngIf="course.estado !== 1 && !yaInscripto" class="curso-no-disponible">
@@ -55,6 +55,14 @@
   </div>
 
   <!-- MODAL DE CONFIRMACION DE CANCELACION -->
+  <div id="cancellationModal" class="modal" *ngIf="showCancellationModal">
+    <div class="modal-content">
+      <h2>Confirmar cancelación</h2>
+      <p>¿Estás seguro de que deseas cancelar tu inscripción en este curso?</p>
+      <button id="inscription" (click)="confirmCancellationModal()">Sí</button>
+      <button id="more-info" (click)="closeCancellationModal()">No</button>
+    </div>
+  </div>
 </ng-container>
 
 <!-- PANTALLA DE CARGA -->
