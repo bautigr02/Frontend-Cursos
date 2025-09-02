@@ -6,7 +6,7 @@
 }
 
 .title-section h1 {
-  font-size: 4rem;
+  font-size: 2rem;
   margin: 0;
 }
 
@@ -142,10 +142,10 @@ button[disabled] {
 .card {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 5px;
   background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 1rem;
+  align-items: center;
 }
 
 .card:hover h2 {
@@ -153,8 +153,8 @@ button[disabled] {
 }
 
 .card img {
-  width: 200px;
-  height: 200px;
+  width: 12rem;
+  height: 12rem;
   border-radius: 5px;
   margin-right: 1rem;
 }

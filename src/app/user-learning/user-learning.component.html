@@ -1,16 +1,24 @@
 <!-- user-learning.component.html -->
 <div class="learning-container">
-  <h1>Tu aprendizaje <span class="curso-count">{{ cursos.length }} Cursos</span></h1>
-  <hr />
+  <header>
+    <h2>
+      Tu aprendizaje 
+    </h2>
+    <p>
+      {{ cursos.length }} Cursos
+    </p>
+  </header>
+  
+  <hr/>
 
   <div class="learning-content">
     <!-- Cursos -->
     <div class="courses-list" *ngIf="cursos.length > 0">
       <div class="course-card" *ngFor="let curso of cursos">
-        <img [src]="curso.imagen" alt="imagen-curso" class="course-img" />
-        <div class="course-info">
+        <img [src]="curso.imagen" alt="imagen-curso" routerLink="/courses/{{ curso.idcurso }}" class="course-img" />
+        <div routerLink="/courses/{{ curso.idcurso }}" class="course-info">
           <!-- Dentro de .course-info -->
-          <h2 routerLink="/courses/{{ curso.idcurso }}">{{ curso.nom_curso }}</h2>
+          <h2 >{{ curso.nom_curso }}</h2>
           <p class="estado" [ngClass]="{
               'inscripto': curso.estado === 1,
               'cursando': curso.estado === 2,
@@ -54,18 +62,16 @@
 
     <!-- Últimos talleres -->
     <div class="sidebar" *ngIf="cursos.length > 0">
-      <div class="ultimos-talleres-box">
-        <h4><u>Tus Talleres</u></h4>
-        <div class="taller-row" *ngFor="let taller of ultimosTalleres">
-          <span>{{ taller.nom_taller }} - {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
-          <span class="taller-nota">{{ taller.nota_taller | number:'1.2-2' }}</span>
-        </div>
+      <h4>Tus Talleres</h4>
+      <div class="taller-row" *ngFor="let taller of ultimosTalleres">
+        <span>{{ taller.nom_taller }} - {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
+        <span class="taller-nota">{{ taller.nota_taller | number:'1.2-2' }}</span>
       </div>
     </div>
-        <!-- No hay cursos disponibles -->
-        <div *ngIf="cursos.length === 0" class="no-courses">
-          <p>No te inscribiste a ningún curso.</p>
-          <p><a routerLink="/courses">Explorá nuestros cursos</a> y comenzá tu aprendizaje hoy mismo!</p>
-        </div>
+    <!-- No hay cursos disponibles -->
+    <div *ngIf="cursos.length === 0" class="no-courses">
+      <p>No te inscribiste a ningún curso.</p>
+      <p><a routerLink="/courses">Explorá nuestros cursos</a> y comenzá tu aprendizaje hoy mismo!</p>
+    </div>
   </div>
 </div>
