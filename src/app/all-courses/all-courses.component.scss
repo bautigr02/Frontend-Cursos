@@ -5,11 +5,13 @@ div{
 }
 
 h2{
+  margin: 0;
   font-size: 35px;
 }
 
 p{
-  margin-left: 1rem;
+  margin: 0 1rem;
+  align-items: center;
   font-size: 18px;
   color: #333;
 }
@@ -18,21 +20,26 @@ a{
   margin-right: 1rem ;
   color: #426B1F;
   text-decoration: none;
-  border: solid 3px #426B1F;
+  border: solid 1px #426B1F;
   border-radius: 30px;
   padding: 10px;
   background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 a:hover,a.active{
   background-color: #426B1F;
   color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
 
 hr{
     border: none;
     border-top: 2px solid #333;
-    margin: 1rem 5rem;
+    margin: 0 5rem;
 }
 .container{
   width: 100%;
@@ -41,6 +48,7 @@ hr{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 2rem 0;
 }
 .titles{
   align-items:baseline;
@@ -66,4 +74,5 @@ app-course-card{
   justify-content: center;
   width: 100%;
   gap: 4rem; // Espaciado entre las cards
+  margin-top: 2rem;
 }

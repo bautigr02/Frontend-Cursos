@@ -7,11 +7,8 @@
     <title>Header</title>
 </head>
 <body>
-    <header class="header">   
-        <div class="titulo">
-            <img id="logo-header" routerLink="/" src="/assets/Icons/logo-1.png" alt="CUR.SOFTWARE">
-        </div>
-    
+    <header>   
+        <a href="/" class="cs-logo">CURSOFTWARE</a>
         <div class="botones">
             <a class="redireccion" routerLink="/workshops" href="#talleres">
                 Talleres
@@ -28,14 +25,12 @@
                 <img src="/assets/Icons/Usuario-logo.png" class="boton-img" (click)="toggleMenu()" alt="Usuario">
                 <div *ngIf="isMenuVisible" class="menu">
                     <ul>
-                        <li *ngIf="!sesionIniciada"><a routerLink="/login">Iniciar Sesión</a></li>
-                        <li *ngIf="!sesionIniciada"><a routerLink="/register">Registrarse</a></li>
+                        <li *ngIf="!sesionIniciada" routerLink="/login"><a>Iniciar Sesión</a></li>
+                        <li *ngIf="!sesionIniciada" routerLink="/register"><a>Registrarse</a></li>
                          <!--Perfil Docente-->
-                        <li *ngIf="sesionIniciada && esDocente"><a routerLink="/teacher-panel">Panel Docente</a></li>
-                        
-                        <li *ngIf="sesionIniciada && esDocente == false"><a routerLink="/panel">Mi Perfil</a></li>
+                        <li *ngIf="sesionIniciada && esDocente" routerLink="/teacher-panel"><a>Panel Docente</a></li>
+                        <li *ngIf="sesionIniciada && esDocente == false" routerLink="/panel"><a>Mi Perfil</a></li>
                         <li *ngIf="sesionIniciada"><a href="#" (click)="logout()">Cerrar Sesión</a></li>
-
                     </ul>
                 </div>
             </div>

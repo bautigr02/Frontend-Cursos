@@ -2,18 +2,19 @@ div {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid #ccc;
   border-radius: 10px;
   padding: 10px;
   width: 350px;
   height: 400px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s;
 }
 
 div:hover {
+  transition: all 0.3s ease;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  transform: translateY(-2px);
+  border: 1px solid #426B1F;
 }
 
 img {
