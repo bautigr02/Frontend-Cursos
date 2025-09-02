@@ -1,14 +1,14 @@
 body{
     margin: 0;
-    padding: 0;
+    padding: 0 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
 .footer{
     display: flex;
     background-color: white;
     flex-direction: row;
     height: auto;
-    margin-bottom: 0px;
-    padding: 0px;
     align-items: center;
 }
 
@@ -31,21 +31,24 @@ h2{
 }
 h4{
     margin-bottom: 0;
+    margin-top: 1rem;
     font-size: 28px;
     color: #426B1F;
 }
 hr{
     margin-top: 0;
-    width: 230px;
+    width: 100%;
     color: #426B1F;
-   border: 1.5px solid #426B1F;
+    border: 1.5px solid #426B1F;
 }
 
 .links{
-    width: 100%;
+    width: 70%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-left: 2rem;
+
 }
 
 .links-info{
@@ -100,6 +103,12 @@ hr{
     margin-top: 12px;
     height: 25px;
 }
+
+.redireccion:hover {
+    transition: all 0.3s ease;
+    color: #426B1F;
+    transform: translateY(-2px);
+}
 .sobre-nosotros{
     margin-top: 5px;
     font-size: 18px;
@@ -112,6 +121,11 @@ hr{
     cursor: pointer;
     height: 25px;
     text-decoration: none;
+}
+.sobre-nosotros:hover {
+    transition: all 0.3s ease;
+    color: #426B1F;
+    transform: translateY(-2px);
 }
 .contenedores-links{
     display: flex;
@@ -130,7 +144,7 @@ hr{
 }
 
 .derechos-reservados hr{
-    width: 90%;
+    width: 100%;
     color: #426B1F;
     border: 1.5px solid #426B1F;
 }

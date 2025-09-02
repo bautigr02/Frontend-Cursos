@@ -3,6 +3,18 @@ div{
   flex-wrap: wrap;
   flex-direction: row;
 }
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 2rem;
+}
+
+.titles {
+  align-items: baseline;
+}
 
 h2{
   margin: 0;
@@ -15,9 +27,11 @@ p{
   font-size: 18px;
   color: #333;
 }
-
+.filters {
+  align-items: center;
+}
 a{
-  margin-right: 1rem ;
+  margin-left: 1rem ;
   color: #426B1F;
   text-decoration: none;
   border: solid 1px #426B1F;
@@ -37,34 +51,8 @@ a:hover,a.active{
 }
 
 hr{
-    border: none;
-    border-top: 2px solid #333;
-    margin: 0 5rem;
-}
-.container{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 2rem 0;
-}
-.titles{
-  align-items:baseline;
-  margin-left: 5rem;
-}
-.filters{
-  justify-content: end;
-  align-items: center;
-  margin-right: 5rem;
-}
-
-.courses{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 1rem; // Espaciado entre las cards
+    border: 1px solid #426B1F;
+    margin: 0 2rem;
 }
 
 app-course-card{
@@ -72,7 +60,6 @@ app-course-card{
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
   gap: 4rem; // Espaciado entre las cards
-  margin-top: 2rem;
+  margin: 2rem 2rem;
 }
