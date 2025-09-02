@@ -7,23 +7,23 @@
   <hr>
 
   <section>
-    <div *ngIf="workshop?.tematica.length > 0" class="content">
+    <div *ngIf="workshop?.tematica && workshop.tematica.length > 0" class="content">
       <h1>Temario</h1>
       <ul>
         <li *ngFor="let item of workshop?.tematica">{{item}}</li>
       </ul>
     </div>
-    <div *ngIf="workshop?.tematica.length === 0" class="content">
+    <div *ngIf="!workshop?.tematica || workshop?.tematica.length === 0" class="content">
       <h2>No hay temario disponible</h2>
     </div>
 
-    <div *ngIf="workshop?.requisitos.length > 0" class="content">
+    <div *ngIf="workshop?.requisitos && workshop.requisitos.length > 0" class="content">
       <h1>Requisitos</h1>
-      <ul>
+      <ul *ngIf="workshop?.requisitos && workshop?.requisitos.length > 0">
         <li *ngFor="let item of workshop?.requisitos">{{item}}</li>
       </ul>
     </div>
-    <div *ngIf="workshop?.requisitos.length === 0" class="content">
+    <div *ngIf="!workshop?.requisitos || workshop?.requisitos.length === 0" class="content">
       <h2>No hay requisitos</h2>
     </div>
   </section>
