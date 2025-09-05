@@ -1,7 +1,7 @@
 <ng-container *ngIf="loading === false">
   <!-- INFO DEL CURSO -->
   <div class="title-section">
-    <h1>{{course?.nom_curso}}</h1>
+    <h2>{{course?.nom_curso}}</h2>
     <p>{{course?.descripcion}}</p>
     <h4>De: {{course?.fec_ini | date:'dd/MM/yyyy'}}, Hasta: {{course?.fec_fin | date:'dd/MM/yyyy'}} </h4>
   </div>
@@ -30,13 +30,13 @@
   <!-- BOTONES -->
   <div class="buttons">
     <button id="more-info" (click)="goBack()">Mas cursos</button>
-    <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1  && !yaInscripto ">
+    <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1  && !yaInscripto && !yaComenzo()" class="inscribirse">
       Inscribirse
     </button>
     <button *ngIf="yaInscripto" class="inscripto-label">
       Ya Inscripto
     </button>
-    <button *ngIf="yaInscripto && course.fec_ini > fechaActual && !course.nota" (click)="openCancellationModal()" class="cancelar">
+    <button *ngIf="yaInscripto && !yaComenzo() && !course?.nota" (click)="openCancellationModal()" class="cancelar">
       Cancelar
     </button>
     <button *ngIf="course.estado !== 1 && !yaInscripto" class="curso-no-disponible">

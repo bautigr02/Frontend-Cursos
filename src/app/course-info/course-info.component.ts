@@ -167,4 +167,15 @@ export class CourseInfoComponent implements OnInit{
   goBack(): void {
   this.location.back();
   }
+
+  // El metodo debe formatear las fechas para que coincidan los formatos y no haya problemas al comparar
+  // fechaActual es del tipo 'dd/MM/yyyy' y course.fec_ini es del tipo 'yyyy-MM-ddTHH:mm:ss' Acomodar eso
+  yaComenzo(): boolean {
+    if (!this.course) {
+      return false;
+    }
+    const fechaActual = new Date();
+    const fechaCurso = new Date(this.course.fec_ini);
+    return (fechaCurso < fechaActual);
+  }
 }
