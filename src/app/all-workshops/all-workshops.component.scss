@@ -4,70 +4,66 @@ div {
   flex-direction: row;
 }
 
-h2 {
-  font-size: 35px;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 2rem;
 }
 
-p {
-  margin-left: 1rem;
-  font-size: 18px;
+.titles {
+  align-items: baseline;
+}
+
+h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+p{
+  margin: 0 1rem;
+  align-items: center;
+  font-size: 1rem;
   color: #333;
 }
 
+.filters {
+  align-items: center;
+}
+
 a {
-  margin-right: 1rem;
+  margin-left: 1rem;
   color: #426B1F;
   text-decoration: none;
-  border: solid 3px #426B1F;
+  border: solid 1px #426B1F;
   border-radius: 30px;
   padding: 10px;
   background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 a:hover,
 a.active {
   background-color: #426B1F;
   color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
 
 hr {
-  border: none;
-  border-top: 2px solid #333;
-  margin: 1rem 5rem;
+  border: 1px solid #426B1F;
+  margin: 0 2rem;
 }
 
-.container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.titles {
-  align-items: baseline;
-  margin-left: 5rem;
-}
-
-.filters {
-  justify-content: end;
-  align-items: center;
-  margin-right: 5rem;
-}
-
-.workshops {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 1rem; // Espaciado entre las cards
-}
-
-app-workshop-card{
+app-workshop-card {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
   gap: 4rem; // Espaciado entre las cards
+  margin: 2rem 2rem;
 }

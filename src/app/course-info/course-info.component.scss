@@ -1,29 +1,43 @@
-.title-section{
+.title-section {
   display: flex;
   flex-direction: column;
-}
-.title-section h1{
-  font-size: 4rem;
-  margin: 1rem 1rem;
-}
-.title-section p{
-  font-size: 1rem;
-  margin: 0.5rem 1rem;
-}
-.title-section h4{
-  font-size: 1rem;
-  margin: 0.5rem 1rem;
+  margin: 2rem 2rem;
+  gap: 1.5rem;
 }
 
-hr{
-  margin: 1rem 1rem;
+.title-section h2 {
+  font-size: 2rem;
+  margin: 0;
 }
 
-.buttons{
+.title-section p {
+  font-size: 1rem;
+  margin: 0;
+  color: #666;
+}
+
+.title-section h4 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+hr {
+  margin: 2rem 2rem;
+}
+
+// Seccion Botones
+
+.buttons {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 1rem;
+}
+
+// a los hijos de buttons...
+.buttons > *:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
 }
 
 #inscription {
@@ -87,6 +101,25 @@ hr{
   transition: background-color 0.3s ease;
   cursor: default;
 }
+.cancelar{
+  width: 175px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 15px;
+  font-size: 22px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  background-color: #d32f2f;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
 
 button[disabled] {
   background: #bdbdbd !important;
@@ -96,39 +129,45 @@ button[disabled] {
   opacity: 0.7;
 }
 
-.card:hover{
-  cursor: pointer;
-  background-color: #e0e0e0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 1.5px 4px rgba(0, 0, 0, 0.10);  
-}
+// Talleres del curso
 
-.content{
+.content {
   display: flex;
   flex-direction: column;
-  margin: 1rem 1rem;
+  margin: 1rem 2rem;
   justify-content: center;
+  gap: 2rem;
 }
 
-.content .card .card-info h2 {
+.card {
+  display: flex;
+  flex-direction: row;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 1rem;
+  align-items: center;
+}
+
+.card:hover h2 {
   text-decoration: underline;
 }
 
-.content .card{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 1rem;
-  padding: 1rem;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-}
-
-.card img{
-  width: 200px;
-  height: 200px;
+.card img {
+  width: 12rem;
+  height: 12rem;
   border-radius: 5px;
   margin-right: 1rem;
 }
+
+.card:hover {
+  cursor: pointer;
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 1.5px 4px rgba(0, 0, 0, 0.10);
+  transition: all 0.3s ease;
+}
+
+// Modal + loading
 
 .modal {
   position: fixed;
@@ -142,12 +181,17 @@ button[disabled] {
   align-items: center;
 }
 
+.modal p {
+  color: #666;
+}
+
 .modal-content {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
   text-align: center;
 }
+
 
 .loading-spinner{
   display: flex;
