@@ -184,23 +184,27 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   // Crear una funcion verAlumnos que te genere un listado de alumnos que estan inscriptos a un curso determinado
-  verAlumnos(curso: any) {
-    this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
-      (alumnos) => {
-        this.alumnosInscritos = alumnos;
-        this.cursoSeleccionado = curso;
+verAlumnos(curso: any): void {
+  this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
+    (alumnos: any[]) => {
+      this.alumnosInscritos = alumnos;
+      this.cursoSeleccionado = curso;
+
+      if (this.alumnosInscritos.length > 0) {
         console.log('Alumnos inscritos en el curso:', alumnos);
-      },
-      (error) => {
-        console.error('Error al obtener alumnos inscritos:', error);
       }
-    );
-  }
+    },
+    (error: any) => {
+      console.error('Error al obtener alumnos inscritos:', error);
+    }
+  );
+}
 
   cerrarAlumnosInscritos(){
     this.alumnosInscritos = [];
   }
-  
+
+
   verAlumnosTaller(taller: any) {
     this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
       (alumnos) => {
@@ -234,6 +238,40 @@ export class TeacherPanelComponent implements OnInit {
   );
 }
 
+agregarNotaFinal(alumno: any): void {
+  const curso = this.cursoSeleccionado;
+  const totalTalleres = curso.talleres ? curso.talleres.length : 0;
+
+  this.teacherService.getNotasByAlumnoInCurso(alumno.dni, curso.idcurso).subscribe(
+    (notas: any[]) => {
+      alumno.notas = notas;
+
+      if (totalTalleres > 0) {
+        const sumaNotas = alumno.notas.reduce((sum: number, nota: any) => sum + nota.nota_taller, 0);
+        alumno.notaFinal = sumaNotas / totalTalleres;
+      } else {
+        alumno.notaFinal = null;
+      }
+
+      this.teacherService.insertNotaCursoAlumno({
+        dni: alumno.dni,
+        nota_curso: alumno.notaFinal,
+        idcurso: curso.idcurso
+      }).subscribe(
+        () => {
+          console.log(`Nota final actualizada para alumno ${alumno.dni}`);
+        },
+        (error: any) => {
+          console.error('Error al insertar nota del alumno:', error);
+        }
+      );
+    },
+    (error: any) => {
+      console.error('Error al obtener notas del alumno:', error);
+    }
+  );
+}
+
   cancelarInsercionNota() {
     this.isInsertarNota = false;
     this.nuevaNota = null;
@@ -260,4 +298,6 @@ export class TeacherPanelComponent implements OnInit {
   cerrarHistorial(){
     this.historialTalleres = [];
   }
+
+ 
 }

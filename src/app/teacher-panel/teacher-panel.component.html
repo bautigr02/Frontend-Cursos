@@ -150,6 +150,7 @@
             <th>Apellido</th>
             <th>Email</th>
             <th>Nota</th>
+            <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -157,7 +158,8 @@
           <td>{{ alumno.nombre_alumno }}</td>
           <td>{{ alumno.apellido_alumno }}</td>
           <td>{{ alumno.email }}</td>
-          <td>{{ alumno.nota }}</td>
+          <td>{{ alumno.notaFinal !== null ? (alumno.notaFinal | number:'1.2-2') : 'Sin nota' }}</td>
+          <button (click)="agregarNotaFinal(alumno)">Agregar Nota</button>
         </tr>
       </tbody>
     </table>
