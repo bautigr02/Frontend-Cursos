@@ -48,7 +48,7 @@ hr {
   align-items: center;
 }
 
-.edit-btn {
+.edit-btn,.alumnos-btn, .eliminar-btn {
   background-color: white;
   border: 0 solid white;
   border-radius: 5px;
@@ -58,7 +58,7 @@ hr {
   cursor: pointer;
 }
 
-.edit-btn:hover {
+.edit-btn:hover, .alumnos-btn:hover, .eliminar-btn:hover {
   background-color: #eee;
 }
 
@@ -120,16 +120,6 @@ textarea,
 button,
 select {
   font-family: "Segoe UI", Arial, sans-serif;
-}
-
-.edit-btn {
-  background-color: white;
-  border: 0 solid white;
-  border-radius: 5px;
-  font-size: 1.5rem;
-  width: 2.4rem;
-  height: 2.4rem;
-  cursor: pointer;
 }
 
 .save-btn {
@@ -380,4 +370,23 @@ select {
 
 .historial-talleres tr:hover {
   background-color: #fafafa;
+}
+
+li {
+  display: flex;
+  justify-content: space-between; /* texto a la izquierda, botones a la derecha */
+  align-items: center;
+}
+
+//Hacer que los botones de curso estén alineados a la derecha
+.div-botones{
+  display: inline-flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.edit-btn,.alumnos-btn,.eliminar-btn{
+  padding: 0.2rem 0.6rem;
+  margin: 2px;
 }
