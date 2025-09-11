@@ -151,6 +151,28 @@ export class TeacherPanelComponent implements OnInit {
     }
   }
 
+  eliminarCurso(curso: any) {
+    if (confirm(`¿Estás seguro de que deseas eliminar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+      this.workshopService.deleteTalleresByCursoId(curso.idcurso).subscribe({
+        next: () => {
+          console.log(`Talleres del curso con ID ${curso.idcurso} eliminados.`);
+          this.CourseService.deleteCurso(curso.idcurso).subscribe({
+            next: () => {
+              this.cursos = this.cursos.filter(c => c.idcurso !== curso.idcurso);
+              console.log(`Curso con ID ${curso.idcurso} eliminado.`);
+            },
+            error: (error) => {
+              console.error('Error al eliminar el curso:', error);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error al eliminar los talleres del curso:', error);
+        }
+      });
+    }
+  }
+  
   //Edicion Talleres
   tallerBackup: any; // Backup de los datos del taller antes de editar
   editarTaller(taller: any) {
