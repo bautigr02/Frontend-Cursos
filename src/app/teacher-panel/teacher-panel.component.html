@@ -158,8 +158,17 @@
           <td>{{ alumno.nombre_alumno }}</td>
           <td>{{ alumno.apellido_alumno }}</td>
           <td>{{ alumno.email }}</td>
-          <td>{{ alumno.notaFinal !== null ? (alumno.notaFinal | number:'1.2-2') : 'Sin nota' }}</td>
-          <button (click)="agregarNotaFinal(alumno)">Agregar Nota</button>
+          <td>
+            {{ alumno.notaFinal != null ? (alumno.notaFinal | number:'1.2-2') : 'Sin nota' }}
+          </td>
+          <td>
+            <button *ngIf="alumno.notaFinal == null && curso.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
+              Agregar Nota
+            </button>
+            <button *ngIf="alumno.notaFinal != null && curso.fec_fin == fechaActual" (click)="editarNotaFinal(alumno)">
+              Editar Nota
+          </button>
+          </td>   
         </tr>
       </tbody>
     </table>
@@ -201,6 +210,19 @@
       </p>
       <button type="submit" class="save-btn">Guardar</button>
       <button type="button" class="cancel-btn" (click)="cancelarInsercionNota()">Cancelar</button>
+    </form>
+  </div>
+
+  <!---Contenedor para la modificacion de nota Final de curso-->
+  <div *ngIf="insertarNotaFinal" class="alumno-nota">
+    <h4>Modificar Nota Final de {{alumnoSeleccionado.nombre_alumno}} {{alumnoSeleccionado.apellido_alumno}}</h4>
+    <form (ngSubmit)="insertarNotaFinalAlumno(alumnoSeleccionado.dni, nuevaNota, cursoSeleccionado.idcurso)">
+      <p>
+        <strong>Nota:</strong>
+        <input [(ngModel)]="nuevaNota" name="nota" required />
+      </p>
+      <button type="submit" class="save-btn">Guardar</button>
+      <button type="button" class="cancel-btn" (click)="cancelarEdicionNotaFinal()">Cancelar</button>
     </form>
   </div>
 

@@ -29,6 +29,8 @@ export class TeacherPanelComponent implements OnInit {
   isInsertarNota = false;
   alumnoSeleccionado: any;
   nuevaNota: number | null = null;
+  fechaActual: Date = new Date();
+  insertarNotaFinal = false;
 
   constructor(
     private http: HttpClient,
@@ -271,6 +273,33 @@ agregarNotaFinal(alumno: any): void {
     }
   );
 }
+
+  editarNotaFinal(alumno: any): void {
+    this.insertarNotaFinal = true;
+    this.alumnoSeleccionado = alumno;
+    this.nuevaNota = alumno.notaFinal; // Asigna la nota actual para editar
+  }
+
+  insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
+    console.log('Insertando nota final:', { dni, nuevaNota, idcurso });
+    this.teacherService.insertNotaCursoAlumno({
+      dni: dni,
+      nota_curso: nuevaNota,
+      idcurso: idcurso
+    }).subscribe(
+      (response) => {
+        console.log('Nota final insertada:', response);
+      },
+      (error) => {
+        console.error('Error al insertar nota final:', error);
+      }
+    );
+  }
+
+  cancelarEdicionNotaFinal() {
+    this.insertarNotaFinal = false;
+    this.nuevaNota = null;
+  }
 
   cancelarInsercionNota() {
     this.isInsertarNota = false;

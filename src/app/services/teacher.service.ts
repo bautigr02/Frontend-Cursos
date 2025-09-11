@@ -41,4 +41,5 @@ export class TeacherService {
   const { dni, nota_curso, idcurso } = nota;
   return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota/curso/${idcurso}`,{ dni, nota_curso });
 }
+
 }
