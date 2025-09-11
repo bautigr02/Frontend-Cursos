@@ -152,27 +152,31 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   eliminarCurso(curso: any) {
-    if (confirm(`¿Estás seguro de que deseas eliminar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
-      this.workshopService.deleteTalleresByCursoId(curso.idcurso).subscribe({
-        next: () => {
-          console.log(`Talleres del curso con ID ${curso.idcurso} eliminados.`);
-          this.CourseService.deleteCurso(curso.idcurso).subscribe({
-            next: () => {
-              this.cursos = this.cursos.filter(c => c.idcurso !== curso.idcurso);
-              console.log(`Curso con ID ${curso.idcurso} eliminado.`);
-            },
-            error: (error) => {
-              console.error('Error al eliminar el curso:', error);
-            }
-          });
-        },
-        error: (error) => {
-          console.error('Error al eliminar los talleres del curso:', error);
-        }
-      });
+    if(curso.estado === 1 || curso.fec_ini < this.fechaActual) { // Si el curso está activo, no se puede eliminar
+      if (confirm(`¿Estás seguro de que deseas eliminar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+        this.workshopService.deleteTalleresByCursoId(curso.idcurso).subscribe({
+          next: () => {
+            console.log(`Talleres del curso con ID ${curso.idcurso} eliminados.`);
+            this.CourseService.deleteCurso(curso.idcurso).subscribe({
+              next: () => {
+                this.cursos = this.cursos.filter(c => c.idcurso !== curso.idcurso);
+                console.log(`Curso con ID ${curso.idcurso} eliminado.`);
+              },
+              error: (error) => {
+                console.error('Error al eliminar el curso:', error);
+              }
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar los talleres del curso:', error);
+          }
+        });
+      }
+    } else{
+      alert('No se puede eliminar un curso activo o que ya ha comenzado.');
     }
   }
-  
+
   //Edicion Talleres
   tallerBackup: any; // Backup de los datos del taller antes de editar
   editarTaller(taller: any) {
@@ -301,6 +305,20 @@ agregarNotaFinal(alumno: any): void {
     this.alumnoSeleccionado = alumno;
     this.nuevaNota = alumno.notaFinal; // Asigna la nota actual para editar
   }
+
+  puedeEditarNotaFinal(curso: any): boolean {
+  const hoy = new Date();
+  const fechaFin = new Date(curso.fec_fin);
+  // Diferencia en milisegundos
+  const diff = hoy.getTime() - fechaFin.getTime();
+  // 7 días en milisegundos
+  const sieteDias = 7 * 24 * 60 * 60 * 1000;
+  // Mostrar si hoy es igual a fecha fin o está dentro de los 7 días posteriores
+  return (
+    hoy.toDateString() === fechaFin.toDateString() ||
+    (hoy > fechaFin && diff <= sieteDias)
+  );
+}
 
   insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
     console.log('Insertando nota final:', { dni, nuevaNota, idcurso });

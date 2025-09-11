@@ -166,9 +166,9 @@
             <button *ngIf="alumno.notaFinal == null && curso.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
               Agregar Nota
             </button>
-            <button *ngIf="alumno.notaFinal != null && curso.fec_fin == fechaActual" (click)="editarNotaFinal(alumno)">
+            <button *ngIf="alumno.notaFinal != null && puedeEditarNotaFinal(curso)" (click)="editarNotaFinal(alumno)">
               Editar Nota
-          </button>
+            </button>
           </td>   
         </tr>
       </tbody>
