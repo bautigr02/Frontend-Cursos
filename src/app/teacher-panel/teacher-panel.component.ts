@@ -29,6 +29,8 @@ export class TeacherPanelComponent implements OnInit {
   isInsertarNota = false;
   alumnoSeleccionado: any;
   nuevaNota: number | null = null;
+  fechaActual: Date = new Date();
+  insertarNotaFinal = false;
 
   constructor(
     private http: HttpClient,
@@ -184,23 +186,27 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   // Crear una funcion verAlumnos que te genere un listado de alumnos que estan inscriptos a un curso determinado
-  verAlumnos(curso: any) {
-    this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
-      (alumnos) => {
-        this.alumnosInscritos = alumnos;
-        this.cursoSeleccionado = curso;
+verAlumnos(curso: any): void {
+  this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
+    (alumnos: any[]) => {
+      this.alumnosInscritos = alumnos;
+      this.cursoSeleccionado = curso;
+
+      if (this.alumnosInscritos.length > 0) {
         console.log('Alumnos inscritos en el curso:', alumnos);
-      },
-      (error) => {
-        console.error('Error al obtener alumnos inscritos:', error);
       }
-    );
-  }
+    },
+    (error: any) => {
+      console.error('Error al obtener alumnos inscritos:', error);
+    }
+  );
+}
 
   cerrarAlumnosInscritos(){
     this.alumnosInscritos = [];
   }
-  
+
+
   verAlumnosTaller(taller: any) {
     this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
       (alumnos) => {
@@ -234,6 +240,67 @@ export class TeacherPanelComponent implements OnInit {
   );
 }
 
+agregarNotaFinal(alumno: any): void {
+  const curso = this.cursoSeleccionado;
+  const totalTalleres = curso.talleres ? curso.talleres.length : 0;
+
+  this.teacherService.getNotasByAlumnoInCurso(alumno.dni, curso.idcurso).subscribe(
+    (notas: any[]) => {
+      alumno.notas = notas;
+
+      if (totalTalleres > 0) {
+        const sumaNotas = alumno.notas.reduce((sum: number, nota: any) => sum + nota.nota_taller, 0);
+        alumno.notaFinal = sumaNotas / totalTalleres;
+      } else {
+        alumno.notaFinal = null;
+      }
+
+      this.teacherService.insertNotaCursoAlumno({
+        dni: alumno.dni,
+        nota_curso: alumno.notaFinal,
+        idcurso: curso.idcurso
+      }).subscribe(
+        () => {
+          console.log(`Nota final actualizada para alumno ${alumno.dni}`);
+        },
+        (error: any) => {
+          console.error('Error al insertar nota del alumno:', error);
+        }
+      );
+    },
+    (error: any) => {
+      console.error('Error al obtener notas del alumno:', error);
+    }
+  );
+}
+
+  editarNotaFinal(alumno: any): void {
+    this.insertarNotaFinal = true;
+    this.alumnoSeleccionado = alumno;
+    this.nuevaNota = alumno.notaFinal; // Asigna la nota actual para editar
+  }
+
+  insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
+    console.log('Insertando nota final:', { dni, nuevaNota, idcurso });
+    this.teacherService.insertNotaCursoAlumno({
+      dni: dni,
+      nota_curso: nuevaNota,
+      idcurso: idcurso
+    }).subscribe(
+      (response) => {
+        console.log('Nota final insertada:', response);
+      },
+      (error) => {
+        console.error('Error al insertar nota final:', error);
+      }
+    );
+  }
+
+  cancelarEdicionNotaFinal() {
+    this.insertarNotaFinal = false;
+    this.nuevaNota = null;
+  }
+
   cancelarInsercionNota() {
     this.isInsertarNota = false;
     this.nuevaNota = null;
@@ -260,4 +327,6 @@ export class TeacherPanelComponent implements OnInit {
   cerrarHistorial(){
     this.historialTalleres = [];
   }
+
+ 
 }

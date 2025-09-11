@@ -143,24 +143,65 @@
 
   <div *ngIf="alumnosInscritos.length > 0" class="alumnos-inscritos">
     <h4>Alumnos inscritos en el curso: {{cursoSeleccionado.nom_curso}}</h4>
-    <ul>
-      <li *ngFor="let alumno of alumnosInscritos">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}</li>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Nota</th>
+            <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alumno of alumnosInscritos">
+          <td>{{ alumno.nombre_alumno }}</td>
+          <td>{{ alumno.apellido_alumno }}</td>
+          <td>{{ alumno.email }}</td>
+          <td>
+            {{ alumno.notaFinal != null ? (alumno.notaFinal | number:'1.2-2') : 'Sin nota' }}
+          </td>
+          <td>
+            <button *ngIf="alumno.notaFinal == null && curso.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
+              Agregar Nota
+            </button>
+            <button *ngIf="alumno.notaFinal != null && curso.fec_fin == fechaActual" (click)="editarNotaFinal(alumno)">
+              Editar Nota
+          </button>
+          </td>   
+        </tr>
+      </tbody>
+    </table>
     <button (click)="cerrarAlumnosInscritos()">Cerrar</button>
   </div>
 
     <div *ngIf="alumnosTaller.length > 0" class="alumnos-inscritos">
     <h4>Alumnos inscritos en el Taller: {{tallerSeleccionado.nom_taller}}</h4>
-    <ul>
-      <li *ngFor="let alumno of alumnosTaller">{{ alumno.nombre_alumno }} {{ alumno.apellido_alumno }} {{alumno.email}}
-      <button (click)="insertarNota(alumno)">Agregar Nota</button>
-      </li>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let alumno of alumnosTaller">
+          <td>{{ alumno.nombre_alumno }}</td>
+          <td>{{ alumno.apellido_alumno }}</td>
+          <td>{{ alumno.email }}</td>
+            <td>
+            <button (click)="insertarNota(alumno)">Agregar Nota</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
     <button (click)="cerrarAlumnosInscritosTaller()">Cerrar</button>
   </div>
 
   <!--Contenedor de Insercion de nota nueva de taller-->
-  <div *ngIf="isInsertarNota">
+  <div *ngIf="isInsertarNota" class="alumno-nota">
     <h4>Agregar Nota a {{alumnoSeleccionado.nombre_alumno}} {{alumnoSeleccionado.apellido_alumno}}</h4>
     <form (ngSubmit)="agregarNota(alumnoSeleccionado)">
       <p>
@@ -172,14 +213,38 @@
     </form>
   </div>
 
+  <!---Contenedor para la modificacion de nota Final de curso-->
+  <div *ngIf="insertarNotaFinal" class="alumno-nota">
+    <h4>Modificar Nota Final de {{alumnoSeleccionado.nombre_alumno}} {{alumnoSeleccionado.apellido_alumno}}</h4>
+    <form (ngSubmit)="insertarNotaFinalAlumno(alumnoSeleccionado.dni, nuevaNota, cursoSeleccionado.idcurso)">
+      <p>
+        <strong>Nota:</strong>
+        <input [(ngModel)]="nuevaNota" name="nota" required />
+      </p>
+      <button type="submit" class="save-btn">Guardar</button>
+      <button type="button" class="cancel-btn" (click)="cancelarEdicionNotaFinal()">Cancelar</button>
+    </form>
+  </div>
+
   <!--Contenedor de historial de talleres-->
-  <div *ngIf="historialTalleres.length > 0">
+  <div *ngIf="historialTalleres.length > 0" class = "historial-talleres">
     <h4>Historial de Talleres</h4>
-    <ul>
-      <li *ngFor="let taller of historialTalleres">
-        {{ taller.nom_taller }} - Fecha: {{ taller.fecha | date: 'dd/MM/yyyy' }}
-      </li>
-    </ul>
+    <table>
+  <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre del Taller</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let taller of historialTalleres; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ taller.nom_taller }}</td>
+        <td>{{ taller.fecha | date: 'dd/MM/yyyy' }}</td>
+      </tr>
+    </tbody>
+    </table>
     <button (click)="cerrarHistorial()">Cerrar</button>
   </div>
 

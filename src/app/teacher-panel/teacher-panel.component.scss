@@ -62,6 +62,109 @@ hr {
   background-color: #eee;
 }
 
+// Modificar datos
+input{
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #388e3c;
+  box-shadow: 0 0 0 2px #c8e6c9;
+  background: #fff;
+}
+
+input:hover {
+  border-color: #81c784;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 300px;
+}
+
+
+textarea:focus {
+  border-color: #388e3c;
+  box-shadow: 0 0 0 2px #c8e6c9;
+  background: #fff;
+}
+
+textarea:hover {
+  border-color: #81c784;
+}
+
+input,
+textarea,
+button,
+select {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.edit-btn {
+  background-color: white;
+  border: 0 solid white;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: background 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #256029;
+}
+
+.cancel-btn {
+  background-color: #b71c1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #7f1010;
+}
+
 .estado-box {
   flex: 1 1 35%;
   display: flex;
@@ -167,7 +270,70 @@ hr {
   max-width: 90vw;
 }
 
-.alumnos-inscritos{
+.alumnos-inscritos {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  z-index: 1000;
+  min-width: 600px;
+  max-width: 900px;
+}
+
+.alumnos-inscritos table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.alumnos-inscritos th,
+.alumnos-inscritos td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.alumnos-inscritos th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.alumnos-inscritos tr:last-child td {
+  border-bottom: none;
+}
+
+.alumnos-inscritos tr:hover {
+  background-color: #fafafa;
+}
+
+//Controla tamaño de las columnas
+.alumnos-inscritos th:nth-child(1),
+.alumnos-inscritos td:nth-child(1) {
+  width: 20%;
+}
+
+.alumnos-inscritos th:nth-child(2),
+.alumnos-inscritos td:nth-child(2) {
+  width: 20%;
+}
+
+.alumnos-inscritos th:nth-child(3),
+.alumnos-inscritos td:nth-child(3) {
+  width: 40%;
+  word-break: break-word;
+}
+
+.alumnos-inscritos th:nth-child(4),
+.alumnos-inscritos td:nth-child(4) {
+  width: 20%;
+  text-align: center;
+}
+
+.alumno-nota {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -181,6 +347,37 @@ hr {
   max-width: 90vw;
 }
 
-.alumnos-inscritos li {
-  margin-bottom: 0.5rem;
+.historial-talleres {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  z-index: 1000;
+  min-width: 350px;
+  max-width: 90vw;
+}
+
+.historial-talleres th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+
+.historial-talleres th,
+.historial-talleres td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.historial-talleres tr:last-child td {
+  border-bottom: none;
+}
+
+.historial-talleres tr:hover {
+  background-color: #fafafa;
 }
