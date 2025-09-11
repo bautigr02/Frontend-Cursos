@@ -62,6 +62,109 @@ hr {
   background-color: #eee;
 }
 
+// Modificar datos
+input{
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #388e3c;
+  box-shadow: 0 0 0 2px #c8e6c9;
+  background: #fff;
+}
+
+input:hover {
+  border-color: #81c784;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.7rem;
+  background: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 80px;
+  max-height: 300px;
+}
+
+
+textarea:focus {
+  border-color: #388e3c;
+  box-shadow: 0 0 0 2px #c8e6c9;
+  background: #fff;
+}
+
+textarea:hover {
+  border-color: #81c784;
+}
+
+input,
+textarea,
+button,
+select {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.edit-btn {
+  background-color: white;
+  border: 0 solid white;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #388e3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: background 0.2s;
+}
+
+.save-btn:hover {
+  background-color: #256029;
+}
+
+.cancel-btn {
+  background-color: #b71c1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #7f1010;
+}
+
 .estado-box {
   flex: 1 1 35%;
   display: flex;
