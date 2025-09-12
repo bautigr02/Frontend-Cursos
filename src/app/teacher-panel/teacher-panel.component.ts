@@ -56,7 +56,7 @@ export class TeacherPanelComponent implements OnInit {
       return;
     }
 
-    this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/${this.user.dni}`)
+    this.teacherService.getCoursesByDocenteDni(this.user.dni)
       .subscribe({
         next: (cursos) => {
           this.cursos = cursos;
@@ -66,8 +66,7 @@ export class TeacherPanelComponent implements OnInit {
               return;
             }
 
-            this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/talleres/${curso.idcurso}`)
-              .subscribe({
+              this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
                 next: (talleres) => {
                   this.cursos[index].talleres = talleres;
                   console.log(`Talleres para el curso ${curso.idcurso}:`, talleres);
@@ -90,6 +89,12 @@ export class TeacherPanelComponent implements OnInit {
     this.isEditing = true;
     this.userBackup = { ...this.user };
 
+  }
+
+  esFechaFutura(fecha: string): boolean {
+    const fechaTaller = new Date(fecha);
+    const hoy = new Date();
+    return fechaTaller > hoy;
   }
 
   guardarDatos() {
@@ -152,6 +157,8 @@ export class TeacherPanelComponent implements OnInit {
     }
   }
 
+
+  //CONTROLAR TEMA ESTADO CURSO
   eliminarCurso(curso: any) {
     const fecIni = new Date(curso.fec_ini);
     const fechaActual = new Date(this.fechaActual);
