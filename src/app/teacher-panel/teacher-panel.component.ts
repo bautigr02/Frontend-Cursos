@@ -31,6 +31,7 @@ export class TeacherPanelComponent implements OnInit {
   nuevaNota: number | null = null;
   fechaActual: Date = new Date();
   insertarNotaFinal = false;
+  mensajeEliminacion = false;
 
   constructor(
     private http: HttpClient,
@@ -152,29 +153,37 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   eliminarCurso(curso: any) {
-    if(curso.estado === 1 || curso.fec_ini < this.fechaActual) { // Si el curso está activo, no se puede eliminar
-      if (confirm(`¿Estás seguro de que deseas eliminar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
-        this.workshopService.deleteTalleresByCursoId(curso.idcurso).subscribe({
-          next: () => {
-            console.log(`Talleres del curso con ID ${curso.idcurso} eliminados.`);
-            this.CourseService.deleteCurso(curso.idcurso).subscribe({
-              next: () => {
-                this.cursos = this.cursos.filter(c => c.idcurso !== curso.idcurso);
-                console.log(`Curso con ID ${curso.idcurso} eliminado.`);
-              },
-              error: (error) => {
-                console.error('Error al eliminar el curso:', error);
-              }
-            });
-          },
-          error: (error) => {
-            console.error('Error al eliminar los talleres del curso:', error);
-          }
-        });
-      }
-    } else{
-      alert('No se puede eliminar un curso activo o que ya ha comenzado.');
+    const fecIni = new Date(curso.fec_ini);
+    const fechaActual = new Date(this.fechaActual);
+
+  if (curso.estado == 1 || fecIni > fechaActual) {
+   
+    if (confirm(`¿Estás seguro de que deseas eliminar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+      this.workshopService.deleteTalleresByCursoId(curso.idcurso).subscribe({
+        next: () => {
+          console.log(`Talleres del curso con ID ${curso.idcurso} eliminados.`);
+          this.CourseService.deleteCurso(curso.idcurso).subscribe({
+            next: () => {
+              this.cursos = this.cursos.filter(c => c.idcurso !== curso.idcurso);
+              console.log(`Curso con ID ${curso.idcurso} eliminado.`);
+            },
+            error: (error) => {
+              console.error('Error al eliminar el curso:', error);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error al eliminar los talleres del curso:', error);
+        }
+      });
     }
+  } else {
+    this.mensajeEliminacion = true;
+  }
+}
+
+  cerrarMensajeEliminacion(){
+    this.mensajeEliminacion = false;
   }
 
   //Edicion Talleres

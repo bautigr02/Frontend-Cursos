@@ -253,4 +253,10 @@
     <button (click)="cerrarHistorial()">Cerrar</button>
   </div>
 
+  <!--Contenedor de mensaje de eliminacion de curso fallido-->
+  <div class="mensaje-eliminacion" *ngIf="mensajeEliminacion">
+    <p>No se puede eliminar un curso activo o que ya ha comenzado.</p>
+    <button (click)="cerrarMensajeEliminacion()">Cancelar</button>
+  </div>
+
 </div>
