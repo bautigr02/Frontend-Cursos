@@ -54,8 +54,11 @@
             <ul>
               <li *ngFor="let curso of cursos">
                 {{ curso.nom_curso }} <span *ngIf="curso.num_aula"> - Aula: {{ curso.num_aula }}</span>
-                <button class="edit-btn" title="Editar curso" (click)="editarCurso(curso)">✎</button>
-                <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnos(curso)">👤</button>
+                <div class="div-botones">
+                    <button class="edit-btn" title="Editar curso" (click)="editarCurso(curso)">✎</button>
+                    <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnos(curso)">👤</button>
+                    <button class ="eliminar-btn" (click)="eliminarCurso(curso)">🗑️</button>
+                </div>
               </li>
             </ul>
           </ng-container>
@@ -73,11 +76,15 @@
             <ng-container *ngIf="curso.talleres && curso.talleres.length > 0;">
               <ul>
                   <li *ngFor="let taller of curso.talleres">
-                    {{ taller.nom_taller }}
-                    <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
-                    <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
-                    <button class="edit-btn" title="Editar taller" (click)="editarTaller(taller)">✎</button>
-                    <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnosTaller(taller)">👤</button>
+                    <div *ngIf=" esFechaFutura(taller.fecha)">
+                      {{ taller.nom_taller }}
+                      <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
+                      <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
+                      <div class="div-botones">
+                          <button class="edit-btn" title="Editar taller" (click)="editarTaller(taller)">✎</button>
+                          <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnosTaller(taller)">👤</button>
+                      </div>
+                    </div>
                   </li>  
               </ul>
             </ng-container>
@@ -165,9 +172,9 @@
             <button *ngIf="alumno.notaFinal == null && curso.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
               Agregar Nota
             </button>
-            <button *ngIf="alumno.notaFinal != null && curso.fec_fin == fechaActual" (click)="editarNotaFinal(alumno)">
+            <button *ngIf="alumno.notaFinal != null && puedeEditarNotaFinal(curso)" (click)="editarNotaFinal(alumno)">
               Editar Nota
-          </button>
+            </button>
           </td>   
         </tr>
       </tbody>
@@ -246,6 +253,12 @@
     </tbody>
     </table>
     <button (click)="cerrarHistorial()">Cerrar</button>
+  </div>
+
+  <!--Contenedor de mensaje de eliminacion de curso fallido-->
+  <div class="mensaje-eliminacion" *ngIf="mensajeEliminacion">
+    <p>No se puede eliminar un curso activo o que ya ha comenzado.</p>
+    <button (click)="cerrarMensajeEliminacion()">Cancelar</button>
   </div>
 
 </div>
