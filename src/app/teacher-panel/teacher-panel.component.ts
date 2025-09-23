@@ -31,6 +31,7 @@ export class TeacherPanelComponent implements OnInit {
   nuevaNota: number | null = null;
   fechaActual: Date = new Date();
   insertarNotaFinal = false;
+  mensajeEliminacion = false;
 
   constructor(
     private http: HttpClient,
@@ -55,7 +56,7 @@ export class TeacherPanelComponent implements OnInit {
       return;
     }
 
-    this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/${this.user.dni}`)
+    this.teacherService.getCoursesByDocenteDni(this.user.dni)
       .subscribe({
         next: (cursos) => {
           this.cursos = cursos;
@@ -65,8 +66,7 @@ export class TeacherPanelComponent implements OnInit {
               return;
             }
 
-            this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/talleres/${curso.idcurso}`)
-              .subscribe({
+              this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
                 next: (talleres) => {
                   this.cursos[index].talleres = talleres;
                   console.log(`Talleres para el curso ${curso.idcurso}:`, talleres);
@@ -89,6 +89,12 @@ export class TeacherPanelComponent implements OnInit {
     this.isEditing = true;
     this.userBackup = { ...this.user };
 
+  }
+
+  esFechaFutura(fecha: string): boolean {
+    const fechaTaller = new Date(fecha);
+    const hoy = new Date();
+    return fechaTaller > hoy;
   }
 
   guardarDatos() {
@@ -152,6 +158,42 @@ export class TeacherPanelComponent implements OnInit {
       this.cursoSeleccionado = { ...this.cursoBackup };
       console.log('Edición de curso cancelada, datos restaurados:', this.cursoSeleccionado);
     }
+  }
+
+
+  //CONTROLAR TEMA ESTADO CURSO
+  eliminarCurso(curso: any) {
+    const fecIni = new Date(curso.fec_ini);
+    const fechaActual = new Date(this.fechaActual);
+
+  if (curso.estado == 1 || fecIni > fechaActual) {
+   
+    if (confirm(`¿Estás seguro de que deseas eliminar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+      this.workshopService.deleteTalleresByCursoId(curso.idcurso).subscribe({
+        next: () => {
+          console.log(`Talleres del curso con ID ${curso.idcurso} eliminados.`);
+          this.CourseService.deleteCurso(curso.idcurso).subscribe({
+            next: () => {
+              this.cursos = this.cursos.filter(c => c.idcurso !== curso.idcurso);
+              console.log(`Curso con ID ${curso.idcurso} eliminado.`);
+            },
+            error: (error) => {
+              console.error('Error al eliminar el curso:', error);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error al eliminar los talleres del curso:', error);
+        }
+      });
+    }
+  } else {
+    this.mensajeEliminacion = true;
+  }
+}
+
+  cerrarMensajeEliminacion(){
+    this.mensajeEliminacion = false;
   }
 
   //Edicion Talleres
@@ -282,6 +324,20 @@ agregarNotaFinal(alumno: any): void {
     this.alumnoSeleccionado = alumno;
     this.nuevaNota = alumno.notaFinal; // Asigna la nota actual para editar
   }
+
+  puedeEditarNotaFinal(curso: any): boolean {
+  const hoy = new Date();
+  const fechaFin = new Date(curso.fec_fin);
+  // Diferencia en milisegundos
+  const diff = hoy.getTime() - fechaFin.getTime();
+  // 7 días en milisegundos
+  const sieteDias = 7 * 24 * 60 * 60 * 1000;
+  // Mostrar si hoy es igual a fecha fin o está dentro de los 7 días posteriores
+  return (
+    hoy.toDateString() === fechaFin.toDateString() ||
+    (hoy > fechaFin && diff <= sieteDias)
+  );
+}
 
   insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
     console.log('Insertando nota final:', { dni, nuevaNota, idcurso });
