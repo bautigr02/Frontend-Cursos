@@ -105,9 +105,11 @@ export class TeacherPanelComponent implements OnInit {
       (data) => {
         this.isEditing = false;
         console.log('Datos del docente actualizados:', data);
+        alert('Datos guardados con éxito.');
       },
       (error) => {
         console.error('Error al guardar los datos:', error);
+        alert('Error al guardar los datos. Por favor, inténtelo de nuevo.');
       }
     );
   }
@@ -118,6 +120,7 @@ export class TeacherPanelComponent implements OnInit {
     if (this.userBackup) {
       this.user = { ...this.userBackup };
       console.log('Edición cancelada, datos restaurados:', this.user);
+      alert('Edición cancelada, los datos no fueron guardados.');
     }
   }
 
