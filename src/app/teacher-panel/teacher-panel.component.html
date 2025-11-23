@@ -2,6 +2,7 @@
   <h1 class="teacher-nombre">{{user?.nombre}}, {{user?.apellido}} <span class="teacher-dni">{{user?.dni}}</span></h1>
   <hr />
 
+  <!--Contenedor principal del panel del docente  (datos docente)-->
   <div class="teacher-grid">
     <div class="datos-box">
       <div class="card-header">
@@ -47,6 +48,8 @@
         <button type="button" class="cancel-btn" (click)="cancelarEdicion()">Cancelar</button>
       </form>
       </div>
+
+    <!--Contenedor de los cursos del docente-->  
     <div class="estado-box">
       <div class="clases-box">
         <h4>Mis cursos</h4>
@@ -68,6 +71,7 @@
           <button class="curso-btn" routerLink="/course-form">Nuevo Curso</button>
       </div>
 
+      <!--Contenedor de proximos talleres a dar por el docente-->
       <div class="horarios-box">
         <div class="horarios-header">
           <h4>Proximas clases</h4>
@@ -93,7 +97,8 @@
       </div>
     </div>
   </div>
-  <!---Visibilziar este contenedor cuando se de click a un edit-btn de la seccion de cursos-->
+
+  <!--Contenedor de modificaciones del curso seleccionado-->
   <div *ngIf="isEditingCurso" class="edicionCurso">
       <form action="" (ngSubmit)="guardarCursoModificado()">
           <p>
@@ -121,6 +126,7 @@
       </form>
   </div>
 
+  <!--Contenedor de modificaciones del taller seleccionado-->
   <div *ngIf="isEditingTaller" class="edicionTaller">
       <form action="" (ngSubmit)="guardarTallerModificado()">
           <p>
@@ -148,6 +154,7 @@
       </form>
   </div>
 
+  <!---Contenedor de los alumnos inscritos en el curso-->
   <div *ngIf="alumnosInscritos.length > 0" class="alumnos-inscritos">
     <h4>Alumnos inscritos en el curso: {{cursoSeleccionado.nom_curso}}</h4>
     <table>
@@ -181,7 +188,7 @@
     </table>
     <button (click)="cerrarAlumnosInscritos()">Cerrar</button>
   </div>
-
+  <!---Contenedor de los alumnos inscritos en el taller-->
     <div *ngIf="alumnosTaller.length > 0" class="alumnos-inscritos">
     <h4>Alumnos inscritos en el Taller: {{tallerSeleccionado.nom_taller}}</h4>
     <table>

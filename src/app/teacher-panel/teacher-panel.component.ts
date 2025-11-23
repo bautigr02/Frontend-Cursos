@@ -56,6 +56,7 @@ export class TeacherPanelComponent implements OnInit {
       return;
     }
 
+    // Obtener cursos y talleres asociados al docente
     this.teacherService.getCoursesByDocenteDni(this.user.dni)
       .subscribe({
         next: (cursos) => {
@@ -97,6 +98,7 @@ export class TeacherPanelComponent implements OnInit {
     return fechaTaller > hoy;
   }
 
+  // Guardar los datos modificados del docente
   guardarDatos() {
     console.log('Intentando guardar...');
     this.teacherService.updateDocente(this.user).subscribe(
@@ -110,6 +112,7 @@ export class TeacherPanelComponent implements OnInit {
     );
   }
 
+  //Cancelar edicion de los datos del docente
   cancelarEdicion() { // Restaura los datos originales si el usuario cancela
     this.isEditing = false;
     if (this.userBackup) {
@@ -119,7 +122,6 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   //Edicion Cursos
-
   cursoBackup: any; // Backup de los datos del curso antes de editar
   editarCurso(curso: any) {
     this.cursoBackup = { ...curso };
@@ -127,6 +129,7 @@ export class TeacherPanelComponent implements OnInit {
     this.isEditingCurso = true;
   }
 
+  // Guardar los datos modificados del curso
   guardarCursoModificado(){
     console.log('Intentando guardar curso modificado...');
     delete this.cursoSeleccionado.talleres; // Elimina talleres para evitar conflictos al enviar
@@ -149,6 +152,7 @@ export class TeacherPanelComponent implements OnInit {
     );
   }
 
+  //Cancelar edicion de curso
   cancelarEdicionCurso() {
     this.isEditingCurso = false;
     if (this.cursoBackup) {
@@ -158,7 +162,8 @@ export class TeacherPanelComponent implements OnInit {
   }
 
 
-  //CONTROLAR TEMA ESTADO CURSO
+  //Eliminar Curso
+  //CONTROLAR TEMA ESTADO CURSO <--- MIRAR
   eliminarCurso(curso: any) {
     const fecIni = new Date(curso.fec_ini);
     const fechaActual = new Date(this.fechaActual);
@@ -189,6 +194,7 @@ export class TeacherPanelComponent implements OnInit {
   }
 }
 
+  //Cerrar mensaje de no se puede eliminar curso
   cerrarMensajeEliminacion(){
     this.mensajeEliminacion = false;
   }
@@ -201,6 +207,7 @@ export class TeacherPanelComponent implements OnInit {
     this.isEditingTaller = true;
   }
 
+  // Guardar los datos modificados del taller
   guardarTallerModificado() {
     console.log('Intentando guardar taller modificado...');
     delete this.tallerSeleccionado.curso;
@@ -219,6 +226,7 @@ export class TeacherPanelComponent implements OnInit {
     );
   }
 
+  //Cancelar edicion de taller
   cancelarEdicionTaller() {
     this.isEditingTaller = false;
     if (this.tallerBackup) {
@@ -227,7 +235,7 @@ export class TeacherPanelComponent implements OnInit {
     }
   }
 
-  // Crear una funcion verAlumnos que te genere un listado de alumnos que estan inscriptos a un curso determinado
+  // Listado de alumnos que estan inscriptos a un curso determinado
 verAlumnos(curso: any): void {
   this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
     (alumnos: any[]) => {
@@ -244,11 +252,12 @@ verAlumnos(curso: any): void {
   );
 }
 
+  // Cerrar el listado de alumnos inscritos
   cerrarAlumnosInscritos(){
     this.alumnosInscritos = [];
   }
 
-
+  // Listado de alumnos que estan inscriptos a un taller determinado
   verAlumnosTaller(taller: any) {
     this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
       (alumnos) => {
@@ -262,11 +271,13 @@ verAlumnos(curso: any): void {
     );
   }
 
+  // Habilita el formulario para insertar nota a un alumno
   insertarNota(alumno: any) {
     this.alumnoSeleccionado = alumno;
     this.isInsertarNota = true;
   }
 
+  // Inserta la nota del alumno en el taller seleccionado
   agregarNota(alumno: any) {
   this.teacherService.insertNotaAlumno({
     dni: alumno.dni,

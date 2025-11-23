@@ -45,10 +45,9 @@ export class LoginComponent {
     this.http.post('http://localhost:3000/api/login', { identifier, password }) // login de alumno
       .pipe(
         tap((response: any) => {
-          if (response.user) {
+          if (response.user && response.token) {
             response.user.rol = 'alumno'; // 👈 importante
-            this.authService.login(response.user);
-            sessionStorage.setItem('dni', response.user.dni);
+            this.authService.login({ user: response.user, token: response.token });
             this.router.navigate(['/']);
           }
         }),
@@ -58,10 +57,9 @@ export class LoginComponent {
           // login de docente si alumno falla
           return this.http.post('http://localhost:3000/api/loginDocente', { identifier, password }).pipe(
             tap((response: any) => {
-              if (response.user) {
+              if (response.user && response.token) {
                 response.user.rol = 'docente';
-                this.authService.login(response.user);
-                 sessionStorage.setItem('dni', response.user.dni);
+                this.authService.login({ user: response.user, token: response.token });
                 this.router.navigate(['/']);
               }
             }),
