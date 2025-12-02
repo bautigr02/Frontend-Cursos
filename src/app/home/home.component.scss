@@ -3,18 +3,25 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: white;
     height: auto;
     margin: 0;
-    padding: 2rem;
+    padding: 2rem 0 ;
     font-family: 'Montserrat', sans-serif;
 }
 
+.fondo-container-buscar-cursos{
+    width: 100%;
+    background-color: #a3b18a;
+    padding: 40px 0;
+    display: flex;
+    justify-content: center; 
+}
 .contenedor-buscar-cursos {
     background-image: url(/assets/Images/Foto-Curso-6.jpg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +29,7 @@ body {
     border: 2px solid #426B1F;
     border-radius: 20px;
     width: 75%;
-    height: 380px;
+    height: 600px;
     margin-top: 0;
 }
 
@@ -54,36 +61,60 @@ h2{
 }
 
 .contenedor-grid-fotos {
+    background-color: white;
     display: grid;
     align-items: center;
     justify-items: center;
-    width: 75%; 
-    height: 600px; 
-    margin: 50px auto; 
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    width: 100%; 
+    height: 700px; 
+    margin: 150px auto; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     gap: 30px; 
 }
 
-.contenedor-grid-fotos img {
-    width: 100%;
-    height: auto; 
-    border-radius: 8px; 
-    object-fit: cover; 
-    border: #426B1F 2px solid;
+.card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 2px solid #426B1F;
+    transition: transform .3s ease;
 }
 
-.contenedor-grid-fotos p{
-    margin-top: 0px;
-    font-size: 25px;
-    text-align: center;
-    color: #426B1F;
+.card:hover {
+    transform: translateY(-8px);
 }
-.contenedor-info h3{
-    color: #588157;
-    font-size: 65px;
-    text-align: center;
-    margin-bottom: 20px;
+
+.card img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    display: block;
 }
+
+.contenido {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    padding: 20px;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+}
+
+.contenido h1 {
+    display: inline-block;
+    background-color: #426B1F; 
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.contenido p {
+    font-size: 18px;
+    line-height: 1.4;
+    margin: 0;
+}
+
 .contenedor-info hr{
     width: 75%;
     margin: 0px;
@@ -92,41 +123,82 @@ h2{
 .contenedor-info{
     display: flex;
     flex-direction: column;
+    background-color: #ffffff;
     justify-content: center;
     align-items: center;
-    width: 75%;
+    width: 100%;
     margin: 50px auto;
 }
 
+.titulo {
+    background-color: #2d500f;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 45px;
+}
 
+.titulo h3{
+    color: white;
+    font-size: 65px;
+    text-align: center;
+    margin-bottom: 20px;
+}
 .contenedor-texto p{
     font-size: 30px;
     text-align: Start;
 }
 
-.contenedor-texto{
+
+.contenedor-texto {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
-    margin: 25px auto;
-    width: auto;
+    width: 100%;
+    height: 780px;
+    background-image: url(/assets/Images/fondo-wave.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 160px; 
 }
 
-.contenedor-texto p{
-    font-size: 25px;
-    text-align: justify; 
-    line-height: 1.5;
-    width: 65%;
-}
-
-.contenedor-texto img{
+.contenedor-texto > img{
     width: 500px;
     height: 500px;
     object-fit: cover;
     margin-left: 20px; 
-    border-radius: 8px;
+    border-radius: 50%;
     border: 2px solid #426B1F;
+}
+
+.seccion-gral{
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.seccion {
+    display: flex;
+    align-items: center;
+    gap: 15px;              
+    margin-bottom: 20px;    
+}
+
+.seccion img {
+    width: 28px;           
+    height: 28px;
+    object-fit: contain;
+    border: none;
+}
+
+.seccion p {
+    font-size: 25px;
+    text-align: justify; 
+    line-height: 1.5;
+    width: 65%;
+    margin: 0;
 }
 
 .contenedor-boton-unirse{
@@ -134,18 +206,38 @@ h2{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: auto;
+    width: 100%;
     margin: 0px auto; 
+    background-color: #2d500f;
+}
+
+.contenedor-boton-unirse button{
+    background-color: white;
+    color: #2d500f;
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
+.contenedor-boton-unirse button:hover{
+    background-color: #a3b18a;
+    color: white;
 }
 
 .contenedor-boton-unirse p{
     font-size: 30px;
     margin-bottom: 20px;
+    color: white;
 }
 
 .contenedor-2024{
     display: flex;
     flex-direction: row;
+    background-image: url(/assets/Images/fondo-wave2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    width: 100%;
+
 }
 
 .contenedor-titulo-2024 h3{

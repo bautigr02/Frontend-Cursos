@@ -9,42 +9,64 @@
     <title>Home</title>
 </head>
 <body>
-    <div class="contenedor-buscar-cursos">
-        <!--Agregar foto de fondo-->
-                <h2>Desarrollá tu aprendizaje al maximo</h2>
-                <h2>Con el mejor equipo docente</h2>
-                <button class="boton" routerLink="/courses">Ver Cursos</button>
+    <div class="fondo-container-buscar-cursos">
+        <div class="contenedor-buscar-cursos">
+                    <h2>Desarrollá tu aprendizaje al maximo</h2>
+                    <h2>Con el mejor equipo docente</h2>
+                    <button class="boton" routerLink="/courses">Ver Cursos</button>
+        </div>
     </div>
     <div class="contenedor-grid-fotos">
-        <img src="/assets/Images/Foto-Curso-1.jpg" alt="foto-1">
-        <img src="/assets/Images/Foto-Curso-3.jpg" alt="foto-2">
-        <img src="/assets/Images/Foto-Curso-4.jpg" alt="foto-3">
-        <p>Aprendé</p>
-        <p>Inspirate</p>
-        <p>Crecé</p>
+        <div class="card">
+            <img src="/assets/Images/Foto-Curso-1.jpg" alt="foto-1">
+            <div class="contenido">
+                <h1>Aprendé</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem animi iusto id, tempora, assumenda optio, magni quisquam omnis dicta ratione est ullam iure pariatur provident itaque repellat velit eaque aut?</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="/assets/Images/Foto-Curso-3.jpg" alt="foto-2">
+            <div class="contenido">
+                <h1>Crea</h1>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam aspernatur temporibus laborum sapiente rem suscipit, quaerat ducimus vitae, eveniet perspiciatis aliquam odio nisi fugiat minus, placeat nulla dicta! Inventore, quasi!</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="/assets/Images/Foto-Curso-4.jpg" alt="foto-3">
+            <div class="contenido">
+                <h1>Crecé</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vitae porro tempore quod minus nulla. Nesciunt porro eos reiciendis ducimus distinctio, quae harum quo voluptates quidem, aperiam hic non cumque.</p>
+            </div>
+        </div>
     </div>
+
     <div id="sobre-nosotros" class="contenedor-info">
-        <h3>¿Por qué elegirnos?</h3>
-        <hr>
+        <div class="titulo">
+            <h3>Sobre nosostros</h3>
+        </div>
         <div class="contenedor-texto">
-            <p>
-                •Brindamos cursos online de calidad y para la comunidad!
-                <br>
-                <br>
-                •Ofrecemos una amplia variedad de cursos diseñados para todos los niveles de habilidad.
-                <br>
-                <br>
-                •Contamos con instructores altamente calificados y con experiencia en la industria.
-                <br>
-                <br>
-                •Nuestros cursos están actualizados con las últimas tendencias y tecnologías.
-                <br>
-                <br>
-                •Ofrecemos flexibilidad en los horarios para que puedas aprender a tu propio ritmo.
-                <br>
-                <br>
-                <br>
-            </p>
+            <div class="seccion-gral">
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="logo aprobacion">
+                    <p>Brindamos cursos online de calidad y para la comunidad!</p>
+                </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="logo aprobacion">
+                    <p>Ofrecemos una amplia variedad de cursos diseñados para todos los niveles de habilidad.</p>
+                </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="logo aprobacion">
+                    <p>Contamos con instructores altamente calificados y con experiencia en la industria.</p>
+                </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="logo aprobacion">
+                    <p>Nuestros cursos están actualizados con las últimas tendencias y tecnologías.</p>
+                </div>           
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="logo aprobacion">
+                    <p>Ofrecemos flexibilidad en los horarios para que puedas aprender a tu propio ritmo.</p>
+                </div>
+            </div>
             <img src="/assets/Images/Foto-Curso-5.jpg" alt="foto-5">
         </div>
 
