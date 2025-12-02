@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-panel',
@@ -13,19 +14,18 @@ export class UserPanelComponent implements OnInit {
   talleres: any[] = [];
   isEditing = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // Obtener el DNI del usuario desde sessionStorage
-    const dniStr = sessionStorage.getItem('dni');
-    if (!dniStr) {
-      console.error('No hay DNI en localStorage');
+    this.user = this.authService.getUser();
+    if (!this.user) {
+      console.error('No hay usuario logueado');
       return;
     }
     // Valida de que el DNI sea válido
-    const dni = Number(dniStr);
+    const dni = this.user.dni;
     if (!dni) {
-      console.error('DNI inválido:', dniStr);
+      console.error('DNI inválido:', this.user.dni);
       return;
     }
 
