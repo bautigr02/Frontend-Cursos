@@ -47,8 +47,10 @@ export class WorkshopFormComponent implements OnInit {
       this.talleresAgregados.push(nuevoTaller);
       this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
       this.tallerForm.reset();
+      alert('Taller agregado correctamente.');
     }else{
       console.log('Formulario de taller no válido. Por favor, revisa los campos.');
+      alert('Formulario de taller no válido. Por favor, revisa los campos.');
       this.isErrorVisible = true;
     }
   }
@@ -58,6 +60,7 @@ export class WorkshopFormComponent implements OnInit {
 
     if (!cursoParaCrear || talleresParaCrear.length === 0) {
       console.error('Faltan datos de curso o talleres para guardar.');
+      alert('Faltan datos de curso o talleres para guardar.');
       return;
     }
 
@@ -82,6 +85,7 @@ export class WorkshopFormComponent implements OnInit {
       next: (responseTalleres) => {
         console.log('Curso y talleres creados con éxito.');
         console.log('Respuesta de los talleres:', responseTalleres);
+        alert('Curso y talleres creados con éxito.');
         this.CourseWorkshopService.clearData(); 
         this.isErrorVisible = false;
         this.isSuccessVisible = true;
@@ -89,6 +93,7 @@ export class WorkshopFormComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error en la creación:', error);
+        alert('Error en la creación del curso o talleres. Por favor, intenta de nuevo.');
         this.isErrorVisible = true;
       }
     });
