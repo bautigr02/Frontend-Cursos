@@ -94,8 +94,8 @@ body {
     align-items: center;
     justify-items: center;
     margin: 0 auto;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 30px; 
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 5px; 
 }
 
 .card {
@@ -142,6 +142,37 @@ body {
     margin: 0;
 }
 
+.estadisticas-generales{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: #a3b18a;
+    margin: 50px;
+}
+
+.estadisticas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: auto;
+    margin: 20px;
+    background-color: blue;
+}
+
+.stat {
+    width: 40%;
+    background-color: red;
+    font-size: 40px;
+    color: white;
+    margin: 20px;
+
+}
+
 .contenedor-info hr{
     width: 75%;
     margin: 0px;
@@ -160,8 +191,7 @@ body {
 .contenedor-info .titulo h3 {
     background-color: white;
     width: 100%;
-    text-align: center;
-    justify-content: center;
+    margin-top: 20px;
 }
 
 .titulo h3{
@@ -199,21 +229,27 @@ body {
 }
 
 .seccion-gral{
-    width: 800px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-.seccion {
+    width: 100%;
     display: flex;
     align-items: center;
-    gap: 15px;              
+    justify-content: center;
+    flex-direction: row;
+}
+.seccion {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    width: 30%;
+    height: auto;
+    margin: 20px;     
+    padding: 10px;    
     margin-bottom: 20px;    
 }
 
 .seccion img {
-    width: 28px;           
-    height: 28px;
+    width: 40px;           
+    height: 40px;
     object-fit: contain;
     border: none;
 }
