@@ -6,51 +6,99 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-    <title>Home</title>
+<title>Home</title>
 </head>
 <body>
-    <div class="contenedor-buscar-cursos">
-        <!--Agregar foto de fondo-->
-                <h2>Desarrollá tu aprendizaje al maximo</h2>
-                <h2>Con el mejor equipo docente</h2>
-                <button class="boton" routerLink="/courses">Ver Cursos</button>
+    <div class="fondo-container-buscar-cursos">
+        <div class="contenedor-buscar-cursos">
+                    <h2>Desarrollá tu <span class = "color-texto">aprendizaje al maximo</span></h2>
+                    <h2>Con el mejor equipo docente</h2>
+                    <p>
+                        ¡Explorá nuestra amplia variedad de cursos y comenzá a aprender hoy mismo!
+                    </p>
+                    <button class="boton" routerLink="/courses">Ver Cursos</button>
+        </div>
     </div>
-    <div class="contenedor-grid-fotos">
-        <img src="/assets/Images/Foto-Curso-1.jpg" alt="foto-1">
-        <img src="/assets/Images/Foto-Curso-3.jpg" alt="foto-2">
-        <img src="/assets/Images/Foto-Curso-4.jpg" alt="foto-3">
-        <p>Aprendé</p>
-        <p>Inspirate</p>
-        <p>Crecé</p>
+    <div class="contenedor-fotos">
+        <div class="titulo">
+            <h2>Todo lo que podemos ofrecerte</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor quaerat, totam illum ullam, facere ducimus ad, molestias aspernatur nostrum odit repellat culpa? Quis ratione consectetur qui facilis, a repellendus neque.</p>
+        </div>
+        <div class="contenedor-grid-fotos">
+            <div class="card">
+                <img src="/assets/Icons/bombilla-luz.png" alt="foto-1">
+                <div class="contenido">
+                    <h1>Talleres de calidad</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem animi iusto id, tempora, assumenda optio, magni quisquam omnis dicta ratione est ullam iure pariatur provident itaque repellat velit eaque aut?</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/assets/Icons/certificado.png" alt="foto-2">
+                <div class="contenido">
+                    <h1>Certificación</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam aspernatur temporibus laborum sapiente rem suscipit, quaerat ducimus vitae, eveniet perspiciatis aliquam odio nisi fugiat minus, placeat nulla dicta! Inventore, quasi!</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/assets/Icons/docente-pizarron.png" alt="foto-3">
+                <div class="contenido">
+                    <h1>Docentes increíbles</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vitae porro tempore quod minus nulla. Nesciunt porro eos reiciendis ducimus distinctio, quae harum quo voluptates quidem, aperiam hic non cumque.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="estadisticas-generales">
+        <div class="estadisticas">
+            <div class="stat">
+                <h2>100+</h2>
+                <h4>Cursos realizados</h4>
+                <p>En los ultimos 2 años</p>
+            </div>
+            <div class="stat">
+                <h2>50+</h2>
+                <h4>Docentes</h4>
+                <p>Calificados y expertos</p>
+            </div>
+            <div class="stat">
+                <h2>1000+</h2>
+                <h4>Alumnos</h4>
+                <p>En los ultimos 3 años</p>
+            </div>
+        </div>
+        <div class="estadisticas-texto">
+            <h2>Encontraron su familia con nosotros</h2>
+            <p>¡Vos también podes convertirte en parte de nuestra familia!</p>
+            <button class="boton2" routerLink="/register">Unirse</button>
+            <p>Ante cualquier duda podes comunicarte con nostros via email!</p>
+            <img src="/assets/Images/" alt="foto">
+        </div>
+       
     </div>
     <div id="sobre-nosotros" class="contenedor-info">
-        <h3>¿Por qué elegirnos?</h3>
-        <hr>
+        <div class="titulo">
+            <h2>Sobre nosostros</h2>
+        </div>
         <div class="contenedor-texto">
-            <p>
-                •Brindamos cursos online de calidad y para la comunidad!
-                <br>
-                <br>
-                •Ofrecemos una amplia variedad de cursos diseñados para todos los niveles de habilidad.
-                <br>
-                <br>
-                •Contamos con instructores altamente calificados y con experiencia en la industria.
-                <br>
-                <br>
-                •Nuestros cursos están actualizados con las últimas tendencias y tecnologías.
-                <br>
-                <br>
-                •Ofrecemos flexibilidad en los horarios para que puedas aprender a tu propio ritmo.
-                <br>
-                <br>
-                <br>
-            </p>
-            <img src="/assets/Images/Foto-Curso-5.jpg" alt="foto-5">
+            <div class="seccion-gral">
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="">
+                    <h2>¿Quiénes somos?</h2>
+                </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="">
+                    <h2>Nuestra Mision</h2>
+                 </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="">
+                    <h2>Nuestros Valores</h2>
+                 </div>
+            </div>
         </div>
 
         <div class="contenedor-2024">
             <div class="contenedor-titulo-2024">
-                <h3>Nuestro 2024 fue de la siguiente manera...</h3>
+                <h2>Nuestro 2024 fue de la siguiente manera...</h2>
                 <img src="/assets/Icons/Stats-logo.png" alt="foto-stats">
                 <!-- Cambiar png por uno de mejor calidad y tamaño -->
             </div>
