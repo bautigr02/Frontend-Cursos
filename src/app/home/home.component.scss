@@ -10,6 +10,12 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 50px;
+    font-weight: bold;
+}
+
 @keyframes color-change {
   0% {
     color: #588157;
@@ -48,8 +54,8 @@ body {
 }
 
 .contenedor-buscar-cursos h2{
-    font-family: 'Montserrat', sans-serif;
     font-style: normal;
+    font-family: montserrat, sans-serif;
     font-size: 35px;
     margin: 0px;
     margin-bottom: 20px;
@@ -57,6 +63,8 @@ body {
 
 .contenedor-buscar-cursos h2 .color-texto {
     color: #000000;
+    font-size: 50px;
+    font-family: 'Playfair Display', serif;
     animation: color-change 4s ease-in-out infinite alternate;
 }
 
@@ -69,7 +77,7 @@ body {
     margin-left: 25px;
 }
 
-.boton {
+.boton{
     font-size: 22px;
     cursor: pointer;
     width: 175px;
@@ -86,6 +94,35 @@ body {
     color: #a3b18a;
 }
 
+.boton2{
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    margin-top: 20px;
+    color: black;
+    background-color: transparent;
+    border-radius: 40px;
+    border: 1px solid black;
+    transition: color 0.3s ease;
+}
+
+.boton2:hover {
+    color: white;
+    border: 1px solid white;
+}
+
+.titulo h2 {
+    color:#548353;
+    text-align: center;
+}
+.titulo p {
+    font-size: 20px;
+    text-align: center;
+    width: 60%;
+    margin: 0 auto 30px auto;
+    color: gray;
+}
 .contenedor-grid-fotos {
     width: 100%;
     height: 600px;
@@ -128,7 +165,8 @@ body {
 
 .contenido h1 {
     color: white;
-    background-color: #426B1F;
+    background-color: #548353;
+    font-family: montserrat, sans-serif;
     display: inline-block;
     padding: 8px 14px;
     border-radius: 5px;
@@ -158,21 +196,50 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 25%;
+    width: 50%;
     height: auto;
     margin: 20px;
-    background-color: blue;
 }
 
+.estadisticas img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
 .stat {
+    height: 150px;
     width: 40%;
-    background-color: red;
-    font-size: 40px;
-    color: white;
+    background-color: #ffffff;
     margin: 20px;
-
+    text-align: center;
+    border-radius: 45px 10px 45px 10px;
+    border: 2px solid #426B1F;
 }
 
+.stat h2 {
+    font-size: 50px;
+    margin: 0;
+    color: #3d5e3d;
+}
+
+.stat h4 {
+    font-size: 30px;
+    margin: 10px 0 5px 0;
+    color: #548353;
+}
+
+.stat p {
+    color: black;
+    font-size: 20px;
+    margin: 0;
+}
+
+.estadisticas-texto {
+    justify-content: center;
+    text-align: center;
+
+}
 .contenedor-info hr{
     width: 75%;
     margin: 0px;
