@@ -136,9 +136,9 @@ h1, h2 {
 }
 
 .card {
+    width: 450px;
     height: 380px;
     border-radius: 14px;
-    border: 2px solid #426B1F;
     transition: transform .3s ease;
     display: flex;
     flex-direction: column;
@@ -214,7 +214,7 @@ h1, h2 {
     margin: 20px;
     text-align: center;
     border-radius: 45px 10px 45px 10px;
-    border: 2px solid #426B1F;
+    border: 2px solid black;
 }
 
 .stat h2 {
@@ -236,9 +236,19 @@ h1, h2 {
 }
 
 .estadisticas-texto {
+    margin-left: 20px;
     justify-content: center;
     text-align: center;
 
+}
+
+.estadisticas-texto h2{
+    font-size: 48px;
+}
+.estadisticas-texto img{
+    margin: 20px;
+    border-radius: 50%;
+    height: 400px;
 }
 .contenedor-info hr{
     width: 75%;
@@ -308,10 +318,11 @@ h1, h2 {
     flex-direction: column;
     align-items: center;  
     width: 30%;
-    height: auto;
+    height: 550px;
     margin: 20px;     
     padding: 10px;    
-    margin-bottom: 20px;    
+    margin-bottom: 20px;  
+    border-radius: 20px;  
 }
 
 .seccion img {
@@ -329,6 +340,12 @@ h1, h2 {
     margin: 0;
 }
 
+.seccion:hover{
+    transition: background-color 0.5s, color 0.5s, box-shadow 0.5s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #588157;
+    color: white;
+}
 .contenedor-boton-unirse{
     display: flex;
     flex-direction: column;
