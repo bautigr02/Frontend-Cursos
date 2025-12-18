@@ -6,73 +6,109 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-    <title>Home</title>
+<title>Home</title>
 </head>
 <body>
-    <div class="contenedor-buscar-cursos">
-        <!--Agregar foto de fondo-->
-                <h2>Desarrollá tu aprendizaje al maximo</h2>
-                <h2>Con el mejor equipo docente</h2>
-                <button class="boton" routerLink="/courses">Ver Cursos</button>
+    <div class="fondo-container-buscar-cursos">
+        <div class="contenedor-buscar-cursos">
+                    <h2>Desarrollá tu <span class = "color-texto">aprendizaje al maximo</span></h2>
+                    <h2>Con el mejor equipo docente</h2>
+                    <p>
+                        ¡Explorá nuestra amplia variedad de cursos y comenzá a aprender hoy mismo!
+                    </p>
+                    <button class="boton" routerLink="/courses">Ver Cursos</button>
+        </div>
     </div>
-    <div class="contenedor-grid-fotos">
-        <img src="/assets/Images/Foto-Curso-1.jpg" alt="foto-1">
-        <img src="/assets/Images/Foto-Curso-3.jpg" alt="foto-2">
-        <img src="/assets/Images/Foto-Curso-4.jpg" alt="foto-3">
-        <p>Aprendé</p>
-        <p>Inspirate</p>
-        <p>Crecé</p>
+    <div class="contenedor-fotos">
+        <div class="titulo">
+            <h2>Todo lo que podemos ofrecerte</h2>
+            <p>Descubrí la propuesta educativa que transformará tu futuro. Desde talleres prácticos hasta certificaciones reconocidas, te brindamos las herramientas para que alcances tu máximo potencial</p>
+        </div>
+        <div class="contenedor-grid-fotos">
+            <div class="card">
+                <img src="/assets/Icons/bombilla-luz.png" alt="foto-1">
+                <div class="contenido">
+                    <h1>Talleres de calidad</h1>
+                    <p>Nuestros talleres están diseñados para una experiencia de aprendizaje intensiva y práctica. Adquirirás habilidades reales a través de proyectos y metodologías de vanguardia.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/assets/Icons/certificado.png" alt="foto-2">
+                <div class="contenido">
+                    <h1>Certificación</h1>
+                    <p>Al completar tus cursos, recibirás una certificación avalada que valida tus nuevos conocimientos y habilidades, potenciando tu perfil profesional ante el mercado laboral.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="/assets/Icons/docente-pizarron.png" alt="foto-3">
+                <div class="contenido">
+                    <h1>Docentes increíbles</h1>
+                    <p>Contamos con un equipo de docentes expertos y apasionados, profesionales activos en sus campos que te guiarán con su experiencia y te motivarán en cada etapa de tu formación.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="info-importante">
+        <div class="titulo">
+            <h2>Nuestros cursos son por la comunidad y para la comunidad</h2>
+            <p>Es por esto que estamos orgullos de ofrecer cursos <span class="color-texto">100% gratuitos</span>.</p>
+            <p>No hay un limitante de edad para aprender, y con nosotros tampoco. Veni a aprender con o sin experiencia!</p>
+        </div>
+    </div>
+     <div class="estadisticas-generales">
+        <div class="estadisticas">
+            <div class="stat">
+                <h2 #statCounterRef class="stat-counter" data-target="100"><span class = "color-change">0+</span></h2>
+                <h4>Cursos realizados</h4>
+                <p>En los ultimos 2 años</p>
+            </div>
+            <div class="stat">
+                
+                <h2 #statCounterRef class="stat-counter" data-target="50"><span class = "color-change">0+</span></h2>
+                <h4>Docentes</h4>
+                <p>Calificados y expertos</p>
+            </div>
+            <div class="stat">
+                <h2 #statCounterRef class="stat-counter" data-target="1000"><span class = "color-change">0+</span></h2>
+                <h4>Alumnos</h4>
+                <p>En los ultimos 3 años</p>
+            </div>
+        </div>
+        <div class="estadisticas-texto">
+            <h2 >Convertite en parte de nuestra familia</h2>
+            <h3><span class="color-change">+1000 personas ya se han unido!</span></h3>
+            <button class="boton2" routerLink="/register">Unirse</button>
+            <div class="estadisticas-texto-img">
+                <img src="/assets/Images/Foto-familia.png" alt="foto">   
+            </div>
+
+        </div>
+       
     </div>
     <div id="sobre-nosotros" class="contenedor-info">
-        <h3>¿Por qué elegirnos?</h3>
-        <hr>
+        <div class="titulo">
+            <h2>Sobre nosostros</h2>
+        </div>
         <div class="contenedor-texto">
-            <p>
-                •Brindamos cursos online de calidad y para la comunidad!
-                <br>
-                <br>
-                •Ofrecemos una amplia variedad de cursos diseñados para todos los niveles de habilidad.
-                <br>
-                <br>
-                •Contamos con instructores altamente calificados y con experiencia en la industria.
-                <br>
-                <br>
-                •Nuestros cursos están actualizados con las últimas tendencias y tecnologías.
-                <br>
-                <br>
-                •Ofrecemos flexibilidad en los horarios para que puedas aprender a tu propio ritmo.
-                <br>
-                <br>
-                <br>
-            </p>
-            <img src="/assets/Images/Foto-Curso-5.jpg" alt="foto-5">
-        </div>
-
-        <div class="contenedor-2024">
-            <div class="contenedor-titulo-2024">
-                <h3>Nuestro 2024 fue de la siguiente manera...</h3>
-                <img src="/assets/Icons/Stats-logo.png" alt="foto-stats">
-                <!-- Cambiar png por uno de mejor calidad y tamaño -->
-            </div>
-            <div class="contenedor-info-2024">
-                    <div class="cuadrado">
-                        <h2>+500</h2>
-                        <p>Alumnos</p>
-                    </div>
-                    <div class="cuadrado">
-                        <h2>+20</h2>
-                        <p>Cursos</p>
-                    </div>
-                    <div class="cuadrado">
-                        <h2>+300</h2>
-                        <p>Horas realizadas</p>
-                    </div>
-                    <div class="cuadrado">
-                       <h2>+15</h2>
-                        <p>Docentes Trabajando</p>
-                    </div>
+            <div class="seccion-gral">
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="">
+                    <h2>¿Quiénes somos?</h2>
+                    <p>Somos una plataforma educativa dedicada a ofrecer formación de alta calidad, impulsando el desarrollo profesional y personal de nuestros estudiantes a través de cursos innovadores y accesibles.</p>
+                </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="">
+                    <h2>Nuestra Mision</h2>
+                    <p>Brindar una educación accesible y de calidad que empodere a nuestros estudiantes para alcanzar sus metas profesionales y personales, fomentando un aprendizaje continuo y significativo.</p>
+                 </div>
+                <div class="seccion">
+                    <img src="/assets/Icons/aprobacion-logo.png" alt="">
+                    <h2>Nuestros Valores</h2>
+                    <p>Nos regimos por la Excelencia Académica, la Innovación Constante, el Compromiso con el Alumno y la Integridad en todo nuestro proceso de enseñanza.</p>
+                 </div>
             </div>
         </div>
+           
     <div class="contenedor-boton-unirse">
         <p> ¡Unite a nuestra comunidad y lleva tu aprendizaje al siguiente nivel!</p>
         <button class="boton" routerLink="/register">Unirse</button> <!-- Boton para Iniciar Sesion en la plataforma -->
