@@ -74,11 +74,11 @@
             </div>
           
             <div class="input-group">
-              <label for="password">Contraseña</label>
-              <input type="password" id="password" formControlName="password">
-              <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
-                <small *ngIf="registerForm.get('password')?.errors?.['required']">La contraseña es requerida.</small>
-                <small *ngIf="registerForm.get('password')?.errors?.['maxlength']">Máximo 15 caracteres permitidos.</small>
+              <label for="contrasena">Contraseña</label>
+              <input type="contrasena" id="contrasena" formControlName="contrasena">
+              <div *ngIf="registerForm.get('contrasena')?.touched && registerForm.get('contrasena')?.invalid">
+                <small *ngIf="registerForm.get('contrasena')?.errors?.['required']">La contraseña es requerida.</small>
+                <small *ngIf="registerForm.get('contrasena')?.errors?.['maxlength']">Máximo 15 caracteres permitidos.</small>
               </div>
             </div>
                  

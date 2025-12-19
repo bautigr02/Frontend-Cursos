@@ -69,7 +69,7 @@ export class RegisterComponent {
             ]
           ],
           // Contraseña: requerido, máximo 15 caracteres
-          password: [
+          contrasena: [
             '',
             [
               Validators.required,
