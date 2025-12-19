@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseWorkshopService } from '../services/course-workshop.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-
 @Component({
   selector: 'app-course-form',
   templateUrl: './course-form.component.html',
@@ -26,7 +25,7 @@ export class CourseFormComponent implements OnInit {
       fec_ini: ['', Validators.required],
       fec_fin: ['', Validators.required],
       num_aula: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      imagen: ['', [Validators.required, Validators.maxLength(255), Validators.pattern('^https?://.*\\.(webp|jpeg|jpg|png|gif)$')]],
+      imagen: ['', [Validators.required,Validators.maxLength(255),Validators.pattern(/^https?:\/\/.+/)]],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
     });
   }
