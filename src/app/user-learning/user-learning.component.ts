@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-learning',
@@ -12,17 +13,17 @@ export class UserLearningComponent implements OnInit {
   cursos: any[] = [];
   ultimosTalleres: any[] = [];
   router: Router = new Router();
+  user: any;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    const dniStr = localStorage.getItem('dni') || sessionStorage.getItem('dni');
-    if (!dniStr) {
+    this.user = this.authService.getUser();
+    if (!this.user || !this.user.dni) {
       console.error('No hay DNI en storage');
       return;
     }
-    const dni = Number(dniStr);
-
+    const dni = Number(this.user.dni);
     // Obtener cursos del alumno
     this.userService.getCursosByAlumno(dni).subscribe(
       (data) => {
