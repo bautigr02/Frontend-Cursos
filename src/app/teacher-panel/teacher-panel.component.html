@@ -155,7 +155,7 @@
   </div>
 
   <!---Contenedor de los alumnos inscritos en el curso-->
-  <div *ngIf="alumnosInscritos.length > 0" class="alumnos-inscritos">
+  <div *ngIf="cursoSeleccionado" class="alumnos-inscritos">
     <h4>Alumnos inscritos en el curso: {{cursoSeleccionado.nom_curso}}</h4>
     <table>
       <thead>

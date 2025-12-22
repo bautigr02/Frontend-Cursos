@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseWorkshopService } from '../services/course-workshop.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+
 @Component({
   selector: 'app-course-form',
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss']
 })
+
 export class CourseFormComponent implements OnInit {
   cursoForm!: FormGroup;
   isErrorVisible = false;
@@ -33,7 +35,7 @@ export class CourseFormComponent implements OnInit {
      if (this.cursoForm.valid) {
       const cursoParaCrear = this.cursoForm.value;
         //Agrega datos faltantes al curso
-        cursoParaCrear.estado = '1';
+        cursoParaCrear.estado = '1'; //Suponemos que ya fue aprobado por la direccion para habilitar el curso.
         const dniDocenteLogueado = this.authService.getDniDocenteLogueado(); 
           cursoParaCrear.dni_docente = dniDocenteLogueado;
         this.CourseWorkshopService.setCurso(cursoParaCrear);

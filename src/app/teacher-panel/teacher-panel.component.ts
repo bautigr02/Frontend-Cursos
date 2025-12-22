@@ -240,10 +240,12 @@ export class TeacherPanelComponent implements OnInit {
 
   // Listado de alumnos que estan inscriptos a un curso determinado
 verAlumnos(curso: any): void {
+  this.alumnosInscritos = [];
+  this.cursoSeleccionado = null;
   this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
     (alumnos: any[]) => {
-      this.alumnosInscritos = alumnos;
       this.cursoSeleccionado = curso;
+      this.alumnosInscritos = alumnos;
 
       if (this.alumnosInscritos.length > 0) {
         console.log('Alumnos inscritos en el curso:', alumnos);
@@ -257,6 +259,7 @@ verAlumnos(curso: any): void {
 
   // Cerrar el listado de alumnos inscritos
   cerrarAlumnosInscritos(){
+    this.cursoSeleccionado = null;
     this.alumnosInscritos = [];
   }
 
