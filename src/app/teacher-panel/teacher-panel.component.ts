@@ -62,29 +62,32 @@ export class TeacherPanelComponent implements OnInit {
     this.teacherService.getCoursesByDocenteDni(this.user.dni)
       .subscribe({
         next: (cursos) => {
-          this.cursos = cursos;
-       cursos.forEach((curso, index) => {
-            if (!curso || !curso.idcurso) {
-              console.warn('Curso inválido o sin idcurso:', curso);
-              return;
-            }
-
-              this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
-                next: (talleres) => {
-                  this.cursos[index].talleres = talleres;
-                  console.log(`Talleres para el curso ${curso.idcurso}:`, talleres);
-                },
-                error: (err) => {
-                  console.error(`Error al obtener talleres para el curso ${curso.idcurso}:`, err);
-                }
-              });
+          //Cargamos aquellos cursos no hayan finalizado(fecha limite + 10 dias)
+          this.cursos = cursos.filter((curso: any) => {
+          if (!curso || !curso.fec_fin) return false;
+          
+          const fechaLimite = new Date(curso.fec_fin); 
+          fechaLimite.setDate(fechaLimite.getDate() + 10);
+          return fechaLimite >= this.fechaActual;
           });
-      },
-      error: (err) => {
+          
+          this.cursos.forEach((curso,index)=>{
+            this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
+              next:(talleres) =>{
+                this.cursos[index].talleres = talleres;
+              },
+            error: (err) =>{
+              console.error ("error al obtener talleres", err);
+            }
+            });
+            });
+
+          },
+        error: (err) => {
         console.error('Error al obtener cursos:', err);
       }
-    });
-  }
+  });
+}
 
   //Edicion usuario Docente
  userBackup: any; // Backup de los datos del usuario antes de editar
