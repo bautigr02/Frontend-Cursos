@@ -34,7 +34,7 @@
     <button 
       id="inscription" 
       (click)="openModal()" 
-      *ngIf="!yaInscripto && workshop.nota_taller === null">
+      *ngIf="!yaInscripto && workshop.nota_taller === null && !userIsTeacher">
       Inscribirse
     </button>
     <button *ngIf="yaInscripto" class="inscripto-label">

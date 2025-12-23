@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,12 @@ export class TeacherService {
   const { dni, nota_curso, idcurso } = nota;
   return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota/curso/${idcurso}`,{ dni, nota_curso });
 }
+
+  isUserATeacher(userId: number): Observable<boolean> {
+    return this.http.get<any>(`http://localhost:3000/api/docente/${userId}`).pipe(
+      map(teacher => !!teacher),
+      catchError(() => of(false))
+    );
+  }
 
 }

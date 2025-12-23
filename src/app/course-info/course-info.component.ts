@@ -20,6 +20,7 @@ export class CourseInfoComponent implements OnInit{
   user: any;
   cursosInscriptos: any[] = [];
   fechaActual = new Date().toLocaleDateString('es-AR');
+  userIsTeacher: boolean = false;
 
 
   constructor(
@@ -32,6 +33,10 @@ export class CourseInfoComponent implements OnInit{
   
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    this.user = user;
+
+    // Verificar si el usuario es docente
+    this.userIsTeacher = user?.rol === 'docente';
 
     // Obtener el ID del curso desde la URL
     this._route.params.subscribe(params => {
@@ -40,14 +45,6 @@ export class CourseInfoComponent implements OnInit{
       this.getCourseInfo(courseId);
       this.getWorkshops(courseId);
     });
-    /* Simulación de carga de datos
-    setTimeout(() => {
-      this._route.params.subscribe(params => {
-      this.course = this.courseList.find(course => course.idcurso == params['id']);
-      this.loading = false; 
-    });
-    }, 1500);
-    */
     if (user && user.dni) {
       this.userService.getCursosByAlumno(user.dni).subscribe(
         (cursos) => {
@@ -82,25 +79,6 @@ export class CourseInfoComponent implements OnInit{
         }
       );
     }
-
-    // // Método para cancelar la inscripción
-    // cancelarInscripcion(): void {
-    //   const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-    //   if (!user.dni || !this.course?.idcurso) {
-    //     alert('Debe iniciar sesión para cancelar la inscripción en el curso.');
-    //     return;
-    //   }
-
-    //   this.userService.cancelarInscripcion(user.dni, this.course.idcurso).subscribe(
-    //     () => {
-    //       this.yaInscripto = false;
-    //       alert('¡Inscripción cancelada con éxito!');
-    //     },
-    //     (error) => {
-    //       alert(error.error?.error || 'Error al cancelar la inscripción');
-    //     }
-    //   );
-    // }
 
     // Modal de inscripción
     openModal(){

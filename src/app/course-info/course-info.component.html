@@ -30,7 +30,7 @@
   <!-- BOTONES -->
   <div class="buttons">
     <button id="more-info" (click)="goBack()">Mas cursos</button>
-    <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1  && !yaInscripto && !yaComenzo()" class="inscribirse">
+    <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1  && !yaInscripto && !yaComenzo() && !userIsTeacher" class="inscribirse">
       Inscribirse
     </button>
     <button *ngIf="yaInscripto" class="inscripto-label">
