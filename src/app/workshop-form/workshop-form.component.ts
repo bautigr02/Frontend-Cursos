@@ -55,7 +55,7 @@ export class WorkshopFormComponent implements OnInit {
         this.tallerForm.reset();
         alert('Taller agregado correctamente.');
       } else{
-      alert('La fecha del taller debe estar dentro del rango de fechas del curso.')
+      alert('La fecha del taller debe estar dentro del rango de fechas del curso.');
     }
   }
   onSubmit(): void {
