@@ -20,6 +20,7 @@ export class WorkshopInfoComponent implements OnInit {
   user: any;
   talleresInscriptos: any[] = [];
   fechaActual: Date = new Date();
+  userIsTeacher: boolean = false;
 
   constructor(
     private _route: ActivatedRoute, 
@@ -30,6 +31,9 @@ export class WorkshopInfoComponent implements OnInit {
   
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
+    
+    // Verificar si el usuario es docente
+    this.userIsTeacher = this.user?.rol === 'docente';
     
     this._route.params.subscribe(params => {
       const workshopId = +params['id'];
