@@ -62,12 +62,12 @@ export class TeacherPanelComponent implements OnInit {
     this.teacherService.getCoursesByDocenteDni(this.user.dni)
       .subscribe({
         next: (cursos) => {
-          //Cargamos aquellos cursos no hayan finalizado(fecha limite + 10 dias)
+          //Cargamos aquellos cursos no hayan finalizado(fecha limite + 7 dias)
           this.cursos = cursos.filter((curso: any) => {
           if (!curso || !curso.fec_fin) return false;
           
           const fechaLimite = new Date(curso.fec_fin); 
-          fechaLimite.setDate(fechaLimite.getDate() + 10);
+          fechaLimite.setDate(fechaLimite.getDate() + 7);
           return fechaLimite >= this.fechaActual;
           });
           
@@ -98,9 +98,18 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   esFechaFutura(fecha: string): boolean {
+    if (!fecha) return false;
+
     const fechaTaller = new Date(fecha);
     const hoy = new Date();
-    return fechaTaller > hoy;
+
+    const fechaLimite = new Date(fechaTaller);
+    fechaLimite.setDate(fechaLimite.getDate() + 7);
+
+    hoy.setHours(0, 0, 0, 0);
+    fechaLimite.setHours(23, 59, 59, 999);
+
+    return fechaTaller >= hoy ;
   }
 
   // Guardar los datos modificados del docente
@@ -282,6 +291,30 @@ verAlumnos(curso: any): void {
     );
   }
 
+
+
+  puedeAgregarNotaFinal(curso: any): boolean {
+  if (!curso?.fec_fin) return false;
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+
+  const fechaFin = new Date(curso.fec_fin + 'T00:00:00');
+  const fechaLimite = new Date(fechaFin);
+
+  fechaLimite.setDate(fechaLimite.getDate() + 7); // sumar 7 días
+
+  return hoy >= fechaFin && hoy <= fechaLimite;
+  }
+
+  puedeAgregarNotaTaller(taller: any): boolean {
+    if (!taller?.fecha) return false;
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const fechaTaller = new Date(taller.fecha + 'T00:00:00');
+    return hoy >= fechaTaller;
+  } 
   // Habilita el formulario para insertar nota a un alumno
   insertarNota(alumno: any) {
     this.alumnoSeleccionado = alumno;
@@ -297,6 +330,7 @@ verAlumnos(curso: any): void {
   }).subscribe(
     (response) => {
       console.log('Nota agregada:', response);
+      this.isInsertarNota = false;
     },
     (error) => {
       console.error('Error al agregar nota:', error);

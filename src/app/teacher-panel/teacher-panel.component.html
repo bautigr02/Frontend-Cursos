@@ -176,7 +176,7 @@
             {{ alumno.notaFinal != null ? (alumno.notaFinal | number:'1.2-2') : 'Sin nota' }}
           </td>
           <td>
-            <button *ngIf="alumno.notaFinal == null && cursoParaAlumnos.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
+            <button *ngIf="alumno.notaFinal == null && puedeAgregarNotaFinal(cursoParaAlumnos)" (click)="agregarNotaFinal(alumno)">
               Agregar Nota
             </button>
             <button *ngIf="alumno.notaFinal != null && puedeEditarNotaFinal(cursoParaAlumnos)" (click)="editarNotaFinal(alumno)">
@@ -205,6 +205,7 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
+          <th>Nota</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -213,8 +214,9 @@
           <td>{{ alumno.nombre_alumno }}</td>
           <td>{{ alumno.apellido_alumno }}</td>
           <td>{{ alumno.email }}</td>
-            <td>
-            <button (click)="insertarNota(alumno)">Agregar Nota</button>
+          <td> {{alumno.nota_taller}}</td>  
+          <td>
+            <button *ngIf="!alumno.nota_taller" (click)="insertarNota(alumno)">Agregar Nota</button>
             </td>
         </tr>
       </tbody>
