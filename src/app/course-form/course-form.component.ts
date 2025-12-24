@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CourseWorkshopService } from '../services/course-workshop.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -29,7 +29,7 @@ export class CourseFormComponent implements OnInit {
       num_aula: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       imagen: ['', [Validators.required,Validators.maxLength(255),Validators.pattern(/^https?:\/\/.+/)]],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
-    });
+    }, { validators: this.fechaFinPosteriorValidator });
   }
   onSubmit(): void {
      if (this.cursoForm.valid) {
@@ -48,4 +48,26 @@ export class CourseFormComponent implements OnInit {
     this.isErrorVisible = true;
     }
   }
+
+  private fechaFinPosteriorValidator = (control: AbstractControl): ValidationErrors | null => {
+    const fecIni = control.get('fec_ini')?.value;
+    const fecFin = control.get('fec_fin')?.value;
+
+    if (!fecIni || !fecFin) return null; // required validators handle empties
+
+    const inicio = new Date(fecIni);
+    const fin = new Date(fecFin);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    if (Number.isNaN(inicio.getTime()) || Number.isNaN(fin.getTime())) {
+      return { fechaInvalida: true };
+    }
+
+    if (inicio < hoy) {
+      return { inicioPasado: true };
+    }
+
+    return fin > inicio ? null : { finAnterior: true };
+  };
 }

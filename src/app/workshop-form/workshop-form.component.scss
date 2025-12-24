@@ -103,6 +103,10 @@ small {
     margin-top: 5px;
 }
 
+.help-text small {
+    color: #1a73e8; /* Info blue, not error red */
+}
+
 .btn-agregar-taller{
     width: 80%;
     padding: 12px;
