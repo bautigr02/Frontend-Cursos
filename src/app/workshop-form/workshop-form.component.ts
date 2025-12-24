@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CourseWorkshopService } from '../services/course-workshop.service';
 import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
@@ -34,29 +34,25 @@ export class WorkshopFormComponent implements OnInit {
       herramienta: ['', [Validators.required, Validators.maxLength(30)]],
       hora_ini: ['', Validators.required],
       requisitos: ['', [Validators.required, Validators.maxLength(70)]],
-      dificultad: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
+      dificultad: ['', [Validators.required, Validators.min(0), Validators.max(3), Validators.pattern(/^(0|1|2|3)$/)]],
       imagen: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]],
-    });
+    }, { validators: this.fechaDentroDeCursoValidator });
   }
 
   addTaller(): void {
     if (!this.tallerForm.valid) {
+      this.tallerForm.markAllAsTouched();
       alert('Formulario de taller no válido. Por favor, revisa los campos.');
       this.isErrorVisible = true;
       return;
     }
       const nuevoTaller = this.tallerForm.value;
-      const curso = this.CourseWorkshopService.getCurso();
-      if(nuevoTaller.fecha <= curso.fec_fin && nuevoTaller.fecha >= curso.fec_ini) {
-        this.totalTalleres++;
-        nuevoTaller.dificultad = Number(nuevoTaller.dificultad); // Convierte dificultad a numero para evitar problema de tipo de dato
-        this.talleresAgregados.push(nuevoTaller);
-        this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
-        this.tallerForm.reset();
-        alert('Taller agregado correctamente.');
-      } else{
-      alert('La fecha del taller debe estar dentro del rango de fechas del curso.');
-    }
+      this.totalTalleres++;
+      nuevoTaller.dificultad = Number(nuevoTaller.dificultad); // Convierte dificultad a numero para evitar problema de tipo de dato
+      this.talleresAgregados.push(nuevoTaller);
+      this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
+      this.tallerForm.reset();
+      alert('Taller agregado correctamente.');
   }
   onSubmit(): void {
     const cursoParaCrear = this.CourseWorkshopService.getCurso();
@@ -102,4 +98,24 @@ export class WorkshopFormComponent implements OnInit {
       }
     });
   }
+
+  private fechaDentroDeCursoValidator = (control: AbstractControl): ValidationErrors | null => {
+    const fecha = control.get('fecha')?.value;
+    const curso = this.CourseWorkshopService.getCurso();
+    if (!curso) return null;
+
+    const { fec_ini, fec_fin } = curso;
+    if (!fecha || !fec_ini || !fec_fin) return null;
+
+    const fechaTaller = new Date(fecha);
+    const inicio = new Date(fec_ini);
+    const fin = new Date(fec_fin);
+
+    if (Number.isNaN(fechaTaller.getTime()) || Number.isNaN(inicio.getTime()) || Number.isNaN(fin.getTime())) {
+      return { fechaInvalida: true };
+    }
+
+    const dentroDeRango = fechaTaller >= inicio && fechaTaller <= fin;
+    return dentroDeRango ? null : { fueraDeRango: true };
+  };
 }

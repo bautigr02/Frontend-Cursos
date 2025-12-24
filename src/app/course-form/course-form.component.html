@@ -28,6 +28,12 @@
       <div *ngIf="cursoForm.get('fec_ini')?.touched && cursoForm.get('fec_ini')?.invalid">
         <small *ngIf="cursoForm.get('fec_ini')?.errors?.['required']">La fecha de inicio es requerida.</small>
       </div>
+      <div *ngIf="cursoForm.touched && cursoForm.errors?.['inicioPasado']">
+        <small>La fecha de inicio debe ser hoy o una fecha futura.</small>
+      </div>
+      <div *ngIf="cursoForm.touched && cursoForm.errors?.['fechaInvalida']">
+        <small>Las fechas ingresadas no son válidas.</small>
+      </div>
     </div>
 
     <div class="input-group">
@@ -35,6 +41,12 @@
       <input type="date" id="fec_fin" formControlName="fec_fin">
       <div *ngIf="cursoForm.get('fec_fin')?.touched && cursoForm.get('fec_fin')?.invalid">
         <small *ngIf="cursoForm.get('fec_fin')?.errors?.['required']">La fecha de finalización es requerida.</small>
+      </div>
+      <div *ngIf="cursoForm.touched && cursoForm.errors?.['finAnterior']">
+        <small>La fecha de fin debe ser posterior a la fecha de inicio.</small>
+      </div>
+      <div *ngIf="cursoForm.touched && cursoForm.errors?.['fechaInvalida']">
+        <small>Las fechas ingresadas no son válidas.</small>
       </div>
     </div>
 

@@ -440,5 +440,23 @@ agregarNotaFinal(alumno: any): void {
     this.historialTalleres = [];
   }
 
+  // Método para verificar si un curso ya comenzó
+  puedeEditarCurso(curso: any): boolean {
+    if (!curso || !curso.fec_ini) return false;
+    const fechaInicio = new Date(curso.fec_ini);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    return fechaInicio > hoy;
+  }
+
+  // Método para verificar si un taller ya comenzó
+  puedeEditarTaller(taller: any): boolean {
+    if (!taller || !taller.fecha) return false;
+    const fechaTaller = new Date(taller.fecha);
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    return fechaTaller > hoy;
+  }
+
  
 }

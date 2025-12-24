@@ -29,6 +29,12 @@
         <div *ngIf="tallerForm.get('fecha')?.touched && tallerForm.get('fecha')?.invalid">
           <small *ngIf="tallerForm.get('fecha')?.errors?.['required']">La fecha es requerida.</small>
         </div>
+        <div *ngIf="tallerForm.touched && tallerForm.errors?.['fueraDeRango']">
+          <small>La fecha del taller debe estar dentro de las fechas del curso.</small>
+        </div>
+        <div *ngIf="tallerForm.touched && tallerForm.errors?.['fechaInvalida']">
+          <small>La fecha ingresada no es válida.</small>
+        </div>
       </div>
 
       <div class="input-group">
@@ -68,11 +74,15 @@
 
       <div class="input-group">
         <label for="dificultad">Dificultad</label>
-        <input type="text" id="dificultad" placeholder="1-10" formControlName="dificultad">
+        <input type="number" id="dificultad" placeholder="0-3" min="0" max="3" step="1" formControlName="dificultad">
         <div *ngIf="tallerForm.get('dificultad')?.touched && tallerForm.get('dificultad')?.invalid">
           <small *ngIf="tallerForm.get('dificultad')?.errors?.['required']">La dificultad es requerida.</small>
-          <small *ngIf="tallerForm.get('dificultad')?.errors?.['min']">Mínimo 1.</small>
-          <small *ngIf="tallerForm.get('dificultad')?.errors?.['max']">Máximo 10.</small>
+          <small *ngIf="tallerForm.get('dificultad')?.errors?.['min']">Mínimo 0.</small>
+          <small *ngIf="tallerForm.get('dificultad')?.errors?.['max']">Máximo 3.</small>
+          <small *ngIf="tallerForm.get('dificultad')?.errors?.['pattern']">Solo números enteros entre 0 y 3.</small>
+        </div>
+        <div class="help-text">
+          <small>0: desconocido, 1: principiante, 2: intermedio, 3: avanzado.</small>
         </div>
       </div>
 
