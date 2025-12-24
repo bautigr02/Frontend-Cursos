@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './course-form.component.html',
   styleUrls: ['./course-form.component.scss']
 })
+
 export class CourseFormComponent implements OnInit {
   cursoForm!: FormGroup;
   isErrorVisible = false;
@@ -26,7 +27,7 @@ export class CourseFormComponent implements OnInit {
       fec_ini: ['', Validators.required],
       fec_fin: ['', Validators.required],
       num_aula: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      imagen: ['', [Validators.required, Validators.maxLength(255), Validators.pattern('^https?://.*\\.(webp|jpeg|jpg|png|gif)$')]],
+      imagen: ['', [Validators.required,Validators.maxLength(255),Validators.pattern(/^https?:\/\/.+/)]],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
     });
   }
@@ -34,7 +35,7 @@ export class CourseFormComponent implements OnInit {
      if (this.cursoForm.valid) {
       const cursoParaCrear = this.cursoForm.value;
         //Agrega datos faltantes al curso
-        cursoParaCrear.estado = '1';
+        cursoParaCrear.estado = '1'; //Suponemos que ya fue aprobado por la direccion para habilitar el curso.
         const dniDocenteLogueado = this.authService.getDniDocenteLogueado(); 
           cursoParaCrear.dni_docente = dniDocenteLogueado;
         this.CourseWorkshopService.setCurso(cursoParaCrear);

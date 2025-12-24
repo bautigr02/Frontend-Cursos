@@ -155,9 +155,9 @@
   </div>
 
   <!---Contenedor de los alumnos inscritos en el curso-->
-  <div *ngIf="alumnosInscritos.length > 0" class="alumnos-inscritos">
-    <h4>Alumnos inscritos en el curso: {{cursoSeleccionado.nom_curso}}</h4>
-    <table>
+  <div *ngIf="cursoParaAlumnos" class="alumnos-inscritos">
+    <h4>Alumnos inscritos en el curso: {{cursoParaAlumnos.nom_curso}}</h4>
+    <table *ngIf="alumnosInscritos.length > 0 else sinAlumnos">
       <thead>
         <tr>
             <th>Nombre</th>
@@ -176,16 +176,24 @@
             {{ alumno.notaFinal != null ? (alumno.notaFinal | number:'1.2-2') : 'Sin nota' }}
           </td>
           <td>
-            <button *ngIf="alumno.notaFinal == null && curso.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
+            <button *ngIf="alumno.notaFinal == null && cursoParaAlumnos.fec_fin == fechaActual" (click)="agregarNotaFinal(alumno)">
               Agregar Nota
             </button>
-            <button *ngIf="alumno.notaFinal != null && puedeEditarNotaFinal(curso)" (click)="editarNotaFinal(alumno)">
+            <button *ngIf="alumno.notaFinal != null && puedeEditarNotaFinal(cursoParaAlumnos)" (click)="editarNotaFinal(alumno)">
               Editar Nota
             </button>
           </td>   
         </tr>
       </tbody>
     </table>
+
+    <!-- SI NO hay alumnos -->
+    <ng-template #sinAlumnos>
+      <p class="mensaje-vacio">
+        No hay alumnos inscritos en este curso.
+      </p>
+    </ng-template>
+
     <button (click)="cerrarAlumnosInscritos()">Cerrar</button>
   </div>
   <!---Contenedor de los alumnos inscritos en el taller-->

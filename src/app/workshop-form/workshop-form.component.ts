@@ -40,18 +40,22 @@ export class WorkshopFormComponent implements OnInit {
   }
 
   addTaller(): void {
-    if (this.tallerForm.valid) {
-      this.totalTalleres++;
-      const nuevoTaller = this.tallerForm.value;
-      nuevoTaller.dificultad = Number(nuevoTaller.dificultad); // Convierte dificultad a numero para evitar problema de tipo de dato
-      this.talleresAgregados.push(nuevoTaller);
-      this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
-      this.tallerForm.reset();
-      alert('Taller agregado correctamente.');
-    }else{
-      console.log('Formulario de taller no válido. Por favor, revisa los campos.');
+    if (!this.tallerForm.valid) {
       alert('Formulario de taller no válido. Por favor, revisa los campos.');
       this.isErrorVisible = true;
+      return;
+    }
+      const nuevoTaller = this.tallerForm.value;
+      const curso = this.CourseWorkshopService.getCurso();
+      if(nuevoTaller.fecha <= curso.fec_fin && nuevoTaller.fecha >= curso.fec_ini) {
+        this.totalTalleres++;
+        nuevoTaller.dificultad = Number(nuevoTaller.dificultad); // Convierte dificultad a numero para evitar problema de tipo de dato
+        this.talleresAgregados.push(nuevoTaller);
+        this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
+        this.tallerForm.reset();
+        alert('Taller agregado correctamente.');
+      } else{
+      alert('La fecha del taller debe estar dentro del rango de fechas del curso.');
     }
   }
   onSubmit(): void {

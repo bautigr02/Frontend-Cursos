@@ -33,6 +33,8 @@ export class TeacherPanelComponent implements OnInit {
   insertarNotaFinal = false;
   mensajeEliminacion = false;
 
+  cursoParaAlumnos: any = null;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -240,10 +242,12 @@ export class TeacherPanelComponent implements OnInit {
 
   // Listado de alumnos que estan inscriptos a un curso determinado
 verAlumnos(curso: any): void {
+  this.alumnosInscritos = [];
+  this.cursoParaAlumnos = curso;
+
   this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
     (alumnos: any[]) => {
       this.alumnosInscritos = alumnos;
-      this.cursoSeleccionado = curso;
 
       if (this.alumnosInscritos.length > 0) {
         console.log('Alumnos inscritos en el curso:', alumnos);
@@ -257,6 +261,7 @@ verAlumnos(curso: any): void {
 
   // Cerrar el listado de alumnos inscritos
   cerrarAlumnosInscritos(){
+    this.cursoParaAlumnos = null;
     this.alumnosInscritos = [];
   }
 
