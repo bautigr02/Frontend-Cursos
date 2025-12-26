@@ -150,6 +150,8 @@ export class TeacherPanelComponent implements OnInit {
   guardarCursoModificado(){
     console.log('Intentando guardar curso modificado...');
     delete this.cursoSeleccionado.talleres; // Elimina talleres para evitar conflictos al enviar
+    delete this.cursoSeleccionado.fec_inicio; // Normaliza nombre de campo a fec_ini
+    // Formatear fecha para SQL
   // Formatear fecha para SQL
   if (this.cursoSeleccionado.fec_ini) {
     this.cursoSeleccionado.fec_ini = this.cursoSeleccionado.fec_ini.slice(0, 10);
