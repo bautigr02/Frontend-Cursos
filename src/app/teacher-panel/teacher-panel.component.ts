@@ -34,6 +34,8 @@ export class TeacherPanelComponent implements OnInit {
   mensajeEliminacion = false;
 
   cursoParaAlumnos: any = null;
+  alumnosInscritosTaller: any[] = [];
+  tallerParaAlumnos: any = null;
 
   constructor(
     private http: HttpClient,
@@ -280,11 +282,16 @@ verAlumnos(curso: any): void {
 
   // Listado de alumnos que estan inscriptos a un taller determinado
   verAlumnosTaller(taller: any) {
+    this.alumnosInscritosTaller = [];
+    this.tallerParaAlumnos = taller ;
+
     this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
-      (alumnos) => {
-        this.alumnosTaller = alumnos;
-        this.tallerSeleccionado = taller;
-        console.log('Alumnos inscritos en el taller:', alumnos);
+      (alumnos: any[]) => {
+        this.alumnosInscritosTaller = alumnos;
+
+        if (this.alumnosInscritosTaller.length > 0) {
+          console.log('Alumnos inscritos en el taller:', this.alumnosInscritosTaller);
+        }
       },
       (error) => {
         console.error('Error al obtener alumnos inscritos:', error);
@@ -292,6 +299,11 @@ verAlumnos(curso: any): void {
     );
   }
 
+  
+  cerrarAlumnosInscritosTaller(){
+    this.alumnosInscritosTaller = [];
+    this.tallerParaAlumnos = null;
+  }
 
 
   puedeAgregarNotaFinal(curso: any): boolean {
@@ -417,10 +429,6 @@ agregarNotaFinal(alumno: any): void {
   cancelarInsercionNota() {
     this.isInsertarNota = false;
     this.nuevaNota = null;
-  }
-
-  cerrarAlumnosInscritosTaller(){
-    this.alumnosTaller = [];
   }
 
   //Historial de talleres x docente
