@@ -44,7 +44,6 @@ export class TeacherPanelComponent implements OnInit {
   ) {}
 
 
-  //Solucionar
   ngOnInit(): void {
     this.user = this.authService.getUser();
 
@@ -62,12 +61,12 @@ export class TeacherPanelComponent implements OnInit {
     this.teacherService.getCoursesByDocenteDni(this.user.dni)
       .subscribe({
         next: (cursos) => {
-          //Cargamos aquellos cursos no hayan finalizado(fecha limite + 7 dias)
+          //Cargamos aquellos cursos no hayan finalizado(fecha limite + 10 dias)
           this.cursos = cursos.filter((curso: any) => {
           if (!curso || !curso.fec_fin) return false;
           
           const fechaLimite = new Date(curso.fec_fin); 
-          fechaLimite.setDate(fechaLimite.getDate() + 7);
+          fechaLimite.setDate(fechaLimite.getDate() + 10);
           return fechaLimite >= this.fechaActual;
           });
           
