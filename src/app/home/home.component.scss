@@ -43,8 +43,6 @@ p {
     background-repeat: no-repeat;
     background-position: center;
     align-items: center;
-    padding: 0 8%;
-    position: relative;
 }
 .contenedor-buscar-cursos {
     display: flex;
@@ -140,13 +138,14 @@ p {
     overflow: visible;
     margin: 0 auto;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 2rem; 
-    padding: 2rem 0;
+    gap: 2.5rem;
+    padding-bottom: 2rem;
+
 }
 
 .card {
     width: 100%;
-    max-width: 380px;
+    max-width: 22rem;
     height: auto;
     min-height: 420px;
     position: relative;
@@ -205,6 +204,17 @@ p {
     margin: 0;
 }
 
+@media (max-width: 80rem) {
+    .card {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 60rem) {
+    .card {
+        max-width: 90%;
+    }
+}
 .info-importante {
     width: 100%;
     border: 10px solid #426B1F;
@@ -355,7 +365,7 @@ p {
 .seccion-gral{
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     flex-direction: row;
 }
