@@ -214,6 +214,32 @@ export class TeacherPanelComponent implements OnInit {
   }
 }
 
+//Cancela el curso cambiando el estado a 4.
+cancelarCurso(curso: any) { 
+  const fecIni = new Date(curso.fec_ini);
+  const fechaActual = new Date();
+
+  if (curso.estado !== 1 || fechaActual >= fecIni) {
+    alert('El curso no puede ser cancelado. Solo los cursos activos que no hayan iniciado pueden ser cancelados.');
+    return;
+  }
+
+  if (curso.estado === 1 && fechaActual < fecIni) {
+    if (confirm(`¿Estás seguro de que deseas cancelar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+      this.CourseService.desactivarCurso(curso.idcurso).subscribe({
+        next: () => {
+          curso.estado = 4; // Actualiza el estado del curso a "cancelado" en la interfaz
+          console.log(`Curso con ID ${curso.idcurso} cancelado.`);
+        },
+        error: (error) => {
+          console.error('Error al cancelar el curso:', error);
+          alert('Ocurrió un error al cancelar el curso.');
+        }
+      });
+    }
+  }
+}
+
   //Cerrar mensaje de no se puede eliminar curso
   cerrarMensajeEliminacion(){
     this.mensajeEliminacion = false;
