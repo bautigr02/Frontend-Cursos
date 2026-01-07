@@ -66,6 +66,8 @@ export class TeacherPanelComponent implements OnInit {
           //Cargamos aquellos cursos no hayan finalizado(fecha limite + 10 dias)
           this.cursos = cursos.filter((curso: any) => {
           if (!curso || !curso.fec_fin) return false;
+          if (curso.estado === 4) return false; // Excluir cursos cancelados
+          
           
           const fechaLimite = new Date(curso.fec_fin); 
           fechaLimite.setDate(fechaLimite.getDate() + 10);
