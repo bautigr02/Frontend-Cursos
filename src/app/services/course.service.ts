@@ -35,4 +35,8 @@ export class CourseService {
   deleteCurso(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  desactivarCurso(id: number): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/desactivar/${id}`, {});
+  }
 }
