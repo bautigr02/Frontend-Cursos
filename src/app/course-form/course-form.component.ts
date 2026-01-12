@@ -55,8 +55,9 @@ export class CourseFormComponent implements OnInit {
 
     if (!fecIni || !fecFin) return null; // required validators handle empties
 
-    const inicio = new Date(fecIni);
-    const fin = new Date(fecFin);
+    const inicio = new Date(fecIni + 'T00:00:00');
+    const fin = new Date(fecFin + 'T00:00:00');
+    
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
 
