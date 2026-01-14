@@ -77,7 +77,15 @@ export class TeacherPanelComponent implements OnInit {
           this.cursos.forEach((curso,index)=>{
             this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
               next:(talleres) =>{
-                this.cursos[index].talleres = talleres;
+                const talleresFiltrados = talleres.filter((taller: any) => {
+                  if (!taller.fecha) return false;
+
+                  const fechaLimiteTaller = new Date(taller.fecha);
+                  fechaLimiteTaller.setDate(fechaLimiteTaller.getDate() + 10);
+                  return fechaLimiteTaller >= this.fechaActual;
+                });
+                this.cursos[index].talleres = talleresFiltrados;
+                console.log("Talleres para curso ", curso.idcurso, talleresFiltrados);
               },
             error: (err) =>{
               console.error ("error al obtener talleres", err);
@@ -107,12 +115,12 @@ export class TeacherPanelComponent implements OnInit {
     const hoy = new Date();
 
     const fechaLimite = new Date(fechaTaller);
-    fechaLimite.setDate(fechaLimite.getDate() + 7);
+    fechaLimite.setDate(fechaLimite.getDate() + 10);
 
     hoy.setHours(0, 0, 0, 0);
     fechaLimite.setHours(23, 59, 59, 999);
 
-    return fechaTaller >= hoy ;
+    return fechaLimite >= hoy ;
   }
 
   // Guardar los datos modificados del docente
