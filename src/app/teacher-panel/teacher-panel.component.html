@@ -217,7 +217,7 @@
           <td>{{ alumno.email }}</td>
           <td> {{alumno.nota_taller}}</td>  
           <td>
-            <button *ngIf="!alumno.nota_taller" (click)="insertarNota(alumno)">Agregar Nota</button>
+            <button *ngIf="!alumno.nota_taller" (click)="insertarNota(alumno, tallerParaAlumnos)">Agregar Nota</button>
             </td>
         </tr>
       </tbody>

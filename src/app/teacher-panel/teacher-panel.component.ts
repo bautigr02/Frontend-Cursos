@@ -365,9 +365,11 @@ verAlumnos(curso: any): void {
     return hoy >= fechaTaller;
   } 
   // Habilita el formulario para insertar nota a un alumno
-  insertarNota(alumno: any) {
+  insertarNota(alumno: any, taller: any) {
     this.alumnoSeleccionado = alumno;
+    this.tallerSeleccionado = taller;
     this.isInsertarNota = true;
+    this.nuevaNota = null;
   }
 
   // Inserta la nota del alumno en el taller seleccionado
