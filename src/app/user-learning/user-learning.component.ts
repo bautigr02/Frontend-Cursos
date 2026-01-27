@@ -52,25 +52,28 @@ export class UserLearningComponent implements OnInit {
     }
     
 cancelarInscripcion(curso: any){
-  const dniStr = localStorage.getItem('dni') || sessionStorage.getItem('dni');
+  const currentUser = this.authService.getUser();
+  const dniStr = currentUser?.dni || localStorage.getItem('dni') || sessionStorage.getItem('dni');
   if (!dniStr) {
-    console.error('No hay DNI en storage');
+    console.error('No hay DNI disponible para cancelar la inscripción');
     return;
   }
   const dni = Number(dniStr);
 
-  if (confirm(`¿Seguro que deseas cancelar la inscripción a "${curso.nom_curso}"?`)) {
-    this.userService.cancelarInscripcion(dni, curso.idcurso).subscribe(
-      () => {
-        curso.estado = 3;
-        alert('Inscripción cancelada (marcada como finalizada).');
-      },
-      (error) => {
-        alert('Error al cancelar la inscripción.');
-        console.error('Error al cancelar inscripción:', error);
-      }
-    );
+  if (!confirm(`¿Seguro que deseas cancelar la inscripción a "${curso.nom_curso}"?`)) {
+    return;
   }
+
+  this.userService.cancelarInscripcion(dni, curso.idcurso).subscribe(
+    () => {
+      curso.estado = 3;
+      alert('Inscripción cancelada (marcada como finalizada).');
+    },
+    (error) => {
+      alert('Error al cancelar la inscripción.');
+      console.error('Error al cancelar inscripción:', error);
+    }
+  );
 }
 
 
