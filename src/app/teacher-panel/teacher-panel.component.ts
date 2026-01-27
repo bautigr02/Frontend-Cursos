@@ -382,6 +382,8 @@ verAlumnos(curso: any): void {
     (response) => {
       console.log('Nota agregada:', response);
       this.isInsertarNota = false;
+
+      this.agregarNotaFinalAutomatica(alumno,this.cursoSeleccionado);
     },
     (error) => {
       console.error('Error al agregar nota:', error);
@@ -389,39 +391,33 @@ verAlumnos(curso: any): void {
   );
 }
 
-agregarNotaFinal(alumno: any): void {
-  const curso = this.cursoSeleccionado;
-  const totalTalleres = curso.talleres ? curso.talleres.length : 0;
+  agregarNotaFinalAutomatica(alumno: any, curso: any): void {
+    const totalTalleresCurso = curso.talleres ? curso.talleres.length : 0;
+    if (totalTalleresCurso === 0) return;
 
-  this.teacherService.getNotasByAlumnoInCurso(alumno.dni, curso.idcurso).subscribe(
-    (notas: any[]) => {
-      alumno.notas = notas;
+    this.teacherService.getNotasByAlumnoInCurso(alumno.dni, curso.idcurso).subscribe({
+      next: (notas: any[]) => {
+        const sumaNotas = notas.reduce((sum: number, n: any) => sum + (n.nota_taller || 0), 0);
 
-      if (totalTalleres > 0) {
-        const sumaNotas = alumno.notas.reduce((sum: number, nota: any) => sum + nota.nota_taller, 0);
-        alumno.notaFinal = sumaNotas / totalTalleres;
-      } else {
-        alumno.notaFinal = null;
+        const promedio = sumaNotas / totalTalleresCurso;
+
+        this.teacherService.insertNotaCursoAlumno({
+          dni: alumno.dni,
+          nota_curso: promedio,
+          idcurso: curso.idcurso
+        }).subscribe({
+          next: () => {
+            alumno.notaFinal = promedio;
+            console.log(`Sincronización exitosa: Nota final ${promedio}`);
+            
+            if (notas.length < totalTalleresCurso) {
+              alert(`Nota actualizada, pero atención: faltan calificar ${totalTalleresCurso - notas.length} talleres para este alumno.`);
+            }
+          }
+        });
       }
-
-      this.teacherService.insertNotaCursoAlumno({
-        dni: alumno.dni,
-        nota_curso: alumno.notaFinal,
-        idcurso: curso.idcurso
-      }).subscribe(
-        () => {
-          console.log(`Nota final actualizada para alumno ${alumno.dni}`);
-        },
-        (error: any) => {
-          console.error('Error al insertar nota del alumno:', error);
-        }
-      );
-    },
-    (error: any) => {
-      console.error('Error al obtener notas del alumno:', error);
-    }
-  );
-}
+    });
+  }
 
   editarNotaFinal(alumno: any): void {
     this.insertarNotaFinal = true;
@@ -443,6 +439,7 @@ agregarNotaFinal(alumno: any): void {
   );
 }
 
+//Colocar nota final de un alumno en curso de forma MANUAL x si el docente quisiera editar la nota
   insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
     console.log('Insertando nota final:', { dni, nuevaNota, idcurso });
     this.teacherService.insertNotaCursoAlumno({
@@ -452,6 +449,9 @@ agregarNotaFinal(alumno: any): void {
     }).subscribe(
       (response) => {
         console.log('Nota final insertada:', response);
+        this.insertarNotaFinal = false;
+        this.alumnoSeleccionado.notaFinal = nuevaNota;
+        this.nuevaNota = null;
       },
       (error) => {
         console.error('Error al insertar nota final:', error);
