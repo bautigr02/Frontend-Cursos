@@ -351,7 +351,7 @@ verAlumnos(curso: any): void {
   const fechaFin = new Date(curso.fec_fin + 'T00:00:00');
   const fechaLimite = new Date(fechaFin);
 
-  fechaLimite.setDate(fechaLimite.getDate() + 7); // sumar 7 días
+  fechaLimite.setDate(fechaLimite.getDate() + 10); // sumar 10 días
 
   return hoy >= fechaFin && hoy <= fechaLimite;
   }
@@ -434,12 +434,12 @@ agregarNotaFinal(alumno: any): void {
   const fechaFin = new Date(curso.fec_fin);
   // Diferencia en milisegundos
   const diff = hoy.getTime() - fechaFin.getTime();
-  // 7 días en milisegundos
-  const sieteDias = 7 * 24 * 60 * 60 * 1000;
-  // Mostrar si hoy es igual a fecha fin o está dentro de los 7 días posteriores
+  // 10 días en milisegundos
+  const diezDias = 10 * 24 * 60 * 60 * 1000;
+  // Mostrar si hoy es igual a fecha fin o está dentro de los 10 días posteriores
   return (
     hoy.toDateString() === fechaFin.toDateString() ||
-    (hoy > fechaFin && diff <= sieteDias)
+    (hoy > fechaFin && diff <= diezDias)
   );
 }
 
