@@ -75,6 +75,8 @@ export class TeacherPanelComponent implements OnInit {
           });
           
           this.cursos.forEach((curso,index)=>{
+            this.validarEstadoCurso(curso);
+
             this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
               next:(talleres) =>{
                 const talleresFiltrados = talleres.filter((taller: any) => {
@@ -121,6 +123,39 @@ export class TeacherPanelComponent implements OnInit {
     fechaLimite.setHours(23, 59, 59, 999);
 
     return fechaLimite >= hoy ;
+  }
+
+
+  validarEstadoCurso(curso: any) {
+    const fecHoy = new Date();
+    fecHoy.setHours(0, 0, 0, 0);
+    const fecIni = new Date(curso.fec_ini);
+    fecIni.setHours(0, 0, 0, 0);
+    const fecFin = new Date(curso.fec_fin);
+    fecFin.setHours(0, 0, 0, 0);
+    
+    if (curso.estado === 1 && fecHoy >= fecIni && fecHoy <= fecFin) {
+      this.CourseService.cambiarEstadoCurso(curso.idcurso, 2).subscribe({
+        next: () => {
+          curso.estado = 2;
+          console.log(`Curso ID ${curso.idcurso} cambiado a estado 2 (en desarrollo).`);
+        }
+      });
+    } else if (curso.estado === 2 && fecHoy > fecFin) {
+      this.CourseService.cambiarEstadoCurso(curso.idcurso, 3).subscribe({
+        next: () => {
+          curso.estado = 3;
+          console.log(`Curso ID ${curso.idcurso} cambiado a estado 3 (finalizado).`);
+        }
+      });
+    } else if ((curso.estado === 1 || curso.estado === 2) && fecHoy > fecFin) {
+      this.CourseService.cambiarEstadoCurso(curso.idcurso, 3).subscribe({
+        next: () => {
+          curso.estado = 3;
+          console.log(`Curso ID ${curso.idcurso} cambiado a estado 3 (finalizado).`);
+        }
+      });
+    }
   }
 
   // Guardar los datos modificados del docente
@@ -193,7 +228,6 @@ export class TeacherPanelComponent implements OnInit {
 
 
   //Eliminar Curso
-  //CONTROLAR TEMA ESTADO CURSO <--- MIRAR
   eliminarCurso(curso: any) {
     const fecIni = new Date(curso.fec_ini);
     const fechaActual = new Date(this.fechaActual);
@@ -224,31 +258,31 @@ export class TeacherPanelComponent implements OnInit {
   }
 }
 
-//Cancela el curso cambiando el estado a 4.
-cancelarCurso(curso: any) { 
-  const fecIni = new Date(curso.fec_ini);
-  const fechaActual = new Date();
+  //Cancela el curso cambiando el estado a 4.
+  cancelarCurso(curso: any) { 
+    const fecIni = new Date(curso.fec_ini);
+    const fechaActual = new Date();
 
-  if (curso.estado !== 1 || fechaActual >= fecIni) {
-    alert('El curso no puede ser cancelado. Solo los cursos activos que no hayan iniciado pueden ser cancelados.');
-    return;
-  }
+    if (curso.estado !== 1 || fechaActual >= fecIni) {
+      alert('El curso no puede ser cancelado. Solo los cursos activos que no hayan iniciado pueden ser cancelados.');
+      return;
+    }
 
-  if (curso.estado === 1 && fechaActual < fecIni) {
-    if (confirm(`¿Estás seguro de que deseas cancelar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
-      this.CourseService.desactivarCurso(curso.idcurso).subscribe({
-        next: () => {
-          curso.estado = 4; // Actualiza el estado del curso a "cancelado" en la interfaz
-          console.log(`Curso con ID ${curso.idcurso} cancelado.`);
-        },
-        error: (error) => {
-          console.error('Error al cancelar el curso:', error);
-          alert('Ocurrió un error al cancelar el curso.');
-        }
-      });
+    if (curso.estado === 1 && fechaActual < fecIni) {
+      if (confirm(`¿Estás seguro de que deseas cancelar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+        this.CourseService.desactivarCurso(curso.idcurso).subscribe({
+          next: () => {
+            curso.estado = 4; // Actualiza el estado del curso a "cancelado" en la interfaz
+            console.log(`Curso con ID ${curso.idcurso} cancelado.`);
+          },
+          error: (error) => {
+            console.error('Error al cancelar el curso:', error);
+            alert('Ocurrió un error al cancelar el curso.');
+          }
+        });
+      }
     }
   }
-}
 
   //Cerrar mensaje de no se puede eliminar curso
   cerrarMensajeEliminacion(){
@@ -291,24 +325,24 @@ cancelarCurso(curso: any) {
     }
   }
 
-  // Listado de alumnos que estan inscriptos a un curso determinado
-verAlumnos(curso: any): void {
-  this.alumnosInscritos = [];
-  this.cursoParaAlumnos = curso;
+    // Listado de alumnos que estan inscriptos a un curso determinado
+  verAlumnos(curso: any): void {
+    this.alumnosInscritos = [];
+    this.cursoParaAlumnos = curso;
 
-  this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
-    (alumnos: any[]) => {
-      this.alumnosInscritos = alumnos;
+    this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
+      (alumnos: any[]) => {
+        this.alumnosInscritos = alumnos;
 
-      if (this.alumnosInscritos.length > 0) {
-        console.log('Alumnos inscritos en el curso:', alumnos);
+        if (this.alumnosInscritos.length > 0) {
+          console.log('Alumnos inscritos en el curso:', alumnos);
+        }
+      },
+      (error: any) => {
+        console.error('Error al obtener alumnos inscritos:', error);
       }
-    },
-    (error: any) => {
-      console.error('Error al obtener alumnos inscritos:', error);
-    }
-  );
-}
+    );
+  }
 
   // Cerrar el listado de alumnos inscritos
   cerrarAlumnosInscritos(){
