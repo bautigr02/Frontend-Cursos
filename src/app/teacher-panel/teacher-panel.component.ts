@@ -36,6 +36,7 @@ export class TeacherPanelComponent implements OnInit {
   cursoParaAlumnos: any = null;
   alumnosInscritosTaller: any[] = [];
   tallerParaAlumnos: any = null;
+  totalSinCalificar: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -88,14 +89,22 @@ export class TeacherPanelComponent implements OnInit {
                 });
                 this.cursos[index].talleres = talleresFiltrados;
                 console.log("Talleres para curso ", curso.idcurso, talleresFiltrados);
+                this.alertaAlumnosSinCalificar(talleresFiltrados);
               },
             error: (err) =>{
               console.error ("error al obtener talleres", err);
             }
-            });
-            });
-
-          },
+          });
+        });
+        setTimeout(() => {
+          if (this.totalSinCalificar > 0) {
+            alert(`Tiene ${this.totalSinCalificar} alumnos sin calificar en talleres finalizados.`);
+            this.totalSinCalificar = 0;
+          } else if (this.totalSinCalificar === 0) {
+            console.log('No hay alumnos sin calificar en talleres finalizados.');
+          }
+        }, 1500);
+      },
         error: (err) => {
         console.error('Error al obtener cursos:', err);
       }
@@ -125,7 +134,7 @@ export class TeacherPanelComponent implements OnInit {
     return fechaLimite >= hoy ;
   }
 
-
+//Modifica el estado de un curso de forma dinámica según la fecha actual
   validarEstadoCurso(curso: any) {
     const fecHoy = new Date();
     fecHoy.setHours(0, 0, 0, 0);
@@ -156,6 +165,22 @@ export class TeacherPanelComponent implements OnInit {
         }
       });
     }
+  }
+
+  //Alerta/notificacion de que hay alumnos sin calificar en un taller finalizado
+  alertaAlumnosSinCalificar(talleres: any[]) {
+    const talleresPasados = talleres.filter(taller => !this.esFechaFutura(taller.fecha));
+
+      if (talleresPasados.length === 0) return;
+
+      talleresPasados.forEach(taller => {
+        this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe({
+          next: (alumnos) => {
+            const sinNota = alumnos.filter((a: any) => a.nota_taller === null || a.nota_taller === undefined);
+            this.totalSinCalificar += sinNota.length;
+          }
+        });
+      });
   }
 
   // Guardar los datos modificados del docente
