@@ -30,7 +30,11 @@ export class CourseService {
     return this.http.patch<any>(`${this.apiUrl}/${id}`, course);
   }
 
-  
+  //actualizar estado de un curso
+  cambiarEstadoCurso(id: number, estado: number): Observable<any> {
+    return this.http.patch<any>(`${this.apiUrl}/estado/${id}`, { nuevo_estado: estado });
+  }
+
   // Eliminar un curso
   deleteCurso(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);

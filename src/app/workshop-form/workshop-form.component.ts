@@ -74,8 +74,8 @@ export class WorkshopFormComponent implements OnInit {
         
         // Mapea cada taller a una petición de creación, agregando el ID del curso
           const peticionesTalleres = talleresParaCrear.map(taller => {
-          const tallerConCursoId = { ...taller, idcurso: idCursoCreado, dni_docente: dniDocente };
-          return this.WorkshopService.createTaller(tallerConCursoId);
+            const tallerConCursoId = { ...taller, idcurso: idCursoCreado, dni_docente: dniDocente };
+            return this.WorkshopService.createTaller(tallerConCursoId);
         });
         
         //forkJoin para esperar a que todas las peticiones de talleres terminen
@@ -86,7 +86,10 @@ export class WorkshopFormComponent implements OnInit {
         console.log('Curso y talleres creados con éxito.');
         console.log('Respuesta de los talleres:', responseTalleres);
         alert('Curso y talleres creados con éxito.');
+
         this.CourseWorkshopService.clearData(); 
+        this.talleresAgregados = [];
+        this.totalTalleres = 0;
         this.isErrorVisible = false;
         this.isSuccessVisible = true;
         this.router.navigate(['/teacher-panel']); 
@@ -95,6 +98,9 @@ export class WorkshopFormComponent implements OnInit {
         console.error('Error en la creación:', error);
         alert('Error en la creación del curso o talleres. Por favor, intenta de nuevo.');
         this.isErrorVisible = true;
+        this.CourseWorkshopService.clearData();
+        this.talleresAgregados = [];
+        this.totalTalleres = 0;
       }
     });
   }

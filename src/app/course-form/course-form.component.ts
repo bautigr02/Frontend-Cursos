@@ -33,6 +33,7 @@ export class CourseFormComponent implements OnInit {
   }
   onSubmit(): void {
      if (this.cursoForm.valid) {
+      this.CourseWorkshopService.clearData(); //Evitar datos previos
       const cursoParaCrear = this.cursoForm.value;
         //Agrega datos faltantes al curso
         cursoParaCrear.estado = '1'; //Suponemos que ya fue aprobado por la direccion para habilitar el curso.
