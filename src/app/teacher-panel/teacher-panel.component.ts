@@ -103,7 +103,7 @@ export class TeacherPanelComponent implements OnInit {
           } else if (this.totalSinCalificar === 0) {
             console.log('No hay alumnos sin calificar en talleres finalizados.');
           }
-        }, 1500);
+        }, 1800);
       },
         error: (err) => {
         console.error('Error al obtener cursos:', err);
@@ -169,8 +169,13 @@ export class TeacherPanelComponent implements OnInit {
 
   //Alerta/notificacion de que hay alumnos sin calificar en un taller finalizado
   alertaAlumnosSinCalificar(talleres: any[]) {
-    const talleresPasados = talleres.filter(taller => !this.esFechaFutura(taller.fecha));
-
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const talleresPasados = talleres.filter(taller =>
+    {
+      const fechaTaller = new Date(taller.fecha); 
+      return fechaTaller < hoy;
+    });
       if (talleresPasados.length === 0) return;
 
       talleresPasados.forEach(taller => {
