@@ -66,7 +66,7 @@ cancelarInscripcion(curso: any){
 
   this.userService.cancelarInscripcion(dni, curso.idcurso).subscribe(
     () => {
-      curso.estado = 3;
+      curso.estado = 3;  //No deberia ser 4 ?
       alert('Inscripción cancelada (marcada como finalizada).');
     },
     (error) => {

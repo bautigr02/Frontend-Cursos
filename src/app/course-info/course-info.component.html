@@ -39,9 +39,13 @@
     <button *ngIf="yaInscripto && !yaComenzo() && !course?.nota" (click)="openCancellationModal()" class="cancelar">
       Cancelar
     </button>
+    <button *ngIf = "course.estado === 4" class="curso-no-disponible">
+      Curso Cancelado
+    </button>
     <button *ngIf="course.estado !== 1 && !yaInscripto" class="curso-no-disponible">
       No disponible 
     </button>
+
   </div>
   <!-- MODAL DE CONFIRMACION DE INSCRIPCION -->
   <div id="confirmationModal" class="modal" *ngIf="showModal">

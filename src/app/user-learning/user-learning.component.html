@@ -22,12 +22,15 @@
           <p class="estado" [ngClass]="{
               'inscripto': curso.estado === 1,
               'cursando': curso.estado === 2,
-              'finalizado': curso.estado === 3
+              'finalizado': curso.estado === 3,
+              'cancelado': curso.estado === 4
             }">
             {{
             curso.estado === 1 ? 'Inscripto' :
             curso.estado === 2 ? 'Cursando' :
-            curso.estado === 3 ? 'Finalizado' : ''}}
+            curso.estado === 3 ? 'Finalizado':
+            curso.estado === 4 ? 'Cancelado' : ''
+            }}</p>
               <p>{{ curso.fec_ini | date:'MM/yyyy' }} - {{ curso.fec_fin | date:'MM/yyyy' }}</p>
         </div>
         <div class="course-actions">
@@ -51,9 +54,11 @@
               <span *ngIf="curso.nota_curso < 6 && curso.nota_curso !== null" class="nota-desaprobado">
                 Desaprobado - {{ curso.nota_curso | number:'1.2-2' }}
               </span>
-              <span *ngIf="curso.nota_curso === null" class="nota-cancelado">
-                Cancelado
-              </span>
+            </div>
+            <div *ngSwitchCase="4">
+                <span class="nota-cancelado">
+                  Cancelado por docente/administrador.
+                </span>
             </div>
           </ng-container>
         </div>
