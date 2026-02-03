@@ -36,6 +36,7 @@ export class TeacherPanelComponent implements OnInit {
   cursoParaAlumnos: any = null;
   alumnosInscritosTaller: any[] = [];
   tallerParaAlumnos: any = null;
+  totalSinCalificar: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -75,17 +76,35 @@ export class TeacherPanelComponent implements OnInit {
           });
           
           this.cursos.forEach((curso,index)=>{
+            this.validarEstadoCurso(curso);
+
             this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
               next:(talleres) =>{
-                this.cursos[index].talleres = talleres;
+                const talleresFiltrados = talleres.filter((taller: any) => {
+                  if (!taller.fecha) return false;
+
+                  const fechaLimiteTaller = new Date(taller.fecha);
+                  fechaLimiteTaller.setDate(fechaLimiteTaller.getDate() + 10);
+                  return fechaLimiteTaller >= this.fechaActual;
+                });
+                this.cursos[index].talleres = talleresFiltrados;
+                console.log("Talleres para curso ", curso.idcurso, talleresFiltrados);
+                this.alertaAlumnosSinCalificar(talleresFiltrados);
               },
             error: (err) =>{
               console.error ("error al obtener talleres", err);
             }
-            });
-            });
-
-          },
+          });
+        });
+        setTimeout(() => {
+          if (this.totalSinCalificar > 0) {
+            alert(`Tiene ${this.totalSinCalificar} alumnos sin calificar en talleres finalizados.`);
+            this.totalSinCalificar = 0;
+          } else if (this.totalSinCalificar === 0) {
+            console.log('No hay alumnos sin calificar en talleres finalizados.');
+          }
+        }, 1800);
+      },
         error: (err) => {
         console.error('Error al obtener cursos:', err);
       }
@@ -107,12 +126,66 @@ export class TeacherPanelComponent implements OnInit {
     const hoy = new Date();
 
     const fechaLimite = new Date(fechaTaller);
-    fechaLimite.setDate(fechaLimite.getDate() + 7);
+    fechaLimite.setDate(fechaLimite.getDate() + 10);
 
     hoy.setHours(0, 0, 0, 0);
     fechaLimite.setHours(23, 59, 59, 999);
 
-    return fechaTaller >= hoy ;
+    return fechaLimite >= hoy ;
+  }
+
+//Modifica el estado de un curso de forma dinámica según la fecha actual
+  validarEstadoCurso(curso: any) {
+    const fecHoy = new Date();
+    fecHoy.setHours(0, 0, 0, 0);
+    const fecIni = new Date(curso.fec_ini);
+    fecIni.setHours(0, 0, 0, 0);
+    const fecFin = new Date(curso.fec_fin);
+    fecFin.setHours(0, 0, 0, 0);
+    
+    if (curso.estado === 1 && fecHoy >= fecIni && fecHoy <= fecFin) {
+      this.CourseService.cambiarEstadoCurso(curso.idcurso, 2).subscribe({
+        next: () => {
+          curso.estado = 2;
+          console.log(`Curso ID ${curso.idcurso} cambiado a estado 2 (en desarrollo).`);
+        }
+      });
+    } else if (curso.estado === 2 && fecHoy > fecFin) {
+      this.CourseService.cambiarEstadoCurso(curso.idcurso, 3).subscribe({
+        next: () => {
+          curso.estado = 3;
+          console.log(`Curso ID ${curso.idcurso} cambiado a estado 3 (finalizado).`);
+        }
+      });
+    } else if ((curso.estado === 1 || curso.estado === 2) && fecHoy > fecFin) {
+      this.CourseService.cambiarEstadoCurso(curso.idcurso, 3).subscribe({
+        next: () => {
+          curso.estado = 3;
+          console.log(`Curso ID ${curso.idcurso} cambiado a estado 3 (finalizado).`);
+        }
+      });
+    }
+  }
+
+  //Alerta/notificacion de que hay alumnos sin calificar en un taller finalizado
+  alertaAlumnosSinCalificar(talleres: any[]) {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const talleresPasados = talleres.filter(taller =>
+    {
+      const fechaTaller = new Date(taller.fecha); 
+      return fechaTaller < hoy;
+    });
+      if (talleresPasados.length === 0) return;
+
+      talleresPasados.forEach(taller => {
+        this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe({
+          next: (alumnos) => {
+            const sinNota = alumnos.filter((a: any) => a.nota_taller === null || a.nota_taller === undefined);
+            this.totalSinCalificar += sinNota.length;
+          }
+        });
+      });
   }
 
   // Guardar los datos modificados del docente
@@ -185,7 +258,6 @@ export class TeacherPanelComponent implements OnInit {
 
 
   //Eliminar Curso
-  //CONTROLAR TEMA ESTADO CURSO <--- MIRAR
   eliminarCurso(curso: any) {
     const fecIni = new Date(curso.fec_ini);
     const fechaActual = new Date(this.fechaActual);
@@ -216,31 +288,31 @@ export class TeacherPanelComponent implements OnInit {
   }
 }
 
-//Cancela el curso cambiando el estado a 4.
-cancelarCurso(curso: any) { 
-  const fecIni = new Date(curso.fec_ini);
-  const fechaActual = new Date();
+  //Cancela el curso cambiando el estado a 4.
+  cancelarCurso(curso: any) { 
+    const fecIni = new Date(curso.fec_ini);
+    const fechaActual = new Date();
 
-  if (curso.estado !== 1 || fechaActual >= fecIni) {
-    alert('El curso no puede ser cancelado. Solo los cursos activos que no hayan iniciado pueden ser cancelados.');
-    return;
-  }
+    if (curso.estado !== 1 || fechaActual >= fecIni) {
+      alert('El curso no puede ser cancelado. Solo los cursos activos que no hayan iniciado pueden ser cancelados.');
+      return;
+    }
 
-  if (curso.estado === 1 && fechaActual < fecIni) {
-    if (confirm(`¿Estás seguro de que deseas cancelar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
-      this.CourseService.desactivarCurso(curso.idcurso).subscribe({
-        next: () => {
-          curso.estado = 4; // Actualiza el estado del curso a "cancelado" en la interfaz
-          console.log(`Curso con ID ${curso.idcurso} cancelado.`);
-        },
-        error: (error) => {
-          console.error('Error al cancelar el curso:', error);
-          alert('Ocurrió un error al cancelar el curso.');
-        }
-      });
+    if (curso.estado === 1 && fechaActual < fecIni) {
+      if (confirm(`¿Estás seguro de que deseas cancelar el curso "${curso.nom_curso}"? Esta acción no se puede deshacer.`)) {
+        this.CourseService.desactivarCurso(curso.idcurso).subscribe({
+          next: () => {
+            curso.estado = 4; // Actualiza el estado del curso a "cancelado" en la interfaz
+            console.log(`Curso con ID ${curso.idcurso} cancelado.`);
+          },
+          error: (error) => {
+            console.error('Error al cancelar el curso:', error);
+            alert('Ocurrió un error al cancelar el curso.');
+          }
+        });
+      }
     }
   }
-}
 
   //Cerrar mensaje de no se puede eliminar curso
   cerrarMensajeEliminacion(){
@@ -283,24 +355,24 @@ cancelarCurso(curso: any) {
     }
   }
 
-  // Listado de alumnos que estan inscriptos a un curso determinado
-verAlumnos(curso: any): void {
-  this.alumnosInscritos = [];
-  this.cursoParaAlumnos = curso;
+    // Listado de alumnos que estan inscriptos a un curso determinado
+  verAlumnos(curso: any): void {
+    this.alumnosInscritos = [];
+    this.cursoParaAlumnos = curso;
 
-  this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
-    (alumnos: any[]) => {
-      this.alumnosInscritos = alumnos;
+    this.teacherService.getAlumnosByCursoId(curso.idcurso).subscribe(
+      (alumnos: any[]) => {
+        this.alumnosInscritos = alumnos;
 
-      if (this.alumnosInscritos.length > 0) {
-        console.log('Alumnos inscritos en el curso:', alumnos);
+        if (this.alumnosInscritos.length > 0) {
+          console.log('Alumnos inscritos en el curso:', alumnos);
+        }
+      },
+      (error: any) => {
+        console.error('Error al obtener alumnos inscritos:', error);
       }
-    },
-    (error: any) => {
-      console.error('Error al obtener alumnos inscritos:', error);
-    }
-  );
-}
+    );
+  }
 
   // Cerrar el listado de alumnos inscritos
   cerrarAlumnosInscritos(){
@@ -343,7 +415,7 @@ verAlumnos(curso: any): void {
   const fechaFin = new Date(curso.fec_fin + 'T00:00:00');
   const fechaLimite = new Date(fechaFin);
 
-  fechaLimite.setDate(fechaLimite.getDate() + 7); // sumar 7 días
+  fechaLimite.setDate(fechaLimite.getDate() + 10); // sumar 10 días
 
   return hoy >= fechaFin && hoy <= fechaLimite;
   }
@@ -357,9 +429,11 @@ verAlumnos(curso: any): void {
     return hoy >= fechaTaller;
   } 
   // Habilita el formulario para insertar nota a un alumno
-  insertarNota(alumno: any) {
+  insertarNota(alumno: any, taller: any) {
     this.alumnoSeleccionado = alumno;
+    this.tallerSeleccionado = taller;
     this.isInsertarNota = true;
+    this.nuevaNota = null;
   }
 
   // Inserta la nota del alumno en el taller seleccionado
@@ -372,6 +446,8 @@ verAlumnos(curso: any): void {
     (response) => {
       console.log('Nota agregada:', response);
       this.isInsertarNota = false;
+
+      this.agregarNotaFinalAutomatica(alumno,this.cursoSeleccionado);
     },
     (error) => {
       console.error('Error al agregar nota:', error);
@@ -379,39 +455,33 @@ verAlumnos(curso: any): void {
   );
 }
 
-agregarNotaFinal(alumno: any): void {
-  const curso = this.cursoSeleccionado;
-  const totalTalleres = curso.talleres ? curso.talleres.length : 0;
+  agregarNotaFinalAutomatica(alumno: any, curso: any): void {
+    const totalTalleresCurso = curso.talleres ? curso.talleres.length : 0;
+    if (totalTalleresCurso === 0) return;
 
-  this.teacherService.getNotasByAlumnoInCurso(alumno.dni, curso.idcurso).subscribe(
-    (notas: any[]) => {
-      alumno.notas = notas;
+    this.teacherService.getNotasByAlumnoInCurso(alumno.dni, curso.idcurso).subscribe({
+      next: (notas: any[]) => {
+        const sumaNotas = notas.reduce((sum: number, n: any) => sum + (n.nota_taller || 0), 0);
 
-      if (totalTalleres > 0) {
-        const sumaNotas = alumno.notas.reduce((sum: number, nota: any) => sum + nota.nota_taller, 0);
-        alumno.notaFinal = sumaNotas / totalTalleres;
-      } else {
-        alumno.notaFinal = null;
+        const promedio = sumaNotas / totalTalleresCurso;
+
+        this.teacherService.insertNotaCursoAlumno({
+          dni: alumno.dni,
+          nota_curso: promedio,
+          idcurso: curso.idcurso
+        }).subscribe({
+          next: () => {
+            alumno.notaFinal = promedio;
+            console.log(`Sincronización exitosa: Nota final ${promedio}`);
+            
+            if (notas.length < totalTalleresCurso) {
+              alert(`Nota actualizada, pero atención: faltan calificar ${totalTalleresCurso - notas.length} talleres para este alumno.`);
+            }
+          }
+        });
       }
-
-      this.teacherService.insertNotaCursoAlumno({
-        dni: alumno.dni,
-        nota_curso: alumno.notaFinal,
-        idcurso: curso.idcurso
-      }).subscribe(
-        () => {
-          console.log(`Nota final actualizada para alumno ${alumno.dni}`);
-        },
-        (error: any) => {
-          console.error('Error al insertar nota del alumno:', error);
-        }
-      );
-    },
-    (error: any) => {
-      console.error('Error al obtener notas del alumno:', error);
-    }
-  );
-}
+    });
+  }
 
   editarNotaFinal(alumno: any): void {
     this.insertarNotaFinal = true;
@@ -424,15 +494,16 @@ agregarNotaFinal(alumno: any): void {
   const fechaFin = new Date(curso.fec_fin);
   // Diferencia en milisegundos
   const diff = hoy.getTime() - fechaFin.getTime();
-  // 7 días en milisegundos
-  const sieteDias = 7 * 24 * 60 * 60 * 1000;
-  // Mostrar si hoy es igual a fecha fin o está dentro de los 7 días posteriores
+  // 10 días en milisegundos
+  const diezDias = 10 * 24 * 60 * 60 * 1000;
+  // Mostrar si hoy es igual a fecha fin o está dentro de los 10 días posteriores
   return (
     hoy.toDateString() === fechaFin.toDateString() ||
-    (hoy > fechaFin && diff <= sieteDias)
+    (hoy > fechaFin && diff <= diezDias)
   );
 }
 
+//Colocar nota final de un alumno en curso de forma MANUAL x si el docente quisiera editar la nota
   insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
     console.log('Insertando nota final:', { dni, nuevaNota, idcurso });
     this.teacherService.insertNotaCursoAlumno({
@@ -442,6 +513,9 @@ agregarNotaFinal(alumno: any): void {
     }).subscribe(
       (response) => {
         console.log('Nota final insertada:', response);
+        this.insertarNotaFinal = false;
+        this.alumnoSeleccionado.notaFinal = nuevaNota;
+        this.nuevaNota = null;
       },
       (error) => {
         console.error('Error al insertar nota final:', error);
