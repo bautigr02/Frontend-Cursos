@@ -124,6 +124,12 @@ small {
     background-color: #365517;
 }
 
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 button[type="submit"] {
     width: 80%;
     padding: 12px;

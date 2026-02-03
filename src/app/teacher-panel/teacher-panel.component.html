@@ -18,7 +18,7 @@
         <p><strong>Email:</strong> {{ user?.email }}</p>
         <p><strong>Teléfono:</strong> {{ user?.telefono }}</p>
     </div>
-    <form *ngIf="isEditing" (ngSubmit)="guardarDatos()">
+    <form *ngIf="isEditing && user" (ngSubmit)="guardarDatos()">
         <p>
           <strong>Nombre:</strong>
           <input [(ngModel)]="user.nombre" name="nombre" required />
@@ -82,8 +82,8 @@
                   <li *ngFor="let taller of curso.talleres">
                     <div *ngIf=" esFechaFutura(taller.fecha)">
                       {{ taller.nom_taller }}
-                      <span *ngIf="taller.fecha"> - Fecha: {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
-                      <span *ngIf="taller.hora_ini"> - Horario: {{ taller.hora_ini }}</span>
+                      <span *ngIf="taller.fecha"> - {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
+                      <span *ngIf="taller.hora_ini"> - {{ taller.hora_ini }}</span>
                       <div class="div-botones">
                           <button class="edit-btn" title="Editar taller" [disabled]="!puedeEditarTaller(taller)" (click)="editarTaller(taller)">✎</button>
                           <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnosTaller(taller)">👤</button>
@@ -99,7 +99,7 @@
   </div>
 
   <!--Contenedor de modificaciones del curso seleccionado-->
-  <div *ngIf="isEditingCurso" class="edicionCurso">
+  <div *ngIf="isEditingCurso && cursoSeleccionado" class="edicionCurso">
       <form action="" (ngSubmit)="guardarCursoModificado()">
           <p>
               <strong>Nombre del curso:</strong>
@@ -127,7 +127,7 @@
   </div>
 
   <!--Contenedor de modificaciones del taller seleccionado-->
-  <div *ngIf="isEditingTaller" class="edicionTaller">
+  <div *ngIf="isEditingTaller && tallerSeleccionado" class="edicionTaller">
       <form action="" (ngSubmit)="guardarTallerModificado()">
           <p>
               <strong>Nombre del taller:</strong>

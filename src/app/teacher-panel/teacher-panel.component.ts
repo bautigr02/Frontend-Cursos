@@ -5,6 +5,11 @@ import { AuthService } from '../services/auth.service';
 import { TeacherService } from '../services/teacher.service';
 import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
+import {Curso, Taller, Docente, Alumno, InscripcionTaller} from '../interface/interface';
+
+interface CursoConTalleres extends Curso {
+  talleres?: Taller[];
+}
 
 @Component({
   selector: 'app-teacher-panel',
@@ -12,14 +17,11 @@ import { WorkshopService } from '../services/workshop.service';
   styleUrls: ['./teacher-panel.component.scss']
 })
 export class TeacherPanelComponent implements OnInit {
-  cursos: any[] = [];
-  user: any;
-  talleres: any[] = [];
-  isEditing = false;
-  isEditingCurso = false;
-  isEditingTaller = false;
-  curso: any;
-  cursoSeleccionado: any;
+  cursos: CursoConTalleres[] = [];
+  user: Docente | null = null;
+  talleres: Taller[] = [];
+  curso: Curso | null = null;
+  cursoSeleccionado: CursoConTalleres | null = null;
   taller: any;
   tallerSeleccionado: any;
   alumno: any;
@@ -38,6 +40,10 @@ export class TeacherPanelComponent implements OnInit {
   tallerParaAlumnos: any = null;
   totalSinCalificar: number = 0;
 
+  isEditing = false;
+  isEditingCurso = false;
+  isEditingTaller = false;
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -48,9 +54,9 @@ export class TeacherPanelComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.user = this.authService.getUser();
+    this.user = this.authService.getUser() as Docente;
 
-    if (!this.user || this.user.rol !== 'docente') {
+    if (!this.user || (this.user as any).rol !== 'docente') {
       console.error('Usuario no válido o no es docente');
       return;
     }
@@ -61,26 +67,25 @@ export class TeacherPanelComponent implements OnInit {
     }
 
     // Obtener cursos y talleres asociados al docente
-    this.teacherService.getCoursesByDocenteDni(this.user.dni)
+    this.teacherService.getCoursesByDocenteDni(this.user.dni as any)
       .subscribe({
-        next: (cursos) => {
+        next: (cursos: Curso[]) => {
           //Cargamos aquellos cursos no hayan finalizado(fecha limite + 10 dias)
-          this.cursos = cursos.filter((curso: any) => {
-          if (!curso || !curso.fec_fin) return false;
-          if (curso.estado === 4) return false; // Excluir cursos cancelados
+          this.cursos = cursos.filter((curso) => {
+            if (!curso.fec_fin || curso.estado === 4) return false;
           
           
-          const fechaLimite = new Date(curso.fec_fin); 
-          fechaLimite.setDate(fechaLimite.getDate() + 10);
-          return fechaLimite >= this.fechaActual;
+            const fechaLimite = new Date(curso.fec_fin); 
+            fechaLimite.setDate(fechaLimite.getDate() + 10);
+            return fechaLimite >= this.fechaActual;
           });
           
           this.cursos.forEach((curso,index)=>{
             this.validarEstadoCurso(curso);
 
-            this.teacherService.getTalleresByCursoId(curso.idcurso).subscribe({
-              next:(talleres) =>{
-                const talleresFiltrados = talleres.filter((taller: any) => {
+            this.teacherService.getTalleresByCursoId(curso.idcurso as number).subscribe({
+              next:(talleres: Taller[]) =>{
+                const talleresFiltrados = talleres.filter((taller) => {
                   if (!taller.fecha) return false;
 
                   const fechaLimiteTaller = new Date(taller.fecha);
@@ -168,7 +173,7 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   //Alerta/notificacion de que hay alumnos sin calificar en un taller finalizado
-  alertaAlumnosSinCalificar(talleres: any[]) {
+  alertaAlumnosSinCalificar(talleres: Taller[]) {
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
     const talleresPasados = talleres.filter(taller =>
@@ -224,21 +229,26 @@ export class TeacherPanelComponent implements OnInit {
 
   // Guardar los datos modificados del curso
   guardarCursoModificado(){
+    if (!this.cursoSeleccionado) return;
+
     console.log('Intentando guardar curso modificado...');
-    delete this.cursoSeleccionado.talleres; // Elimina talleres para evitar conflictos al enviar
-    delete this.cursoSeleccionado.fec_inicio; // Normaliza nombre de campo a fec_ini
+    const cursoAEnviar = {...this.cursoSeleccionado };
+
+    delete cursoAEnviar.talleres;
     // Formatear fecha para SQL
   // Formatear fecha para SQL
-  if (this.cursoSeleccionado.fec_ini) {
-    this.cursoSeleccionado.fec_ini = this.cursoSeleccionado.fec_ini.slice(0, 10);
+  if (cursoAEnviar.fec_ini) {
+    cursoAEnviar.fec_ini = (cursoAEnviar.fec_ini as string).slice(0, 10);
   }
-  if (this.cursoSeleccionado.fec_fin) {
-    this.cursoSeleccionado.fec_fin = this.cursoSeleccionado.fec_fin.slice(0, 10);
+  if (cursoAEnviar.fec_fin) {
+    cursoAEnviar.fec_fin = (cursoAEnviar.fec_fin as string).slice(0, 10);
   }
-    this.CourseService.patchCurso(this.cursoSeleccionado.idcurso,this.cursoSeleccionado).subscribe(  
+    this.CourseService.patchCurso(cursoAEnviar.idcurso as number, cursoAEnviar).subscribe(  
       (data) => {
         this.isEditingCurso = false;
-        this.cursoSeleccionado.talleres = this.cursoBackup.talleres;
+        if (this.cursoBackup && this.cursoSeleccionado) {
+          this.cursoSeleccionado.talleres = this.cursoBackup.talleres;
+        }
         console.log('Curso actualizado:', data);
       },
       (error) => {
@@ -304,6 +314,7 @@ export class TeacherPanelComponent implements OnInit {
           next: () => {
             curso.estado = 4; // Actualiza el estado del curso a "cancelado" en la interfaz
             console.log(`Curso con ID ${curso.idcurso} cancelado.`);
+            this.ngOnInit();
           },
           error: (error) => {
             console.error('Error al cancelar el curso:', error);
@@ -536,7 +547,8 @@ export class TeacherPanelComponent implements OnInit {
   //Historial de talleres x docente
 
   verHistorial(){
-    this.teacherService.showTalleresHistorial(this.user.dni).subscribe(
+    if (!this.user) return;
+    this.teacherService.showTalleresHistorial(this.user.dni.toString()).subscribe(
       (historial) => {
         this.historialTalleres = historial;
         console.log('Historial de talleres:', historial);
