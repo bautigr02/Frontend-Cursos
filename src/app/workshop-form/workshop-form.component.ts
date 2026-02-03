@@ -5,6 +5,7 @@ import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
 import { switchMap, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { Taller } from '../interface/interface';
 
 @Component({
   selector: 'app-workshop-form',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./workshop-form.component.scss'] 
 })
 export class WorkshopFormComponent implements OnInit {
-  talleresAgregados: any[] = [];
+  talleresAgregados: Taller[] = [];
   tallerForm!: FormGroup;
   isErrorVisible: boolean = false;
   isSuccessVisible: boolean = false;

@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { WorkshopService } from '../services/workshop.service';
+import { Taller } from '../interface/interface';
 // import { Workshop, workshopList } from './workshop.mock';
 
 @Component({
@@ -13,7 +14,7 @@ export class WorkshopCardComponent implements OnInit, OnChanges{
 
   @Input() order:string = 'default';
 
-  workshopList: any[] = []; // Objeto que contiene la lista de talleres
+  workshopList: Taller[] = []; // Objeto que contiene la lista de talleres
   color: string = ''; // Inicializa color de la dificultad
   
   ngOnInit(): void {

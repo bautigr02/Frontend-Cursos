@@ -4,6 +4,7 @@ import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
 import { Location } from '@angular/common';
+import {Curso, Taller} from '../interface/interface';
 
 @Component({
   selector: 'app-course-info',
@@ -11,14 +12,14 @@ import { Location } from '@angular/common';
   styleUrls: ['./course-info.component.scss']
 })
 export class CourseInfoComponent implements OnInit{
-  course: any;
-  workshops: any[] = [];
+  course: Curso | any;
+  workshops: Taller[] = [];
   loading: boolean = true;
   showModal: boolean = false;
   showCancellationModal: boolean = false;
   yaInscripto: boolean = false;
   user: any;
-  cursosInscriptos: any[] = [];
+  cursosInscriptos: Curso[] = [];
   fechaActual = new Date().toLocaleDateString('es-AR');
   userIsTeacher: boolean = false;
 
