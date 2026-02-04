@@ -81,8 +81,6 @@ export class TeacherPanelComponent implements OnInit {
           });
           
           this.cursos.forEach((curso,index)=>{
-            this.validarEstadoCurso(curso);
-
             this.teacherService.getTalleresByCursoId(curso.idcurso as number).subscribe({
               next:(talleres: Taller[]) =>{
                 const talleresFiltrados = talleres.filter((taller) => {
@@ -137,39 +135,6 @@ export class TeacherPanelComponent implements OnInit {
     fechaLimite.setHours(23, 59, 59, 999);
 
     return fechaLimite >= hoy ;
-  }
-
-//Modifica el estado de un curso de forma dinámica según la fecha actual
-  validarEstadoCurso(curso: any) {
-    const fecHoy = new Date();
-    fecHoy.setHours(0, 0, 0, 0);
-    const fecIni = new Date(curso.fec_ini);
-    fecIni.setHours(0, 0, 0, 0);
-    const fecFin = new Date(curso.fec_fin);
-    fecFin.setHours(0, 0, 0, 0);
-    
-    if (curso.estado === 1 && fecHoy >= fecIni && fecHoy <= fecFin) {
-      this.CourseService.cambiarEstadoCurso(curso.idcurso, 2).subscribe({
-        next: () => {
-          curso.estado = 2;
-          console.log(`Curso ID ${curso.idcurso} cambiado a estado 2 (en desarrollo).`);
-        }
-      });
-    } else if (curso.estado === 2 && fecHoy > fecFin) {
-      this.CourseService.cambiarEstadoCurso(curso.idcurso, 3).subscribe({
-        next: () => {
-          curso.estado = 3;
-          console.log(`Curso ID ${curso.idcurso} cambiado a estado 3 (finalizado).`);
-        }
-      });
-    } else if ((curso.estado === 1 || curso.estado === 2) && fecHoy > fecFin) {
-      this.CourseService.cambiarEstadoCurso(curso.idcurso, 3).subscribe({
-        next: () => {
-          curso.estado = 3;
-          console.log(`Curso ID ${curso.idcurso} cambiado a estado 3 (finalizado).`);
-        }
-      });
-    }
   }
 
   //Alerta/notificacion de que hay alumnos sin calificar en un taller finalizado
