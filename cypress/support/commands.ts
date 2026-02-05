@@ -5,7 +5,7 @@ declare namespace Cypress {
 }
 
 Cypress.Commands.add('login', (identifier: string, password: string) => {
-    cy.visit('http://localhost:4200/login');
+    cy.visit('/login');
 
     cy.get ('input[formcontrolname = "identifier"]').type(identifier);
     cy.get ('input[formcontrolname = "password"]').type(password);
