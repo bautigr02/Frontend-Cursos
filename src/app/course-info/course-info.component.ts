@@ -35,7 +35,6 @@ export class CourseInfoComponent implements OnInit{
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
     this.user = user;
-
     // Verificar si el usuario es docente
     this.userIsTeacher = user?.rol === 'docente';
 
@@ -45,16 +44,16 @@ export class CourseInfoComponent implements OnInit{
       const dni = user?.dni || null;
       this.getCourseInfo(courseId);
       this.getWorkshops(courseId);
-    });
-    if (user && user.dni) {
-      this.userService.getCursosByAlumno(user.dni).subscribe(
-        (cursos) => {
-          this.cursosInscriptos = cursos;
-          // Si el curso actual está en la lista, ya está inscripto
-          this.yaInscripto = !!cursos.find(c => c.idcurso === this.course.idcurso && c.estado !== 3);
+
+      if(this.user && this.user.dni) {
+        this.userService.getCursosByAlumno(this.user.dni).subscribe(
+          (cursos) => {
+            this.cursosInscriptos = cursos;
+            const inscripto = cursos.find(c => Number(c.idcurso) === courseId && Number(c.estado_inscripcion) === 1);
+            this.yaInscripto = !!inscripto;
+         });
         }
-      );
-    }
+     });
   }
 
     getCourseInfo(id: number): void {

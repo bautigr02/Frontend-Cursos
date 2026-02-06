@@ -66,7 +66,7 @@ export class WorkshopInfoComponent implements OnInit {
           const inscripcion = talleresAlumno.find((t: Taller) => t.idtaller === this.workshop.idtaller);
           
           if (inscripcion) {
-            this.yaInscripto = inscripcion.estado === 1 || inscripcion.estado === 2;
+            this.yaInscripto = inscripcion.estado === 1; // Estado 1 = Inscripto
             this.workshop.estado_inscripcion = inscripcion.estado;
             
             // Normalizar nota

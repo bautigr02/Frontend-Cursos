@@ -258,23 +258,25 @@
 
   <!--Contenedor de historial de talleres-->
   <div *ngIf="historialTalleres.length > 0" class = "historial-talleres">
-    <h4>Historial de Talleres</h4>
-    <table>
-  <thead>
-      <tr>
-        <th>#</th>
-        <th>Nombre del Taller</th>
-        <th>Fecha</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let taller of historialTalleres; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ taller.nom_taller }}</td>
-        <td>{{ taller.fecha | date: 'dd/MM/yyyy' }}</td>
-      </tr>
-    </tbody>
-    </table>
+    <div class="tabla-historial">
+      <h4>Historial de Talleres</h4>
+      <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre del Taller</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let taller of historialTalleres; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ taller.nom_taller }}</td>
+          <td>{{ taller.fecha | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
     <button (click)="cerrarHistorial()">Cerrar</button>
   </div>
 
