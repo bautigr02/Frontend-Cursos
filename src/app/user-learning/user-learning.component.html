@@ -20,18 +20,21 @@
           <!-- Dentro de .course-info -->
           <h2 >{{ curso.nom_curso }}</h2>
           <p class="estado" [ngClass]="{
-              'inscripto': curso.estado === 1,
-              'cursando': curso.estado === 2,
-              'finalizado': curso.estado === 3
+              'inscripto': curso.estado_inscripcion === 1,
+              'cursando': curso.estado_curso === 2,
+              'finalizado': curso.estado_curso === 3,
+              'cancelado': curso.estado_curso === 4
             }">
             {{
-            curso.estado === 1 ? 'Inscripto' :
-            curso.estado === 2 ? 'Cursando' :
-            curso.estado === 3 ? 'Finalizado' : ''}}
+            curso.estado_inscripcion === 1 ? 'Inscripto' :
+            curso.estado_inscripcion === 2 ? 'Cursando' :
+            curso.estado_inscripcion === 3 ? 'Finalizado':
+            curso.estado_inscripcion === 4 ? 'Cancelado' : ''
+            }}</p>
               <p>{{ curso.fec_ini | date:'MM/yyyy' }} - {{ curso.fec_fin | date:'MM/yyyy' }}</p>
         </div>
         <div class="course-actions">
-          <ng-container [ngSwitch]="curso.estado">
+          <ng-container [ngSwitch]="curso.estado_inscripcion">
             <!-- Inscripto -->
             <div *ngSwitchCase="1">
               <button class="cancel-btn" [disabled]="!puedeCancelar(curso.fec_ini)" (click)="cancelarInscripcion(curso)">
@@ -51,9 +54,11 @@
               <span *ngIf="curso.nota_curso < 6 && curso.nota_curso !== null" class="nota-desaprobado">
                 Desaprobado - {{ curso.nota_curso | number:'1.2-2' }}
               </span>
-              <span *ngIf="curso.nota_curso === null" class="nota-cancelado">
-                Cancelado
-              </span>
+            </div>
+            <div *ngSwitchCase="4">
+                <span class="nota-cancelado" *ngIf="curso.estado_curso === 4">
+                   Cancelado por docente/administrador.
+                </span>
             </div>
           </ng-container>
         </div>

@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { AuthService } from '../services/auth.service';
+import { filter } from 'cypress/types/bluebird';
 
 @Component({
   selector: 'app-user-learning',
@@ -14,6 +15,7 @@ export class UserLearningComponent implements OnInit {
   ultimosTalleres: any[] = [];
   router: Router = new Router();
   user: any;
+  CursosCanceladosPorAlumno: number[] = [];
 
   constructor(private userService: UserService, private authService: AuthService) {}
 
@@ -29,9 +31,17 @@ export class UserLearningComponent implements OnInit {
       (data) => {
         this.cursos = data.map(curso => ({
           ...curso,
-          estado: curso.estado !== null && curso.estado !== undefined ? Number(curso.estado) : null,
+          estado_inscripcion: Number(curso.estado_inscripcion),
+          estado_curso: Number(curso.estado_curso),
           nota_curso: curso.nota_curso !== null && curso.nota_curso !== undefined ? Number(curso.nota_curso) : null
-        }));
+        }))
+        .filter(curso =>{
+          if (curso.estado_inscripcion === 4) {
+
+            return curso.estado_curso ===4;
+        }
+        return true;
+        });
       },
       (error) => { console.error('Error al obtener cursos:', error); }
     );
@@ -66,7 +76,8 @@ cancelarInscripcion(curso: any){
 
   this.userService.cancelarInscripcion(dni, curso.idcurso).subscribe(
     () => {
-      curso.estado = 3;
+      curso.estado_inscripcion = 4;  //No deberia ser 4 
+      this.ngOnInit();
       alert('Inscripción cancelada (marcada como finalizada).');
     },
     (error) => {

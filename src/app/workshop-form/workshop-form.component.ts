@@ -5,6 +5,7 @@ import { CourseService } from '../services/course.service';
 import { WorkshopService } from '../services/workshop.service';
 import { switchMap, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { Taller } from '../interface/interface';
 
 @Component({
   selector: 'app-workshop-form',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./workshop-form.component.scss'] 
 })
 export class WorkshopFormComponent implements OnInit {
-  talleresAgregados: any[] = [];
+  talleresAgregados: Taller[] = [];
   tallerForm!: FormGroup;
   isErrorVisible: boolean = false;
   isSuccessVisible: boolean = false;
@@ -40,23 +41,29 @@ export class WorkshopFormComponent implements OnInit {
   }
 
   addTaller(): void {
+    this.isErrorVisible = false;
+
     if (!this.tallerForm.valid) {
       this.tallerForm.markAllAsTouched();
       alert('Formulario de taller no válido. Por favor, revisa los campos.');
       this.isErrorVisible = true;
       return;
     }
-      const nuevoTaller = this.tallerForm.value;
+      const nuevoTaller = {...this.tallerForm.value};
       this.totalTalleres++;
       nuevoTaller.dificultad = Number(nuevoTaller.dificultad); // Convierte dificultad a numero para evitar problema de tipo de dato
       this.talleresAgregados.push(nuevoTaller);
       this.CourseWorkshopService.addTaller(nuevoTaller); //Agrega el taller a la lista en el service
       this.tallerForm.reset();
+      this.isErrorVisible = false;
       alert('Taller agregado correctamente.');
   }
   onSubmit(): void {
     const cursoParaCrear = this.CourseWorkshopService.getCurso();
     const talleresParaCrear = this.CourseWorkshopService.getTalleres();
+
+    console.log('Curso a enviar:', cursoParaCrear);
+    console.log('Talleres a enviar:', talleresParaCrear);
 
     if (!cursoParaCrear || talleresParaCrear.length === 0) {
       console.error('Faltan datos de curso o talleres para guardar.');
@@ -68,7 +75,7 @@ export class WorkshopFormComponent implements OnInit {
     this.courseService.createCurso(cursoParaCrear).pipe(
       //SwitchMap para obtener el ID del curso y luego crear los talleres
       switchMap(responseCurso => {
-        const idCursoCreado = responseCurso.id;
+        const idCursoCreado = responseCurso.id || responseCurso.idcurso;
         const dniDocente = cursoParaCrear.dni_docente;
         console.log('Curso creado con éxito:', responseCurso);
         

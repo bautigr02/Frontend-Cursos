@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
+import {Curso, Taller} from '../interface/interface';
 
 @Component({
   selector: 'app-user-panel',
@@ -10,8 +11,8 @@ import { AuthService } from '../services/auth.service';
 export class UserPanelComponent implements OnInit {
 
   user: any;
-  cursos: any[] = [];
-  talleres: any[] = [];
+  cursos: Curso[] = [];
+  talleres: Taller[] = [];
   isEditing = false;
 
   constructor(private userService: UserService, private authService: AuthService) { }

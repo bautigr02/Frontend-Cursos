@@ -4,6 +4,7 @@ import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
 import { forkJoin, of } from 'rxjs';
 import { Location } from '@angular/common';
+import { Taller } from '../interface/interface';
 
 @Component({
   selector: 'app-workshop-info',
@@ -11,14 +12,14 @@ import { Location } from '@angular/common';
   styleUrls: ['./workshop-info.component.scss']
 })
 export class WorkshopInfoComponent implements OnInit {
-  workshop: any;
+  workshop: Taller | any;
   loading: boolean = true;
   showModal: boolean = false;
   showCancellationModal: boolean = false;
   yaInscripto: boolean = false;
   mensajeError: string = '';
   user: any;
-  talleresInscriptos: any[] = [];
+  talleresInscriptos: Taller[] = [];
   fechaActual: Date = new Date();
   userIsTeacher: boolean = false;
 
@@ -62,10 +63,10 @@ export class WorkshopInfoComponent implements OnInit {
           }
 
           // Buscar inscripción del usuario a este taller
-          const inscripcion = talleresAlumno.find((t: any) => t.idtaller === this.workshop.idtaller);
+          const inscripcion = talleresAlumno.find((t: Taller) => t.idtaller === this.workshop.idtaller);
           
           if (inscripcion) {
-            this.yaInscripto = inscripcion.estado === 1 || inscripcion.estado === 2;
+            this.yaInscripto = inscripcion.estado === 1; // Estado 1 = Inscripto
             this.workshop.estado_inscripcion = inscripcion.estado;
             
             // Normalizar nota

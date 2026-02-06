@@ -42,3 +42,9 @@ testem.log
 Thumbs.db
 # Local env files
 server/.env
+
+#Cypress
+cypress/cache/
+cypress/videos/
+cypress/screenshots/
+cypress/reports/
