@@ -414,11 +414,8 @@ export class TeacherPanelComponent implements OnInit {
 
   // Inserta la nota del alumno en el taller seleccionado
   agregarNota(alumno: any) {
-  this.teacherService.insertNotaAlumno({
-    dni: alumno.dni,
-    nota_taller: this.nuevaNota,
-    idtaller: this.tallerSeleccionado.idtaller
-  }).subscribe(
+  this.teacherService.insertNotaAlumno(this.tallerSeleccionado.idtaller, alumno.dni, this.nuevaNota as number
+  ).subscribe(
     (response) => {
       console.log('Nota agregada:', response);
       this.isInsertarNota = false;
@@ -441,11 +438,7 @@ export class TeacherPanelComponent implements OnInit {
 
         const promedio = sumaNotas / totalTalleresCurso;
 
-        this.teacherService.insertNotaCursoAlumno({
-          dni: alumno.dni,
-          nota_curso: promedio,
-          idcurso: curso.idcurso
-        }).subscribe({
+        this.teacherService.insertNotaCursoAlumno(curso.idcurso, alumno.dni, promedio).subscribe({
           next: () => {
             alumno.notaFinal = promedio;
             console.log(`Sincronización exitosa: Nota final ${promedio}`);
@@ -482,11 +475,7 @@ export class TeacherPanelComponent implements OnInit {
 //Colocar nota final de un alumno en curso de forma MANUAL x si el docente quisiera editar la nota
   insertarNotaFinalAlumno( dni: number, nuevaNota: any, idcurso: number) {
     console.log('Insertando nota final:', { dni, nuevaNota, idcurso });
-    this.teacherService.insertNotaCursoAlumno({
-      dni: dni,
-      nota_curso: nuevaNota,
-      idcurso: idcurso
-    }).subscribe(
+    this.teacherService.insertNotaCursoAlumno(idcurso, dni, nuevaNota).subscribe(
       (response) => {
         console.log('Nota final insertada:', response);
         this.insertarNotaFinal = false;

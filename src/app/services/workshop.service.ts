@@ -39,4 +39,3 @@ export class WorkshopService {
     return this.http.delete<any>(`${this.apiUrl}/curso/${idcurso}`);
   }
 }
-

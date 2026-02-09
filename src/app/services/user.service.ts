@@ -36,7 +36,7 @@ export class UserService {
   // Cancelar inscripción a un curso
   cancelarInscripcion(dni: number, idCurso: number): Observable<any> {
   // PATCH: solo actualiza el campo estado
-  return this.http.patch(`http://localhost:3000/api/inscripcion_curso/${dni}/${idCurso}`, { estado: 3 });
+  return this.http.patch(`http://localhost:3000/api/inscripcion_curso/${dni}/${idCurso}`,{});
   }
 
   // Inscribirse a un taller
@@ -46,6 +46,6 @@ export class UserService {
 
   // Cancelar inscripción a un taller
   cancelarInscripcionTaller(dni: number, idtaller: number): Observable<any> {
-    return this.http.patch(`http://localhost:3000/api/inscripcion_taller/${dni}/${idtaller}`, { estado: 3 });
+    return this.http.patch(`http://localhost:3000/api/inscripcion_taller/${dni}/${idtaller}`, {});
   }
 }

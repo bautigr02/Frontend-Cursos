@@ -14,15 +14,15 @@ export class TeacherService {
   // Obtener datos del usuario
   
   updateDocente(user: any) {
-    return this.http.patch(`http://localhost:3000/api/docente/${user.dni}`, user);
+    return this.http.patch(`${this.apiUrl}/${user.dni}`, user);
   }
 
   getCoursesByDocenteDni(dni: string): Observable<any[]> {
-   return this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/${dni}`);
+   return this.http.get<any[]>(`${this.apiUrl}/cursos/${dni}`);
   }
 
   getTalleresByCursoId(idcurso: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/api/docente/cursos/talleres/${idcurso}`);
+    return this.http.get<any[]>(`${this.apiUrl}/cursos/talleres/${idcurso}`);
   }
 
   getAlumnosByCursoId(idcurso: number): Observable<any[]> {
@@ -33,26 +33,24 @@ export class TeacherService {
     return this.http.get<any[]>(`${this.apiUrl}/talleres/alumnos/${idtaller}`);
   }
 
-  insertNotaAlumno(nota: any) {
-    const { dni, nota_taller, idtaller } = nota;
-    return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota`, { dni, nota_taller, idtaller });
+  insertNotaAlumno(idtaller: number, dni:string, notaTaller: number) {
+    return this.http.post(`${this.apiUrl}/talleres/alumnos/nota/${idtaller}/${dni}`, { notaTaller});
   }
 
   showTalleresHistorial(dni_docente: string): Observable<any[]> {
-  return this.http.get<any[]>(`http://localhost:3000/api/docente/talleres/historial/${dni_docente}`);
+  return this.http.get<any[]>(`${this.apiUrl}/talleres/historial/${dni_docente}`);
   }
   
   getNotasByAlumnoInCurso(idalumno: string, idcurso: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:3000/api/docente/talleres/alumnos/nota/${idalumno}/${idcurso}`);
+    return this.http.get<any[]>(`${this.apiUrl}/talleres/alumnos/nota/${idalumno}/${idcurso}`);
   }
 
-  insertNotaCursoAlumno(nota: any) {
-  const { dni, nota_curso, idcurso } = nota;
-  return this.http.post(`http://localhost:3000/api/docente/talleres/alumnos/nota/curso/${idcurso}`,{ dni, nota_curso });
+  insertNotaCursoAlumno(idcurso: number, dni: string | number, notaCurso: number) {
+  return this.http.post(`${this.apiUrl}/talleres/alumnos/nota/curso/${idcurso}/${dni}`,{notaCurso });
 }
 
   isUserATeacher(userId: number): Observable<boolean> {
-    return this.http.get<any>(`http://localhost:3000/api/docente/${userId}`).pipe(
+    return this.http.get<any>(`${this.apiUrl}/${userId}`).pipe(
       map(teacher => !!teacher),
       catchError(() => of(false))
     );
