@@ -12,20 +12,41 @@ import { UserLearningComponent } from './user-learning/user-learning.component';
 import { TeacherPanelComponent } from './teacher-panel/teacher-panel.component';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { WorkshopFormComponent } from './workshop-form/workshop-form.component';
-
+import { authGuardGuard } from './AuthGuard/auth-guard.guard';
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'panel', component: UserPanelComponent},
-  {path: 'learning', component: UserLearningComponent},
+
+  //Alumnos
+  {path: 'panel', component: UserPanelComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['alumno']}
+  },
+  {path: 'learning', component: UserLearningComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['alumno']}
+  },
+
+  //Ambos usuarios
   {path: 'courses', component: AllCoursesComponent},
   {path: 'courses/:id', component: CourseInfoComponent},
   {path: 'workshops', component: AllWorkshopsComponent},
   {path: 'workshops/:id', component: WorkshopInfoComponent},
-  {path: 'teacher-panel', component: TeacherPanelComponent},
-  {path:'course-form', component: CourseFormComponent},
-  {path:'workshop-form', component: WorkshopFormComponent},
+  
+  //Docentes
+  {path: 'teacher-panel', component: TeacherPanelComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['docente']}
+  },
+  {path:'course-form', component: CourseFormComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['docente']}
+  },
+  {path:'workshop-form', component: WorkshopFormComponent,
+    canActivate: [authGuardGuard],
+    data: { roles: ['docente']}
+  },
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ]; 
 
