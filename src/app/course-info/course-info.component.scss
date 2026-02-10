@@ -83,7 +83,7 @@ hr {
   cursor: default;
 }
 
-.curso-no-disponible {
+/*.curso-no-disponible {
   width: 175px;
   height: 60px;
   border: none;
@@ -100,7 +100,8 @@ hr {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
   cursor: default;
-}
+}*/
+
 .cancelar{
   width: 175px;
   height: 60px;
@@ -165,6 +166,49 @@ button[disabled] {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 1.5px 4px rgba(0, 0, 0, 0.10);
   transition: all 0.3s ease;
+}
+
+//Mensajes estado relacion de curso e inscripcion del curso
+.mensaje {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem auto;  
+  padding: 1rem;
+  border-radius: 5px;
+  width: 50%;
+}
+
+.mensaje-content{
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.estado-finalizado {
+  background-color: #f5f5f5;
+  color: #616161;
+  border-color: #e0e0e0;
+}
+
+.estado-progreso {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-color: #bbdefb;
+}
+
+.estado-cancelado {
+  background-color: #ffebee;
+  color: #d32f2f;
+  border-color: #ffcdd2;
+}
+
+.estado-disponible {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border-color: #c8e6c9;
 }
 
 // Modal + loading
