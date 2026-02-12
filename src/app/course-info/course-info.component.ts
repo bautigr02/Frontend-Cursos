@@ -5,6 +5,7 @@ import { WorkshopService } from '../services/workshop.service';
 import { UserService } from '../services/user.service';
 import { Location } from '@angular/common';
 import {Curso, Taller} from '../interface/interface';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-course-info',
@@ -29,23 +30,22 @@ export class CourseInfoComponent implements OnInit{
     private courseService: CourseService, 
     private workshopService: WorkshopService, 
     private userService: UserService,
+    private authService: AuthService,
     private location: Location
   ) { }
   
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-    this.user = user;
+    this.user = this.authService.getUser();
     // Verificar si el usuario es docente
-    this.userIsTeacher = user?.rol === 'docente';
-
+    this.userIsTeacher = this.user?.rol === 'docente';
     // Obtener el ID del curso desde la URL
     this._route.params.subscribe(params => {
       const courseId = +params['id']; // Convierte el ID a número
-      const dni = user?.dni || null;
+      const dni = this.user?.dni || null;
       this.getCourseInfo(courseId);
       this.getWorkshops(courseId);
 
-      if(this.user && this.user.dni) {
+      if(this.user?.dni) {
         this.userService.getCursosByAlumno(this.user.dni).subscribe(
           (cursos) => {
             this.cursosInscriptos = cursos;
@@ -86,15 +86,14 @@ export class CourseInfoComponent implements OnInit{
     }
 
     confirmModal(){
-    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-    if (!user.dni || !this.course?.idcurso) {
+    if (!this.user?.dni || !this.course?.idcurso) {
       alert('Debe iniciar sesión para inscribirse.');
       this.showModal = false;
       window.location.href = '/login'; // Redirigir al login si no hay usuario
       return;
     } 
   
-    this.userService.inscribirEnCurso(user.dni, this.course.idcurso).subscribe(
+    this.userService.inscribirEnCurso(this.user.dni, this.course.idcurso).subscribe(
       () => {
         this.yaInscripto = true;
         this.showModal = false;
@@ -116,16 +115,14 @@ export class CourseInfoComponent implements OnInit{
     this.showCancellationModal = true;
   }
 
-  confirmCancellationModal() {
-  const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user') || '{}');
-  
-  if (!user.dni || !this.course?.idcurso) {
+  confirmCancellationModal() {  
+  if (!this.user?.dni || !this.course?.idcurso) {
     alert('Error: No se pudo obtener la información necesaria.');
     this.showCancellationModal = false;
     return;
   }
 
-  this.userService.cancelarInscripcion(user.dni, this.course.idcurso).subscribe(
+  this.userService.cancelarInscripcion(this.user.dni, this.course.idcurso).subscribe(
     () => {
       this.yaInscripto = false;
       this.showCancellationModal = false;

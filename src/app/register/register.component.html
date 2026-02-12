@@ -41,6 +41,7 @@
                 <small *ngIf="registerForm.get('telefono')?.errors?.['required']">El teléfono es requerido.</small>
                 <small *ngIf="registerForm.get('telefono')?.errors?.['maxlength']">Máximo 15 dígitos permitidos.</small>
                 <small *ngIf="registerForm.get('telefono')?.errors?.['pattern']">Solo se permiten números.</small>
+                <small *ngIf="registerForm.get('telefono')?.errors?.['minlength']">Mínimo 7 dígitos requeridos.</small>
               </div>
             </div>
           
@@ -57,10 +58,11 @@
             <div class="input-group">
               <label for="documento">Documento de identidad o DNI</label>
               <input type="text" id="documento" placeholder="dni" formControlName="dni">
-              <div *ngIf="registerForm.get('documento')?.touched && registerForm.get('documento')?.invalid">
-                <small *ngIf="registerForm.get('documento')?.errors?.['required']">El documento es requerido.</small>
-                <small *ngIf="registerForm.get('documento')?.errors?.['maxlength']">Máximo 10 dígitos permitidos.</small>
-                <small *ngIf="registerForm.get('documento')?.errors?.['pattern']">Solo se permiten números.</small>
+              <div *ngIf="registerForm.get('dni')?.touched && registerForm.get('dni')?.invalid">
+                <small *ngIf="registerForm.get('dni')?.errors?.['required']">El documento es requerido.</small>
+                <small *ngIf="registerForm.get('dni')?.errors?.['maxlength']">Máximo 8 dígitos permitidos.</small>
+                <small *ngIf="registerForm.get('dni')?.errors?.['minlength']">Mínimo 8 dígitos requeridos.</small>
+                <small *ngIf="registerForm.get('dni')?.errors?.['pattern']">Solo se permiten números.</small>
               </div>
             </div>
           
@@ -79,6 +81,7 @@
               <div *ngIf="registerForm.get('contrasena')?.touched && registerForm.get('contrasena')?.invalid">
                 <small *ngIf="registerForm.get('contrasena')?.errors?.['required']">La contraseña es requerida.</small>
                 <small *ngIf="registerForm.get('contrasena')?.errors?.['maxlength']">Máximo 15 caracteres permitidos.</small>
+                <small *ngIf="registerForm.get('contrasena')?.errors?.['minlength']">Mínimo 6 caracteres requeridos.</small>
               </div>
             </div>
                  

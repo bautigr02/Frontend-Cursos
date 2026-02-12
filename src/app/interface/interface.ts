@@ -33,6 +33,7 @@ export interface Curso {
     dni_docente: number;
     imagen: string;
     descripcion: string;
+    email_docente?: string; //Utilizado en course-info
 }
 
 export interface Taller {

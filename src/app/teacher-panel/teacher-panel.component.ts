@@ -301,6 +301,7 @@ export class TeacherPanelComponent implements OnInit {
     this.tallerBackup = { ...taller };
     this.tallerSeleccionado = taller;
     this.isEditingTaller = true;
+    console.log('Taller seleccionado para edición:', this.tallerSeleccionado);
   }
 
   // Guardar los datos modificados del taller
@@ -357,9 +358,10 @@ export class TeacherPanelComponent implements OnInit {
   }
 
   // Listado de alumnos que estan inscriptos a un taller determinado
-  verAlumnosTaller(taller: any) {
+  verAlumnosTaller(taller: any, curso: any) {
     this.alumnosInscritosTaller = [];
     this.tallerParaAlumnos = taller ;
+    this.cursoSeleccionado = curso;
 
     this.teacherService.getAlumnosByTallerId(taller.idtaller).subscribe(
       (alumnos: any[]) => {
@@ -405,9 +407,10 @@ export class TeacherPanelComponent implements OnInit {
     return hoy >= fechaTaller;
   } 
   // Habilita el formulario para insertar nota a un alumno
-  insertarNota(alumno: any, taller: any) {
+  insertarNota(alumno: any, taller: any, curso: any) {
     this.alumnoSeleccionado = alumno;
     this.tallerSeleccionado = taller;
+    this.cursoSeleccionado = curso;
     this.isInsertarNota = true;
     this.nuevaNota = null;
   }
@@ -421,6 +424,7 @@ export class TeacherPanelComponent implements OnInit {
       this.isInsertarNota = false;
 
       this.agregarNotaFinalAutomatica(alumno,this.cursoSeleccionado);
+      this.verAlumnosTaller(this.tallerSeleccionado, this.cursoSeleccionado);
     },
     (error) => {
       console.error('Error al agregar nota:', error);

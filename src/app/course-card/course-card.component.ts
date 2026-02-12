@@ -19,8 +19,8 @@ export class CourseCardComponent implements OnInit, OnChanges{
     // Cargar los cursos desde el service -> desde el backend
     this.courseService.getCourses().subscribe(
       (data) => {
-        this.allCourses = data;
-        this.courseList = [...data]; // Copia para mostrar inicialmente
+        this.allCourses = data.filter(course => course.estado !== 4);
+        this.courseList = [...this.allCourses]; // Copia para mostrar inicialmente
         console.log('Cursos obtenidos:', data);
       },
       (error) => {

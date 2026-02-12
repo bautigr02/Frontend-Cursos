@@ -27,8 +27,13 @@
   <div class="content" *ngIf="workshops.length == 0">
     <p>No hay talleres para este curso.</p>
   </div>
-
-
+  <!--Mensaje post inscripcion-->
+  <div class="recordatorio-user" *ngIf = "yaInscripto && !yaComenzo() && course.estado === 1">
+      <h2>RECORDATORIO</h2>
+      <P>El docente debería comunicarse <strong>vía email</strong> contigo unos días antes de comenzar el curso.</P>
+      <span>En caso de que esto no ocurra aqui tienes el email de contacto: <strong>{{course.email_docente}}</strong></span>
+      <span><strong>No olvides inscribirte a los talleres del curso!</strong></span>
+  </div>
   <!--Mensajes-->
   <div class="mensaje" *ngIf="!yaInscripto">
     <div class="mensaje-content" *ngIf="course.estado === 3">
@@ -59,10 +64,10 @@
     <button id="inscription" (click)="openModal()" *ngIf="course.estado === 1  && !yaInscripto && !yaComenzo() && !userIsTeacher" class="inscribirse">
       Inscribirse
     </button>
-    <button *ngIf="yaInscripto" class="inscripto-label">
+    <button *ngIf="yaInscripto && !userIsTeacher" class="inscripto-label">
       Ya Inscripto
     </button>
-    <button *ngIf="yaInscripto && !yaComenzo() && !course?.nota" (click)="openCancellationModal()" class="cancelar">
+    <button *ngIf="yaInscripto && !yaComenzo() && !course?.nota && !userIsTeacher" (click)="openCancellationModal()" class="cancelar">
       Cancelar
     </button>
   </div>

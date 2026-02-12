@@ -26,6 +26,12 @@
     <div *ngIf="!workshop?.requisitos || workshop?.requisitos.length === 0" class="content">
       <h2>No hay requisitos</h2>
     </div>
+    <div *ngIf="workshop?.herramienta && workshop.herramienta.length > 0" class="content">
+      <h1>Herramientas</h1>
+      <ul>
+        <li *ngFor="let item of workshop?.herramienta">{{item}}</li>
+      </ul>
+    </div>
   </section>
 
   <!-- BOTONES -->
@@ -34,13 +40,13 @@
     <button 
       id="inscription" 
       (click)="openModal()" 
-      *ngIf="!yaInscripto && workshop.nota_taller === null && !userIsTeacher">
+      *ngIf="!yaInscripto && workshop.nota_taller === null && !userIsTeacher && puedeInscribirse()">
       Inscribirse
     </button>
-    <button *ngIf="yaInscripto" class="inscripto-label">
+    <button *ngIf="yaInscripto && !userIsTeacher" class="inscripto-label">
       Ya inscripto
     </button>
-    <button *ngIf="yaInscripto && fechaActual < workshop.fecha && workshop.estado_inscripcion === 1" class="cancelar" (click)="openCancellationModal()">
+    <button *ngIf="yaInscripto && fechaActual < workshop.fecha && workshop.estado_inscripcion === 1 && !userIsTeacher" class="cancelar" (click)="openCancellationModal()">
       Cancelar
     </button>
     <button *ngIf="workshop.nota_taller !== null && workshop.nota_taller >= 6" class="aprobado">
@@ -48,6 +54,9 @@
     </button>
     <button *ngIf="workshop.nota_taller !== null && workshop.nota_taller < 6" class="desaprobado">
       Desaprobado {{workshop?.nota_taller}}
+    </button>
+    <button *ngIf="!userIsTeacher && !puedeInscribirse() && !yaInscripto" class="no-disponible">
+      Inscripciones cerradas
     </button>
   </div>
 

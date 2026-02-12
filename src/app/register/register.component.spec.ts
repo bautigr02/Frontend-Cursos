@@ -40,9 +40,27 @@ describe('RegisterComponent (Test Unitario)', () => {
     expect(nombre.valid).toBeFalsy();
   });
 
+  it('Formulario invalido si el telefono tiene letras', () => {
+    const telefono = component.registerForm.controls['telefono'];
+    telefono.setValue('ABC1234567');
+    expect(telefono.valid).toBeFalsy();
+  });
+
+  it('Formulario invalido si el telefono no tiene entre 7 y 15 caracteres', () => {
+    const telefono = component.registerForm.controls['telefono'];
+    telefono.setValue('123456');
+    expect(telefono.valid).toBeFalsy();
+  });
+
   it('Formulario invalido si el DNI tiene letras', () => {
     const dni = component.registerForm.controls['dni'];
     dni.setValue('ABC1234567');
+    expect(dni.valid).toBeFalsy();
+  });
+
+  it('Formulario invalido si el DNI no tiene 8 caracteres', () => {
+    const dni = component.registerForm.controls['dni'];
+    dni.setValue('1234567');
     expect(dni.valid).toBeFalsy();
   });
 

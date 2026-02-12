@@ -22,7 +22,7 @@ import { UserLearningComponent } from './user-learning/user-learning.component';
 import { TeacherPanelComponent } from './teacher-panel/teacher-panel.component';
 import { CourseFormComponent } from './course-form/course-form.component';
 import { WorkshopFormComponent } from './workshop-form/workshop-form.component';
-import { AuthInterceptor } from './services/auth.interceptor';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
