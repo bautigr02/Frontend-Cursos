@@ -43,7 +43,14 @@ export class UserPanelComponent implements OnInit {
 
     // Obtener los cursos del usuario
     this.userService.getCursosByAlumno(dni).subscribe(
-      (data) => { this.cursos = data; },
+      (data) => { this.cursos = data.map(curso => ({
+        ...curso,
+        estado_curso: Number(curso.estado_curso),
+        nota_curso: (curso.nota_curso !== null && curso.nota_curso !== undefined) ? Number(curso.nota_curso) : null
+        })).filter(curso => {
+          return curso.estado_inscripcion !==4;
+        });
+      },
       (error) => { console.error('Error al obtener cursos del alumno:', error); }
     );
 

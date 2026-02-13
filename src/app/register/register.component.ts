@@ -39,6 +39,7 @@ export class RegisterComponent {
             [
               Validators.required,
               Validators.maxLength(15),
+              Validators.minLength(7),
               Validators.pattern('^[0-9]+$')
             ]
           ],
@@ -56,7 +57,8 @@ export class RegisterComponent {
             '',
             [
               Validators.required,
-              Validators.maxLength(10),
+              Validators.maxLength(8),
+              Validators.minLength(8),
               Validators.pattern('^[0-9]+$')
             ]
           ],
@@ -73,7 +75,8 @@ export class RegisterComponent {
             '',
             [
               Validators.required,
-              Validators.maxLength(15)
+              Validators.maxLength(15),
+              Validators.minLength(6),
             ]
           ]
         });

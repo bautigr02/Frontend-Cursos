@@ -26,7 +26,9 @@ export class CourseFormComponent implements OnInit {
       nom_curso: ['', [Validators.required, Validators.maxLength(45)]],
       fec_ini: ['', Validators.required],
       fec_fin: ['', Validators.required],
-      num_aula: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      num_aula: ['', [Validators.required, Validators.pattern('^[0-9]+$'),
+        Validators.min(1), Validators.max(5) //Solo 5 Aulas disponibles
+      ]],
       imagen: ['', [Validators.required,Validators.maxLength(255),Validators.pattern(/^https?:\/\/.+/)]],
       descripcion: ['', [Validators.required, Validators.maxLength(255)]]
     }, { validators: this.fechaFinPosteriorValidator });

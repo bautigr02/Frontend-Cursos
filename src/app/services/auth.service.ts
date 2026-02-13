@@ -9,8 +9,8 @@ export class AuthService {
   public user$ = this.userSubject.asObservable(); 
 
   constructor() {
-    const user = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
+    const user = sessionStorage.getItem('user');
+    const token = sessionStorage.getItem('token');
     if (user &&token) {
       this.userSubject.next(JSON.parse(user)); 
     }
@@ -18,20 +18,20 @@ export class AuthService {
 
   // Método para iniciar sesión
   login(resp: { user: any; token: string }): void {
-    localStorage.setItem('user', JSON.stringify(resp.user));
-    localStorage.setItem('token', resp.token);
+    sessionStorage.setItem('user', JSON.stringify(resp.user));
+    sessionStorage.setItem('token', resp.token);
     this.userSubject.next(resp.user);
-  }
+}
   // Método para cerrar sesión
   logout(): void {
     sessionStorage.removeItem('user'); 
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this.userSubject.next(null);  
   }
 
   // Método para verificar si el usuario está autenticado
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return !!token;
   }
    
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
   // Existe para course-form.component.ts
   getDniDocenteLogueado(): string | null {

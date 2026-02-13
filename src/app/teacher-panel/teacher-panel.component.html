@@ -80,15 +80,15 @@
             <ng-container *ngIf="curso.talleres && curso.talleres.length > 0;">
               <ul>
                   <li *ngFor="let taller of curso.talleres">
-                    <div *ngIf=" esFechaFutura(taller.fecha)">
+                    <ng-container *ngIf=" esFechaFutura(taller.fecha)">
                       {{ taller.nom_taller }}
                       <span *ngIf="taller.fecha"> - {{ taller.fecha | date:'dd/MM/yyyy' }}</span>
                       <span *ngIf="taller.hora_ini"> - {{ taller.hora_ini }}</span>
                       <div class="div-botones">
                           <button class="edit-btn" title="Editar taller" [disabled]="!puedeEditarTaller(taller)" (click)="editarTaller(taller)">✎</button>
-                          <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnosTaller(taller)">👤</button>
+                          <button class="alumnos-btn" title="Ver alumnos" (click)="verAlumnosTaller(taller,curso)">👤</button>
                       </div>
-                    </div>
+                    </ng-container>
                   </li>  
               </ul>
             </ng-container>
@@ -144,6 +144,10 @@
           <p>
             <strong>Tematica:</strong>
             <input [(ngModel)]="tallerSeleccionado.tematica" name="tematicaTaller" required />
+          </p>
+          <p>
+            <strong>Herramienta:</strong>
+            <input [(ngModel)]="tallerSeleccionado.herramienta" name="herramientaTaller" required />
           </p>
           <p>
             <strong>Requisitos:</strong>
@@ -214,7 +218,7 @@
           <td>{{ alumno.email }}</td>
           <td> {{alumno.nota_taller}}</td>  
           <td>
-            <button *ngIf="!alumno.nota_taller" (click)="insertarNota(alumno, tallerParaAlumnos)">Agregar Nota</button>
+            <button *ngIf="!alumno.nota_taller" (click)="insertarNota(alumno, tallerParaAlumnos, cursoSeleccionado)">Agregar Nota</button>
             </td>
         </tr>
       </tbody>
