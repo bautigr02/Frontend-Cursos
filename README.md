@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
 
-## Backend-Cursos
+## Frontend-Cursos
 
 Repositorio del codigo Frontend del proyecto **Cursos**
 
@@ -12,7 +12,7 @@ Repositorio del codigo Frontend del proyecto **Cursos**
 
 Al correr el codigo de forma local, este estara disponible en: <mark> http://localhost:4200/ </mark>
 
-**Recordatorio:** El backend debe estar conectado para una correcta utilización.
+**Recordatorio:** El backend debe estar conectado para una correcta utilización. [link al Backend](https://github.com/bautigr02/Backend-Cursos)
 
 
 
