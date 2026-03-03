@@ -188,7 +188,14 @@ export class TeacherPanelComponent implements OnInit {
   cursoBackup: any; // Backup de los datos del curso antes de editar
   editarCurso(curso: any) {
     this.cursoBackup = { ...curso };
-    this.cursoSeleccionado = curso;
+    const copia = { ...curso } as CursoConTalleres;
+    if (copia.fec_ini) {
+      copia.fec_ini = (copia.fec_ini as string).slice(0, 10);
+    }
+    if (copia.fec_fin) {
+      copia.fec_fin = (copia.fec_fin as string).slice(0, 10);
+    }
+    this.cursoSeleccionado = copia;
     this.isEditingCurso = true;
   }
 
@@ -299,7 +306,13 @@ export class TeacherPanelComponent implements OnInit {
   tallerBackup: any; // Backup de los datos del taller antes de editar
   editarTaller(taller: any) {
     this.tallerBackup = { ...taller };
-    this.tallerSeleccionado = taller;
+    this.tallerSeleccionado = { ...taller };
+    if (this.tallerSeleccionado.fecha) {
+      this.tallerSeleccionado.fecha = (this.tallerSeleccionado.fecha as string).slice(0, 10);
+    }
+    if (this.tallerSeleccionado.hora_ini) {
+      this.tallerSeleccionado.hora_ini = (this.tallerSeleccionado.hora_ini as string).slice(0, 5);
+    }
     this.isEditingTaller = true;
     console.log('Taller seleccionado para edición:', this.tallerSeleccionado);
   }
