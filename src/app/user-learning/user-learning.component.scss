@@ -237,3 +237,27 @@ h4 {
   font-size: 1.2rem;
   color: #888;
 }
+
+@media (max-width: 600px) {
+  .learning-content {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    order: 2;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .courses-list {
+    order: 1;
+  }
+
+  .course-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .course-actions span {
+    font-size: 0.9rem;
+  }
+}

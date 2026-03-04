@@ -76,9 +76,9 @@ cancelarInscripcion(curso: any){
 
   this.userService.cancelarInscripcion(dni, curso.idcurso).subscribe(
     () => {
-      curso.estado_inscripcion = 4;  //No deberia ser 4 
+      curso.estado_inscripcion = 4; 
       this.ngOnInit();
-      alert('Inscripción cancelada (marcada como finalizada).');
+      alert('Inscripción cancelada.');
     },
     (error) => {
       alert('Error al cancelar la inscripción.');

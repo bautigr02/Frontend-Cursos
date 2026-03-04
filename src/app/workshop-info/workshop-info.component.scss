@@ -250,3 +250,50 @@ li {
   height: 100vh;
   font-size: 1rem;
 }
+
+@media (max-width: 600px) {
+  section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content {
+    width: 90%;
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+  }
+
+  #more-info {
+    flex: 0 0 80%;
+    width: 80%;
+    height: 50px;
+    font-size: 18px;
+    margin: 8px auto;
+  }
+
+  #inscription,
+  .inscripto-label,
+  .cancelar,
+  .no-disponible {
+    flex: 1 1 40%;
+    width: auto;
+    height: 50px;
+    font-size: 16px;
+    margin: 8px 6px;
+  }
+
+  .aprobado,
+  .desaprobado {
+    flex: 0 0 80%;
+    width: 80%;
+    height: 50px;
+    font-size: 18px;
+    margin: 8px auto;
+  }
+}

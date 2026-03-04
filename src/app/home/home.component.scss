@@ -6,8 +6,9 @@ body {
     background-color: white;
     height: auto;
     margin: 0;
-    padding: 2rem 0 ;
+    padding: 2rem 0;
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
 
 h1, h2 {
@@ -55,7 +56,6 @@ p {
     padding: 2.5rem 2rem;
     gap: 1rem;
     min-height: auto;
-
 }
 
 .contenedor-buscar-cursos h2{
@@ -68,7 +68,7 @@ p {
 
 .contenedor-buscar-cursos h2 .color-texto {
     color: #000000;
-    font-size: 50px;
+    font-size: clamp(1.8rem, 5vw, 3.1rem);
     font-family: 'Playfair Display', serif;
     animation: color-change 4s ease-in-out infinite alternate;
 }
@@ -76,7 +76,7 @@ p {
 .contenedor-buscar-cursos p{
     font-size: clamp(1rem, 1.5vw, 1.2rem);
     font-weight: bold;
-    margin-top: 200px;
+    margin-top: 0;
     text-align: center;
     width: 70%;
 }
@@ -202,12 +202,6 @@ p {
     font-size: 18px;
     line-height: 1.4;
     margin: 0;
-}
-
-@media (max-width: 80rem) {
-    .card {
-        max-width: 90%;
-    }
 }
 
 @media (max-width: 60rem) {
@@ -442,5 +436,147 @@ p {
     font-size: 30px;
     margin-bottom: 20px;
     color: white;
+}
+
+/* ── Mobile (≤ 768px) ── */
+@media (max-width: 48rem) {
+
+    /* Hero */
+    .fondo-container-buscar-cursos {
+        justify-content: center;
+        min-height: 500px;
+        background-position: center top;
+    }
+
+    .contenedor-buscar-cursos {
+        max-width: 90%;
+        width: 90%;
+        padding: 2rem 1.5rem;
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .contenedor-buscar-cursos h2 {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        margin-bottom: 10px;
+    }
+
+    .contenedor-buscar-cursos p {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    .boton {
+        font-size: 18px;
+        width: 150px;
+        height: 50px;
+    }
+
+    /* Estadísticas */
+    .estadisticas-generales {
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+    }
+
+    .estadisticas {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stat {
+        width: 85%;
+        height: auto;
+        min-height: auto;
+        padding: 1rem 1rem 0.8rem;
+        margin: 8px auto;
+        box-sizing: border-box;
+    }
+
+    .stat:nth-child(1),
+    .stat:nth-child(3) {
+        margin-right: auto;
+    }
+
+    .stat h2 {
+        font-size: 2rem;
+    }
+
+    .stat h4 {
+        font-size: 1.1rem;
+    }
+
+    .stat p {
+        font-size: 0.9rem;
+    }
+
+    .estadisticas-texto {
+        width: 100%;
+        padding: 1.5rem 1rem;
+    }
+
+    .estadisticas-texto h2 {
+        font-size: clamp(1.4rem, 5vw, 2rem);
+    }
+
+    .estadisticas-texto h3 {
+        font-size: 1.1rem;
+    }
+
+    .estadisticas-texto img {
+        width: 90%;
+        height: auto;
+        border-radius: 12px;
+        margin: 10px 0;
+    }
+
+    /* Sobre nosotros */
+    .contenedor-texto {
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+        background-position: 0 0;
+    }
+
+    .contenedor-texto > img {
+        width: 85%;
+        height: auto;
+        margin: 0 auto 1.5rem auto;
+        border-radius: 12px;
+    }
+
+    .seccion-gral {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .seccion {
+        max-width: 100%;
+        width: 100%;
+        min-height: auto;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+
+    .titulo h2 {
+        font-size: clamp(1.3rem, 5vw, 1.8rem);
+        padding: 0 1rem;
+    }
+
+    .titulo p {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    .contenedor-boton-unirse p {
+        font-size: 1.1rem;
+        text-align: center;
+        padding: 0 1rem;
+    }
 }
 
