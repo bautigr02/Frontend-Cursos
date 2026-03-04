@@ -423,3 +423,46 @@ li {
   color: #666;
   margin: 1rem 0;
 }
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .alumnos-inscritos {
+    min-width: unset;
+    width: 96vw;
+    max-width: 96vw;
+    padding: 1rem 0.6rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow-x: hidden;
+  }
+
+  .alumnos-inscritos h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .alumnos-inscritos table {
+    font-size: 0.72rem;
+  }
+
+  .alumnos-inscritos th,
+  .alumnos-inscritos td {
+    padding: 0.35rem 0.3rem;
+  }
+
+  .alumnos-inscritos th:nth-child(3),
+  .alumnos-inscritos td:nth-child(3) {
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: normal;
+  }
+
+  .alumnos-inscritos button {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
