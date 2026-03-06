@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/alumno'; // URL del backend
+  private apiUrl = `${environment.apiUrl}/alumno`;
 
 
   constructor(private http: HttpClient) { }
@@ -30,22 +31,22 @@ export class UserService {
 
   // Inscribirse a un curso
   inscribirEnCurso(dni: number, idcurso: number) {
-  return this.http.post('http://localhost:3000/api/inscripcion_curso', { dni, idcurso });
+  return this.http.post(`${environment.apiUrl}/inscripcion_curso`, { dni, idcurso });
   }
 
   // Cancelar inscripción a un curso
   cancelarInscripcion(dni: number, idCurso: number): Observable<any> {
   // PATCH: solo actualiza el campo estado
-  return this.http.patch(`http://localhost:3000/api/inscripcion_curso/${dni}/${idCurso}`,{});
+  return this.http.patch(`${environment.apiUrl}/inscripcion_curso/${dni}/${idCurso}`,{});
   }
 
   // Inscribirse a un taller
   inscribirEnTaller(dni: number, idtaller: number) {
-    return this.http.post('http://localhost:3000/api/inscripcion_taller', { dni, idtaller });
+    return this.http.post(`${environment.apiUrl}/inscripcion_taller`, { dni, idtaller });
   }
 
   // Cancelar inscripción a un taller
   cancelarInscripcionTaller(dni: number, idtaller: number): Observable<any> {
-    return this.http.patch(`http://localhost:3000/api/inscripcion_taller/${dni}/${idtaller}`, {});
+    return this.http.patch(`${environment.apiUrl}/inscripcion_taller/${dni}/${idtaller}`, {});
   }
 }
