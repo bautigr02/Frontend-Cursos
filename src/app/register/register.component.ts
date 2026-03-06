@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { environment } from '../enviroments/enviroment';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -85,7 +86,7 @@ export class RegisterComponent {
 onSubmit(): void {
   if (this.registerForm.valid) {
     console.log('Registro exitoso:', this.registerForm.value);
-    this.http.post('http://localhost:3000/api/alumno', this.registerForm.value) //CAMBIAR
+    this.http.post(`${environment.apiUrl}/alumno`, this.registerForm.value) //CAMBIAR
       .pipe(
         tap((response) => {console.log('Alumno creado exitosamente:', response)
           this.isSuccessVisible = true;
