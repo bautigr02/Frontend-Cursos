@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap, catchError, switchMap, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../enviroments/enviroment';
 
 @Component({
   selector: 'app-login',
@@ -42,11 +43,11 @@ export class LoginComponent {
     const { identifier, password } = this.loginForm.value;
     this.isErrorVisible = false;
 
-    this.http.post('http://localhost:3000/api/login', { identifier, password }) // login de alumno
+    this.http.post(`${environment.apiUrl}/login`, { identifier, password }) // login de alumno
       .pipe(
         tap((response: any) => {
           if (response.user && response.token) {
-            response.user.rol = 'alumno'; // 👈 importante
+            response.user.rol = 'alumno'; 
             this.authService.login({ user: response.user, token: response.token });
             this.router.navigate(['/']);
           }
@@ -55,7 +56,7 @@ export class LoginComponent {
           console.warn('No se encontró como alumno, intentando como docente...');
 
           // login de docente si alumno falla
-          return this.http.post('http://localhost:3000/api/loginDocente', { identifier, password }).pipe(
+          return this.http.post(`${environment.apiUrl}/loginDocente`, { identifier, password }).pipe(
             tap((response: any) => {
               if (response.user && response.token) {
                 response.user.rol = 'docente';
