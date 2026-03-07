@@ -18,17 +18,28 @@ Al correr el codigo de forma local, este estara disponible en: <mark> http://loc
 
 ## Comandos Utiles
 
--Instalar dependencias: <mark> Npm install </mark>
+-Instalar dependencias: <mark> npm install </mark>
 
--Inciar el frontend: <mark> Ng serve (Habilita el  http://localhost:4200/) </mark>
+-Inciar el frontend: <mark> npm start (Habilita el  http://localhost:4200/) </mark>
 
 
 
 ## Tests
 
+### Tests Unitarios
 
-  -E2E Test: <mark> Npx cypress open </mark>
-
-  **Recordatorio:** Tener inicado tanto el frontend como backend para su correcta utilización.
+  -Todos los tests unitarios: <mark> npm test </mark>
 
   -Test Unitario (Formulario de registrarse): <mark> ng test --include **/register.component.spec.ts </mark>
+
+  -Test de un componente específico: <mark> ng test --include **/nombre-componente.component.spec.ts </mark>
+
+  -Tests de todos los servicios: <mark> ng test --include **/services/**/*.spec.ts </mark>
+
+### Tests E2E
+
+  -E2E Test (modo interactivo): <mark> npx cypress open </mark>
+
+  -E2E Test (modo headless): <mark> npx cypress run </mark>
+
+  **Recordatorio:** Tener iniciado tanto el frontend como backend para su correcta utilización.
