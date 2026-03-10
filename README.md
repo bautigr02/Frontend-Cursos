@@ -6,7 +6,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Repositorio del codigo Frontend del proyecto **Cursos**
 
-
+## Video explicativo del proyecto
+[Link al video](https://www.canva.com/design/DAHDfsZoEeo/vmdc9ngQbeJouODFh7PGsA/edit?utm_content=DAHDfsZoEeo&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ## Setup
 
